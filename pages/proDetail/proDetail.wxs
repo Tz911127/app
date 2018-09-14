@@ -1,0 +1,111 @@
+//字符串转换成数组
+function strArr(str, separator) {
+  str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
+  var source = str.split("#");
+  var target = [];
+  for (var i = 0; i < source.length; i++) {
+    target[i] = JSON.parse(source[i]);
+  }
+  console.log(target[0].weeks, source, target[0].startTime, target[0].endTime);
+  var weekData = (target[0].weeks).split(",");
+  var du = ''
+  if (weekData.length == 7) {
+    du = '每天' + target[0].startTime + "至" + target[0].endTime
+  } else {
+    for (var i = 0; i < weekData.length; i++) {
+      du = '周' + day_time(weekData[i]) + target[0].startTime + "至" + target[0].endTime
+    }
+  }
+  return du;
+};
+
+function day_time(num) {
+  if (num == 1) {
+    return "一"
+  } else if (num == 2) {
+    return "二"
+  } else if (num == 3) {
+    return "三"
+  } else if (num == 4) {
+    return "四"
+  } else if (num == 5) {
+    return "五"
+  } else if (num == 6) {
+    return "六"
+  } else if (num == 7) {
+    return "日"
+  }
+};
+
+
+function getTime(time) {
+  var timeStr = JSON.stringify(time);
+  var newTime = timeStr.slice(0, 4) + '-' + timeStr.slice(4, 6) + '-' + timeStr.slice(6, 8);
+  return newTime;
+};
+
+function status(data) {
+  if (data == 0) {
+    return "待提交审核";
+  } else if (data == 1) {
+    return "审核通过";
+  } else if (data == 2) {
+    return "内部初审中"
+  } else if (data == 3) {
+    return "平台审核中"
+  } else if (data == 4) {
+    return "内部审核不通过"
+  } else if (data == 5) {
+    return "平台审核不通过"
+  } else if (data == 6) {
+    return "内部终审中"
+  } else if (data == 7) {
+    return "内部终审不通过"
+  }
+};
+
+function format(ts) {
+  var d = getDate(ts)
+  return [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-') +
+    ' ' + [d.getHours(), d.getMinutes(), d.getSeconds()].join(':')
+}
+//下发状态
+function proStatus(data) {
+  if (data == 1) {
+    return "下发成功"
+  } else if (data == 2) {
+    return "下发失败"
+  } else if (data == 3) {
+    return "等待终端执行"
+  } else if (data == 4) {
+    return "已取消"
+  } else if (data == 5) {
+    return "正在下载"
+  }
+}
+
+function temStatus(data) {
+  if (data == 0) {
+    return "未激活";
+  } else if (data == 1) {
+    return "正常";
+  } else if (data == 2) {
+    return "离线"
+  } else if (data == 3) {
+    return "异常"
+  }
+};
+
+function size(num) {
+  var newNum = (num / 1024).toFixed(2)
+  return newNum;
+};
+module.exports = {
+  strArr: strArr,
+  getTime: getTime,
+  status: status,
+  format: format,
+  proStatus: proStatus,
+  temStatus: temStatus,
+  size: size
+}

@@ -1,0 +1,20 @@
+<view>
+  <view class='me'>
+    <view class='img'>
+      <image src='../../img/u260.png'></image>
+    </view>
+    <view class='info'>
+      <view>公司名称：快媒数字</view>
+      <view>登录账号：kmsz</view>
+    </view>
+  </view>
+  <view class='pwd' bindtap='pwd'>
+    修改密码
+    <image src='../../img/u502.png'></image>
+  </view>
+  <view class='pwd' bindtap='about'>关于
+    <image src='../../img/u502.png'></image>
+  </view>
+
+    <button bindtap='quit'>退出</button>
+</view>

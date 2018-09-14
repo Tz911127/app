@@ -1,0 +1,42 @@
+<!--pages/login/login.wxml-->
+
+<view style='text-align:center'>
+  <image style='width:400rpx;height:160rpx' src='../../img/sign up_logo.png'></image>
+</view>
+<view class='title'>智能营销传播</view>
+
+
+<form bindsubmit="formSubmit">
+  <view class="page-section">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <image src='../../img/sign up_icon_company_code.png'></image>
+        <input class="weui-input" name="code" placeholder="公司代码" value='whkm' bindinput="codeInput" />
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <image src='../../img/sign up_icon_account.png'></image>
+        <input class="weui-input" name="no" placeholder="账号" value='xuweilin' bindinput="phoneInput" />
+      </view>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <image src='../../img/sign up_password.png'></image>
+        <input class="weui-input" password name="pwd" value='Kmsz123456' placeholder="密码" bindinput="passwordInput" />
+      </view>
+    </view>
+  </view>
+
+  <view class='btn-area'>
+    <button type="primary" form-type='submit'>登录</button>
+  </view>
+</form>
+
+<!-- <view class='btn-area'>
+  <button type="primary" bindtap = "toHome">登录</button>
+</view> -->

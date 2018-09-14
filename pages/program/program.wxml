@@ -1,0 +1,87 @@
+<!--pages/terminal/terminal.wxml-->
+<wxs module='filter' src='./program.wxs'></wxs>
+<view class='page clearfix'>
+
+  <!-- 滑动 -->
+
+  <view class='page-tab' style="{{position}}">
+    <view class='tab'>
+      <view>审核状态</view>
+      <button class='btn'>待提交审核</button>
+      <button class='btn'>审核通过</button>
+      <button class='btn'>内部终审中</button>
+      <button class='btn'>内部审核不通过</button>
+
+      <view>节目类型</view>
+      <button class='btn_'>普通节目</button>
+      <button class='btn_'>互动节目</button>
+
+      <view>终端分辨率</view>
+      <button class='btn_'>1920*1080</button>
+      <button class='btn_'>1024*768</button>
+
+      <view>发布终端</view>
+      <button class='btn_'>有</button>
+      <button class='btn_'>无</button>
+
+      <view>节目分组</view>
+      <button class='btn_'>小组A</button>
+      <button class='btn_'>小组B</button>
+
+      <view class='ok_off'>
+        <button>重置</button>
+        <button type="primary">确定</button>
+      </view>
+    </view>
+
+  </view>
+  <!-- 遮罩 -->
+
+  <view class="bg" bindtap='hideview' style='display:{{display}}'></view>
+
+
+  <!-- nav -->
+  <view class='home' style="{{translate }}">
+    <view class='sear'>
+      <view class="btn">
+        <image src='../../img/home_nav-2_icon_search.png'></image>
+        <input class="" placeholder="终端名称/终端编号" />
+      </view>
+      <view class='weui-cell_input sea'>
+        <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
+      </view>
+    </view>
+    <!-- <view style='margin-top:130rpx'> -->
+    <scroll-view style='margin-top:87rpx;height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+      <navigator url='../proDetail/proDetail?id={{item.id}}&playTers={{item.playTers}}' wx:for="{{dataList}}" wx:key='item' class='main'>
+        <view class='title'>
+          <view>节目名称</view>
+          <view>{{item.name}}</view>
+        </view>
+        <view class='nav'>
+          <view class='img'>
+            <image src='../../img/u260.png'></image>
+          </view>
+          <view class='test'>
+            <view class='num'>
+             分辨率：{{item.pixelHorizontal}}*{{item.pixelVertical}}
+            </view>
+            <view class='num'>
+             发布终端数: {{item.playTers}}
+            </view>
+            <view class='num'>
+            {{filter.status(item.status)}}
+          </view>
+          </view>
+        </view>
+        <view class='foot'>
+          <view bindtap='preview'>预览</view>
+          <view bindtap='pub'>发布</view>
+        </view>
+      </navigator>
+    </scroll-view>
+    <!-- </view> -->
+  </view>
+
+
+</view>

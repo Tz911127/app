@@ -1,0 +1,97 @@
+<!--pages/terminal/terminal.wxml-->
+<wxs module='filter' src='./terminal.wxs'></wxs>
+<view class='page'>
+
+  <!-- 滑动 -->
+
+  <view class='page-tab' style="{{position}}">
+    <view class='tab'>
+      <view>终端状态</view>
+      <button class='btn'>在线</button>
+      <button class='btn'>离线</button>
+      <button class='btn'>异常</button>
+      <button class='btn'>到期</button>
+
+      <view>终端分辨率</view>
+      <button class='btn_'>1920*1080</button>
+      <button class='btn_'>1024*768</button>
+
+      <view>系统类型</view>
+      <button class='btn_'>Android</button>
+      <button class='btn_'>Windows</button>
+
+      <view>播放节目</view>
+      <button class='btn_'>有</button>
+      <button class='btn_'>无</button>
+
+      <view>终端分组</view>
+      <button class='btn_'>小组A</button>
+      <button class='btn_'>小组B</button>
+
+      <view class='clearfix turn'>
+        <view style='float:left'>所属区域</view>
+        <button bindtap='upArea' style='float:right'>全部
+          <image src='../../img/u502.png'></image>
+        </button>
+      </view>
+
+      <view class='ok_off'>
+        <button>重置</button>
+        <button type="primary">确定</button>
+      </view>
+    </view>
+
+  </view>
+  <!-- 遮罩 -->
+
+  <view class="bg" bindtap='hideview' style='display:{{display}}'></view>
+
+
+  <!-- nav -->
+  <view class='home' style="{{translate}}">
+    <!-- <view class="page-section"> -->
+    <view class='sear'>
+      <view class="btn">
+        <image src='../../img/home_nav-2_icon_search.png'></image>
+        <input class="" placeholder="终端名称/终端编号" />
+      </view>
+      <view class='weui-cell_input sea'>
+        <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
+      </view>
+      <!-- </view> -->
+    </view>
+    <scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+      <navigator class='nav' wx:for="{{datalist}}" wx:key="item" url='../detail/detail?id={{item.id}}&name={{item.name}}&no={{item.no}}&status={{item.status}}&resolution={{item.resolution}}&hasProgram={{item.hasProgram}}'>
+        <!-- <view class='img'> -->
+        <!-- <image src='../../img/icon_name.png'></image> -->
+        <!-- <image src='../../img/icon_res.png'></image> -->
+        <!-- <image src='../../img/terminal1_icon_number.png'></image> -->
+        <!-- </view> -->
+        <view class='test'>
+          <view class='tit'>
+            <image src='../../img/icon_name.png'></image>
+            <text>{{item.name}}</text>
+            <text class='stu'>{{ filter.status(item.status)}}</text>
+          </view>
+          <view class='main'>
+            <image src='../../img/icon_res.png'></image>
+            <text>{{item.no}}</text>
+          </view>
+          <view class='main'>
+            <image src='../../img/terminal1_icon_number.png'></image>
+            <text>{{item.resolution}}</text>
+          </view>
+        </view>
+        <view class='num'>
+          <!-- <view>{{ filter.status(item.status)}}</view> -->
+          <view>节目</view>
+          <view>{{item.hasProgram}}</view>
+
+
+        </view>
+
+      </navigator>
+    </scroll-view>
+
+  </view>
+</view>

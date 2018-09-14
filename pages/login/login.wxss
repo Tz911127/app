@@ -1,0 +1,18 @@
+@import "../../lib/lib.wxss";
+.title {
+  text-align: center;
+  color: #2B344A;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'PingFangSC-Regular', 'PingFang SC';
+  margin-bottom: 200rpx;
+}
+.page-section{
+  margin-bottom: 20rpx;
+}
+
+image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx
+}

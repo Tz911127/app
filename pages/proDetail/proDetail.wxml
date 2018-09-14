@@ -1,0 +1,80 @@
+<wxs module='filter' src='./proDetail.wxs'></wxs>
+<view>
+  <view class="nav bc_white">
+    <view class="{{selected?'red':'default'}}" bindtap="selected">节目信息</view>
+    <view class="{{selected1?'red':'default'}}" bindtap="selected1">命令记录</view>
+  </view>
+
+  <view class="{{selected?'show':'hidden'}}">
+    <view class='main'>
+      <view class='tit'>
+        <view>{{dataList.name}}</view>
+        <view>{{filter.status(dataList.status)}}</view>
+      </view>
+      <view class='left'>
+        <view>创建账号 </view>
+        <view>节目大小 </view>
+        <view>节目时长 </view>
+        <view>创建时间 </view>
+        <view>当前状态 </view>
+      </view>
+      <view class='right'>
+        <view>{{filter.size(dataList.size)}}KB</view>
+        <view>{{dataList.duration}}s</view>
+        <view></view>
+        <view>{{createTime}}</view>
+        <view>{{filter.status(dataList.status)}}</view>
+      </view>
+
+    </view>
+    <view class='pub'>已发布终端数： {{playTers}}</view>
+    <view class='tem clearfix' wx:for="{{temList}}" wx:key="{{item}}">
+      <view class='detail'>
+        <view class='title'>
+          <view>{{item.terminalName}}</view>
+          <view>{{filter.temStatus(item.terminalStatus)}}</view>
+        </view>
+        <view class='test'>
+          <view class='left'>
+            <view>终端编号</view>
+            <view>分辨率</view>
+            <view>播放时间</view>
+            <view>播放周期</view>
+          </view>
+          <view class='right'>
+            <view>{{item.terminalNo}}</view>
+            <view>{{pixel}}</view>
+            <view>{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
+            <view>{{filter.strArr(item.periodArray)}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='btn'>
+        停播
+      </view>
+    </view>
+
+  </view>
+  <view class="{{selected1?'show':'hidden'}}">
+    <scroll-view style='height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+      <view class='order' wx:for="{{orderList}}" wx:key="{{item}}">
+        <view class='left'>
+          <view>命令名称</view>
+          <view>下发状态</view>
+          <view>终端编号</view>
+          <view>终端名称</view>
+          <view>用户账号</view>
+          <view>下发时间</view>
+        </view>
+        <view class='right'>
+          <view> {{item.terName}}</view>
+          <view> {{filter.proStatus(item.status)}}</view>
+          <view> {{item.terNo}}</view>
+          <view> {{item.programName}}</view>
+          <view> {{item.userAccount}}</view>
+          <view> {{filter.format(item.sendTime)}}</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

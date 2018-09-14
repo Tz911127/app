@@ -1,0 +1,35 @@
+function status(data) {
+  if (data == 0) {
+    return "待提交审核";
+  }
+  else if (data == 1) {
+    return "审核通过";
+  } else if (data == 2) {
+    return "内部初审中"
+  } else if (data == 3) {
+    return "平台审核中"
+  } else if (data == 4) {
+    return "内部审核不通过"
+  } else if (data == 5) {
+    return "平台审核不通过"
+  } else if (data == 6) {
+    return "内部终审中"
+  } else if (data == 7) {
+    return "内部终审不通过"
+  }
+};
+function size(num){
+  var newNum = (num/1024).toFixed(2)
+  return newNum;
+};
+function format(ts) {
+  var d = getDate(ts)
+  return [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-')
+    + ' '
+    + [d.getHours(), d.getMinutes(), d.getSeconds()].join(':')
+}
+module.exports = {
+  status: status,
+  size: size,
+  format: format
+}

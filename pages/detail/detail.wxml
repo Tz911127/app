@@ -1,0 +1,162 @@
+<wxs module='filter' src='./detail.wxs'></wxs>
+<view class="body">
+  <view class="nav bc_white">
+    <view class="{{selected?'red':'default'}}" bindtap="selected">终端操作</view>
+    <view class="{{selected1?'red':'default'}}" bindtap="selected1">终端信息</view>
+    <view class="{{selected2?'red':'default'}}" bindtap="selected2">命令记录</view>
+  </view>
+  <view class="{{selected?'show':'hidden'}}">
+    <view class='detail'>
+      <!-- <view class='img'>
+        <image src='../../img/u260.png'></image>
+      </view> -->
+      <view class='test'>
+        <view class='title'>
+          <view>{{name}}</view>
+          <view>{{filter.proStatus(status)}}</view>
+        </view>
+        <view class='image'>
+          <image src='../../img/icon_res.png'></image>
+          {{no}}
+        </view>
+        <view class='image'>
+          <image src='../../img/terminal1_icon_number.png'></image>
+          {{resolution}}
+        </view>
+      </view>
+      <!-- <view class='num'>
+        <view>{{filter.proStatus(status)}}</view>
+      </view> -->
+    </view>
+    <!-- btn -->
+    <view style='margin:30rpx'>
+
+      <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%">
+
+        <view class='scroll_img open_close' bindtap='open_close'>开关机时间</view>
+        <view class='scroll_img sounds' bindtap='sounds'>音量设置</view>
+        <view class='scroll_img restart' bindtap='restart'>远程重启</view>
+        <view class='scroll_img screen' bindtap='screen'>终端截屏</view>
+        <view class='scroll_img temInfo' bindtap='temInfo'>获取终端信息</view>
+        <view class='scroll_img temInit' bindtap='temInit'>终端初始化</view>
+        </scroll-view>
+    </view>
+    <!-- 终端节目数 -->
+    <view class='pro'>终端节目数:
+      <text>{{hasProgram}}</text>
+    </view>
+    <view class='program' wx:for="{{proList}}" wx:key="item">
+      <view class='tit'>节目名称:{{item.name}}</view>
+      <view>播放时间：{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
+      <view>播放周期：{{filter.strArr(item.periodArray)}}</view>
+      <view class='foot'>
+        <button>预览</button>
+        <button>停播</button>
+      </view>
+    </view>
+  </view>
+  <view class="{{selected1?'show':'hidden'}}">
+    <view class='info'>
+      <!-- <image src='../../img/close-circle.png'></image> -->
+      <view class='basic'>基本信息</view>
+      <view class='main'>
+        <view class='left'>
+          <view>编号信息:</view>
+          <view>终端名称:</view>
+          <view>有效期: </view>
+          <view>组织机构:</view>
+          <view>备注:</view>
+          <view>地址:</view>
+        </view>
+        <view class='right'>
+          <view>{{datalist.no}}</view>
+          <view>{{datalist.name}}</view>
+          <view>{{billingDate}} 至 {{dueDate}}</view>
+          <view>{{datalist.domain}}</view>
+          <view>{{}}</view>
+          <view>{{datalist.addr}}</view>
+        </view>
+
+
+
+      </view>
+      <!-- order -->
+      <view class='basic'>命令信息</view>
+      <view class='main'>
+        <view class='left'>
+          <view>截图更新时间:</view>
+          <view>终端时间:</view>
+          <view>服务端时间:</view>
+          <view>最后上线时间:</view>
+          <view>开关机时间:</view>
+          <view>音量:</view>
+        </view>
+        <view class='right'>
+          <view>{{}}</view>
+          <view>{{terminal_time}}</view>
+          <view>{{sync_time}}</view>
+          <view>{{lastOnline}}</view>
+          <view>{{}}</view>
+          <view>{{}}</view>
+        </view>
+
+
+      </view>
+
+      <!-- 版本 -->
+      <view class='basic'>版本信息</view>
+      <view class='main'>
+        <view class='left'>
+          <view>APP版本:</view>
+          <view>目标版本:</view>
+          <view>Setting版本:</view>
+        </view>
+        <view class='right'>
+          <view>{{datalist.appVersion}}</view>
+          <view>{{}}</view>
+          <view>{{}}</view>
+        </view>
+      </view>
+      <!-- 硬件信息 -->
+      <view class='basic'>硬件信息</view>
+      <view class='main'>
+        <view class='left'>
+          <view>系统:</view>
+          <view>MAC地址:</view>
+          <view>硬盘信息:</view>
+          <view>内存信息:</view>
+          <view>板卡信息:</view>
+          <view>软件信息:</view>
+          <view>网络类型:</view>
+        </view>
+        <view class='right'>
+          <view>{{datalist.sw_info}}</view>
+          <view>{{datalist.mac}}</view>
+          <view>{{datalist.disk_info}}</view>
+          <view>{{datalist.hw_info}}</view>
+          <view>{{}}</view>
+          <view>{{}}</view>
+          <view>{{}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="{{selected2?'show':'hidden'}}">
+    <scroll-view style='height:100vh' scroll-y="true" bindscrolltolower="lower">
+    <view class='order' wx:for="{{orderList}}" wx:key='item'>
+      <view class='left'>
+        <view>命令名称：</view>
+        <view>下发状态: </view>
+        <view>用户账号：</view>
+        <view>下发时间：</view>
+      </view>
+      <view class='right'>
+        <view>{{filter.options(item.cmdCode)}}</view>
+        <view>{{filter.status(item.status)}}</view>
+        <view>{{item.userAccount}}</view>
+        <view>{{filter.format(item.sendTime)}}</view>
+      </view>
+    </view>
+  </scroll-view>
+  </view>
+</view>

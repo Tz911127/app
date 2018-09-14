@@ -1,0 +1,33 @@
+<wxs module='filter' src='./examine.wxs'></wxs>
+<view class="nav bc_white">
+  <view class="{{selected?'red':'default'}}" bindtap="selected">节目审核</view>
+  <view class="{{selected1?'red':'default'}}" bindtap="selected1">素材审核</view>
+</view>
+
+<view class="{{selected?'show':'hidden'}}">
+  <view bindtap='proDetail' style='background:#fff;padding-bottom:27rpx'>
+    <view class='main' wx:for="{{dataList}}" wx:key="item">
+      <view class='img'>
+        <image src='../../img/u260.png'></image>
+      </view>
+      <view class='test'>
+        <view class='tit'>{{item.name}}</view>
+        <view>
+          <text>节目大小：</text>
+          <text>{{filter.size(item.size)}}KB</text>
+        </view>
+        <view>
+          <text>创建时间：</text>
+          <text>{{filter.format(item.createTime)}}</text>
+        </view>
+        <view>{{filter.status(item.status)}}</view>
+      </view>
+    </view>
+    <view class='foot'>
+      <button class="mini-btn" type="default" size="mini" bindtap='proExa'>审核</button>
+    </view>
+  </view>
+</view>
+<view class="{{selected1?'show':'hidden'}}">
+
+</view>

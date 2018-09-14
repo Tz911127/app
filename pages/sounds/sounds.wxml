@@ -1,0 +1,10 @@
+<view class='time'>
+  <view class='timeView'>
+    <view class='open'>音量：</view>
+    <view class='openTime'>
+      <input placeholder='输入1-100之间的数字'></input>
+    </view>
+  </view>
+
+  <button type="primary">确定</button>
+</view>

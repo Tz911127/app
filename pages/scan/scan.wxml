@@ -1,0 +1,25 @@
+<view class='time'>
+  <view class='scan'>
+    <image src='../../img/u260.png'></image>
+    <view>{{result}}</view>
+  </view>
+
+  <view class='timeView'>
+    <view class='close'>终端名称：</view>
+    <view class='closeTime'>
+      <input></input>
+    </view>
+  </view>
+
+  <view class='timeView'>
+    <view class='close'>备注(选填)：</view>
+    <view class='closeTime'>
+      <input></input>
+    </view>
+  </view>
+  <view class="page-body-text">{{locationAddress}}</view>
+  <view bindtap="chooseLocation" style='text-align:right'>修改</view>
+
+    <button type="primary" >确定</button>
+
+</view>

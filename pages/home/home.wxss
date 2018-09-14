@@ -1,0 +1,92 @@
+@import "../../lib/lib.wxss";
+
+.page-section-gap {
+  box-sizing: border-box;
+}
+
+.page-body-button {
+  margin-bottom: 30rpx;
+}
+
+.sea {
+  position: fixed;
+  z-index: 2;
+  background: #fff;
+  /* margin-top: 15rpx; */
+  width: 100%;
+  display: flex;
+  padding-bottom: 10rpx;
+}
+
+.sea image {
+  width: 60rpx;
+  height: 60rpx;
+  padding-left: 30rpx;
+  /* margin-top: 20rpx; */
+}
+
+.btn {
+  display: inline-block;
+  border: 1px solid rgba(228, 228, 228, 1);
+  border-radius: 57rpx;
+  width: 83%;
+  background-color: rgba(242, 242, 242, 1);
+  height: 70rpx;
+}
+
+.scroll-view_H {
+  white-space: nowrap;
+}
+
+.btns {
+  display: flex;
+  z-index: 3;
+  position: fixed;
+  top: 100rpx;
+  width: 98%;
+}
+
+.btns button {
+  display: inline-block;
+  flex-direction: row;
+  width: 45%;
+  font-size: 27rpx;
+  margin: 10rpx;
+}
+
+.btn image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+
+.btn input {
+  display: inline-block;
+}
+
+.btn_ok, .btn_offline, .btn_error, .btn_out {
+  display: inline-block;
+  width: 300rpx;
+  height: 150rpx;
+  position: relative;
+  color: #fff;
+}
+
+.btns image {
+  width: 300rpx;
+  height: 150rpx;
+}
+
+.btn_ok text:nth-child(2), .btn_offline text:nth-child(2),
+.btn_error text:nth-child(2), .btn_out text:nth-child(2) {
+  position: absolute;
+  top: 15rpx;
+  left: 30rpx;
+}
+
+.btn_ok text:nth-child(3), .btn_offline text:nth-child(3),
+.btn_error text:nth-child(3), .btn_out text:nth-child(3) {
+  position: absolute;
+  top: 60rpx;
+  left: 30rpx;
+}
