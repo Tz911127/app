@@ -3,38 +3,43 @@
 <view class='page clearfix'>
 
   <!-- 滑动 -->
+  <form bindsubmit="formSubmit">
+    <view class='page-tab' style="{{position}}">
+      <view class='tab'>
+        <view>审核状态</view>
+        <view data-text="0" bindtap="bindtapFuncSt" class='status_line online'>待提交审核</view>
+        <view data-text="1" bindtap="bindtapFuncSt" class='status_line offline'>审核通过</view>
+        <view data-text="3" bindtap="bindtapFuncSt" class='status_line inline'>内部终审中</view>
+        <view data-text="5" bindtap="bindtapFuncSt" class='status_line okline'>内部审核不通过</view>
 
-  <view class='page-tab' style="{{position}}">
-    <view class='tab'>
-      <view>审核状态</view>
-      <button class='btn'>待提交审核</button>
-      <button class='btn'>审核通过</button>
-      <button class='btn'>内部终审中</button>
-      <button class='btn'>内部审核不通过</button>
+        <view>节目类型</view>
+        <button class='btn_' data-text='0' bindtap='bindtapFuncPr'>普通节目</button>
+        <button class='btn_' data-text='1' bindtap='bindtapFuncPr'>互动节目</button>
 
-      <view>节目类型</view>
-      <button class='btn_'>普通节目</button>
-      <button class='btn_'>互动节目</button>
+        <view>终端分辨率
+          <view bindtap='pro_more' style='float:right;color:#98A0B3'>更多 ></view>
+        </view>
+        <button class='btn_'>1920*1080</button>
+        <button class='btn_'>1024*768</button>
 
-      <view>终端分辨率</view>
-      <button class='btn_'>1920*1080</button>
-      <button class='btn_'>1024*768</button>
+        <!-- <view>发布终端</view>
+        <button class='btn_'>有</button>
+        <button class='btn_'>无</button> -->
 
-      <view>发布终端</view>
-      <button class='btn_'>有</button>
-      <button class='btn_'>无</button>
+        <view>节目分组
+          <view bindtap='tem_res_more' style='float:right;color:#98A0B3'>更多 ></view>
+        </view>
+        <button class='btn_'>小组A</button>
+        <button class='btn_'>小组B</button>
 
-      <view>节目分组</view>
-      <button class='btn_'>小组A</button>
-      <button class='btn_'>小组B</button>
-
-      <view class='ok_off'>
-        <button>重置</button>
-        <button type="primary">确定</button>
+        <view class='ok_off'>
+          <button bindtap='reset'>重置</button>
+          <button type="primary" form-type='submit'>确定</button>
+        </view>
       </view>
-    </view>
 
-  </view>
+    </view>
+  </form>
   <!-- 遮罩 -->
 
   <view class="bg" bindtap='hideview' style='display:{{display}}'></view>
@@ -45,7 +50,7 @@
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input class="" placeholder="终端名称/终端编号" />
+        <input class="" placeholder="节目名称" bindconfirm='search' />
       </view>
       <view class='weui-cell_input sea'>
         <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
@@ -64,19 +69,19 @@
           </view>
           <view class='test'>
             <view class='num'>
-             分辨率：{{item.pixelHorizontal}}*{{item.pixelVertical}}
+              分辨率：{{item.pixelHorizontal}}*{{item.pixelVertical}}
             </view>
             <view class='num'>
-             发布终端数: {{item.playTers}}
+              发布终端数: {{item.playTers}}
             </view>
             <view class='num'>
-            {{filter.status(item.status)}}
-          </view>
+              {{filter.status(item.status)}}
+            </view>
           </view>
         </view>
         <view class='foot'>
           <view bindtap='preview'>预览</view>
-          <view bindtap='pub'>发布</view>
+          <view bindtap='pub' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}'>发布</view>
         </view>
       </navigator>
     </scroll-view>

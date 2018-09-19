@@ -1,6 +1,6 @@
 <view class='page'>
-  <view>播放周期：{{week}}</view>
-  <view>
+  <!-- <view>播放周期：{{week}}</view> -->
+  <form bindsubmit="formSubmit">
     <view>
       <checkbox-group class='checkbox' bindchange="checkboxChange">
         <label wx:for="{{items}}" wx:key="{{item.value}}">
@@ -41,7 +41,7 @@
       </view>
     </view>
 
-    <button type="primary" bindtap='btn'>确定</button>
+    <button type="primary"  form-type='submit'>确定</button>
 
-  </view>
+  </form>
 </view>

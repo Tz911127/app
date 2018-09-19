@@ -1,43 +1,61 @@
 <view class='time'>
-  <view>
-    <text>节目名称:</text>
-    <text>春天来了</text>
+  <view style='text-align:center;margin-top:100rpx;color:#2B344A'>
+    <text>{{title}}</text>
   </view>
-  <view>
-    <text>节目分辨率:</text>
-    <text>1920*1080</text>
+  <view style='text-align:center;margin-bottom:100rpx;color:#2B344A'>
+    <text>{{res}}</text>
   </view>
 
 
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">开始日期</view>
+        <view class="weui-label" style='color:#000'>开始日期</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="date" value="{{startDate}}"bindchange="bindStartDate">
-          <view class="weui-input">{{startDate}}</view>
+        <picker mode="date" value="{{startDate}}" bindchange="bindStartDate">
+          <view class="weui-input" style='color:#98A0B3'>{{startDate}}</view>
         </picker>
       </view>
     </view>
   </view>
 
 
-   <view class="weui-cells weui-cells_after-title">
+  <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">结束日期</view>
+        <view class="weui-label" style='color:#000'>结束日期</view>
       </view>
       <view class="weui-cell__bd">
         <picker mode="date" value="{{endDate}}" bindchange="bindEndDate">
-          <view class="weui-input">{{endDate}}</view>
+          <view class="weui-input" style='color:#98A0B3'>{{endDate}}</view>
         </picker>
       </view>
     </view>
   </view>
 
+  <view style='padding:25rpx 15rpx; font-size:35rpx;background:#fff'>自定时段
+    <button class='add' bindtap='setTime' disabled="{{flag}}">添加时段</button>
+  </view>
 
- 
-  <view style='float:right;font-size:25rpx' bindtap='setTime'>添加时段</view>
-  <button type="primary">下一步，选择终端</button>
+  <view wx:for="{{pubTime}}" wx:key="item"  class='addTime'>
+    <view class='clearfix'>
+      <view class='left'>
+        <view>播放周期</view>
+        <view>播放时段</view>
+      </view>
+      <view class='right'>
+        <view>
+          {{item.week}}
+        </view>
+        <view>
+          {{item.startTime}}-{{item.endTime}}
+        </view>
+      </view>
+    </view>
+    <view class='del' bindtap='del' data-name="{{item}}">删除</view>
+  </view>
+
+
+  <button class='btn' type="primary">下一步，选择终端</button>
 </view>

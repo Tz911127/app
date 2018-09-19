@@ -119,6 +119,7 @@ page {
   padding: 30rpx;
   background-color: #fff;
   font-size: 27rpx;
+  color: #2B344A
 }
 
 .program {
@@ -134,6 +135,24 @@ page {
 }
 
 .program .foot {
+  border-top: 1px solid rgba(242, 242, 242, 1);
+  display: flex;
+  margin: 20rpx;
+  padding-top: 25rpx;
+}
+
+.program .foot view {
+  width: 50%;
+  font-size: 25rpx;
+  color: #096DD9;
+  text-align: center
+}
+.program .foot view:nth-child(2) {
+    color: #FF4D4F;
+}
+
+/* 
+.program .foot {
   border-top: 2px solid rgba(242, 242, 242, 1);
   display: flex;
   margin: 20rpx;
@@ -144,8 +163,26 @@ page {
   flex-direction: row;
   width: 45%;
   font-size: 25rpx;
+} */
+
+.program .left, .program .right {
+  display: inline-block;
+  font-size: 30rpx;
 }
 
+.program .left {
+  color: #2b344a;
+}
+
+.program .right {
+  text-align: right;
+  width: 80%;
+  color: #98a0b3;
+}
+
+.program .right view, .program .left view {
+  margin: 20rpx 0;
+}
 /* info */
 
 .info {
@@ -154,9 +191,10 @@ page {
 
 .main {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   background-color: #fff;
   font-size: 25rpx;
+  padding: 0 20rpx
 }
 
 .basic {
@@ -165,7 +203,28 @@ page {
   font-size: 26rpx;
 }
 
+.main .left, .main .right {
+  display: inline-block;
+  font-size: 30rpx;
+}
+
 .main .left {
+  color: #2b344a;
+}
+
+.main .right {
+  text-align: right;
+  width: 70%;
+  color: #98a0b3;
+}
+
+.main .right view, .main .left view {
+  margin: 20rpx 0;
+  height: 26rpx;
+}
+
+
+/* .main .left {
   flex-direction: row;
   width: 30%;
   text-align: right;
@@ -183,7 +242,7 @@ page {
 .main .right view, .main .left view {
   margin: 20rpx 0;
   height: 26rpx;
-}
+} */
 
 /* order */
 
@@ -198,13 +257,13 @@ page {
 .order .left {
   flex-direction: row;
   width: 30%;
-  text-align: right;
+  text-align: left;
 }
 
 .order .right {
   flex-direction: row;
   width: 60%;
-  text-align: left;
+  text-align: right;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -16,7 +16,12 @@
     "pages/about/about",
     "pages/password/password",
     "pages/examine/examine",
-    "pages/scan/scan"
+    "pages/scan/scan",
+    "pages/tem_more/tem_more",
+    "pages/res_more/res_more",
+    "pages/pro_more/pro_more",
+    "pages/tem_res_more/tem_res_more",
+    "pages/area_city/area_city"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -6,7 +6,11 @@ Page({
   data: {
     windowWidth: wx.getSystemInfoSync().windowWidth,
     start: 0,
-    dataList: []
+    dataList: [],
+    gid: '',
+    status: '',
+    resolution: '',
+    type: ''
   },
 
   onShow: function(e) {
@@ -14,7 +18,6 @@ Page({
     wx.getStorage({
       key: 'sessionid',
       success: function(res) {
-        console.log(res.data);
         that.setData({
           JSESSIONID: res.data
         })
@@ -77,9 +80,13 @@ Page({
       url: '../preview/preview',
     })
   },
-  pub: function() {
+  pub: function(e) {
+    console.log(e)
+    var title = e.currentTarget.dataset.title;
+    var pixlh = e.currentTarget.dataset.pixlh;
+    var pixlv = e.currentTarget.dataset.pixlv
     wx.navigateTo({
-      url: '../pub/pub',
+      url: '../pub/pub?pub=' + title + '|' + pixlh + '|' + pixlv,
     })
   },
   proDetail: function() {
@@ -102,14 +109,18 @@ Page({
           data: {
             // oid: 0,
             length: 10,
-            start: that.data.start += 10
+            start: that.data.start += 10,
+            resolution: that.data.resolution,
+            type: that.data.type,
+            status: that.data.status,
+            gid: that.data.gid,
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: function(res) {
             that.setData({
-              dataList: that.data.dataList.concat(res.data.content.data) 
+              dataList: that.data.dataList.concat(res.data.content.data)
             })
           }
         })
@@ -119,4 +130,79 @@ Page({
   scroll: function(e) {
     // console.log(e)
   },
+
+  tem_res_more:function(){
+    wx.navigateTo({
+      url: '../tem_res_more/tem_res_more',
+    })
+  },
+  pro_more:function(){
+    wx.navigateTo({
+      url: '../pro_more/pro_more',
+    })
+  },
+
+  search: function(e) {
+    var that = this;
+    console.log(e)
+    wx.request({
+      url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+      // method: 'POST',
+      data: {
+        oid: 0,
+        search: e.detail.value || ''
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        that.setData({
+          dataList: res.data.content.data
+        })
+      }
+    });
+
+  },
+
+  formSubmit: function(e) {
+    var that = this;
+    this.setData({
+      display: "none",
+      position: "position:absolute",
+      translate: '',
+    })
+    wx.request({
+      url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+      data: {
+        oid: 0,
+        resolution: that.data.resolution,
+        type: that.data.type,
+        status: that.data.status,
+        gid: that.data.gid,
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        that.setData({
+          dataList: res.data.content.data
+        })
+      }
+    });
+  },
+  reset: function() {
+    this.data.type = '';
+    this.data.status = '';
+    this.data.gid = '';
+    this.data.resolution = ''
+  },
+
+  bindtapFuncSt: function(e) {
+    var that = this;
+    that.data.status = e.currentTarget.dataset.text;
+  },
+  bindtapFuncPr: function(e) {
+    var that = this;
+    that.data.type = e.currentTarget.dataset.text;
+  }
 })

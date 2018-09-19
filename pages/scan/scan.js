@@ -6,27 +6,55 @@ var qqmapsdk;
 var formatLocation = util.formatLocation
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    result: '',
     hasLocation: false,
     token: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function(e) {
     var that = this;
-    wx.scanCode({
+    wx.getStorage({
+      key: 'token',
       success: function(res) {
         that.setData({
-          result: res.result
-        });
+          token: res.data
+        })
       },
-      fail: function(res) {}
+    });
+    wx.getStorage({
+      key: 'sessionid',
+      success: function(res) {
+        that.setData({
+          JSESSIONID: res.data
+        })
+      },
+    })
+    wx.scanCode({
+      success: function(res) {
+        // that.setData({
+        //   result: res.result
+        // });
+        wx.request({
+          url: ip.init + '/client/assit/descryptQR;JSESSIONID=' + that.data.JSESSIONID,
+          method: 'POST',
+          data: {
+            token: that.data.token,
+            qr: res.result
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          success: function(res) {
+            console.log(res.data.content);
+            var new_res = res.data.content;
+
+            console.log(new_res.split(',')[2])
+            that.setData({
+              reso: new_res.split(',')[2],
+              uuid: new_res.split(',')[1]
+            })
+          }
+        })
+      },
     });
 
     qqmapsdk = new QQMapWX({
@@ -42,58 +70,11 @@ Page({
             longitude: res.longitude
           },
           success: function(address) {
+            console.log(address)
             that.setData({
-              locationAddress: address.result.address
-            })
-          }
-        })
-      }
-    })
-
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    var that = this;
-    wx.getStorage({
-      key: 'token',
-      success: function(res) {
-        that.setData({
-          token: res.data
-        })
-      },
-    })
-    wx.getStorage({
-      key: 'sessionid',
-      success: function(res) {
-        that.setData({
-          JSESSIONID: res.data
-        })
-
-        wx.request({
-          url: ip.init + '/client/assit/descryptQR;JSESSIONID=' + res.data,
-          method: 'POST',
-          data: {
-            token: that.data.token,
-            qr: "bb7f3ce66a5858d03350e3f26d6cde2c7a28e8384f12a5d938a13445169779b6cf8d0264253fccfe0e8093d4ad570c1a"
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' // 默认值
-          },
-          success: function(res) {
-            console.log(res)
-            that.setData({
-              // datalist: res.data.content.data
+              locationAddress: address.result.address,
+              latitude: address.result.location.lat,
+              longitude: address.result.location.lng
             })
           }
         })
@@ -101,50 +82,43 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   chooseLocation: function() {
     var that = this
     wx.chooseLocation({
       success: function(res) {
         that.setData({
           hasLocation: true,
-          locationAddress: res.address
+          locationAddress: res.address,
+          latitude: res.latitude,
+          longitude: res.longitude
         })
       }
     })
   },
+  ok_btn: function() {
+    var that = this;
+    wx.request({
+      url: ip.init + '/client/assit/activateTerminal;JSESSIONID=' + that.data.JSESSIONID,
+      method: "POST",
+      data: {
+        token: that.data.token,
+        sn: that.data.uuid,
+        os: 1,
+        name: '',
+        longitude: that.data.longitude,
+        latitude: that.data.latitude,
+        address: that.data.locationAddress,
+        resolution: that.data.reso,
+        license: '',
+        remark: ''
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success:function(res){
+
+      }
+    })
+  }
 
 })

@@ -3,45 +3,60 @@
 <view class='page'>
 
   <!-- 滑动 -->
+  <form bindsubmit="formSubmit">
+    <view class='page-tab' style="{{position}}">
+      <view class='tab'>
+        <view>终端状态</view>
+        <view>
+          <view data-text="1" class="status_line online" bindtap="bindtapFuncSt">在线</view>
+          <view data-text="2" class="status_line offline" bindtap="bindtapFuncSt">离线</view>
+          <view data-text="3" class="status_line error" bindtap="bindtapFuncSt">异常</view>
+          <view data-text="4" class="status_line timeout" bindtap="bindtapFuncSt">到期</view>
+        </view>
 
-  <view class='page-tab' style="{{position}}">
-    <view class='tab'>
-      <view>终端状态</view>
-      <button class='btn'>在线</button>
-      <button class='btn'>离线</button>
-      <button class='btn'>异常</button>
-      <button class='btn'>到期</button>
 
-      <view>终端分辨率</view>
-      <button class='btn_'>1920*1080</button>
-      <button class='btn_'>1024*768</button>
+        <view>
+          <view>终端分辨率
+            <view bindtap='res_more' style='float:right;color:#98A0B3'>更多 ></view>
+          </view>
+          <view data-text="{{tem_fir}}" class="btn_" bindtap="bindtapFuncRe">{{tem_fir}}</view>
+          <view data-text="{{tem_sec}}" class="btn_" bindtap="bindtapFuncRe">{{tem_sec}}</view>
+        </view>
 
-      <view>系统类型</view>
-      <button class='btn_'>Android</button>
-      <button class='btn_'>Windows</button>
+        <view>
+          <view>系统类型</view>
+          <view data-text="1" class="btn_" bindtap="bindtapFuncOp">Android</view>
+          <view data-text="2" class="btn_" bindtap="bindtapFuncOp">Windows</view>
+        </view>
 
-      <view>播放节目</view>
-      <button class='btn_'>有</button>
-      <button class='btn_'>无</button>
+        <view>
+          <view>播放节目</view>
+          <view data-text="1" class="btn_" bindtap="bindtapFuncPro">有</view>
+          <view data-text="0" class="btn_" bindtap="bindtapFuncPro">无</view>
+        </view>
 
-      <view>终端分组</view>
-      <button class='btn_'>小组A</button>
-      <button class='btn_'>小组B</button>
+        <view>
+          <view>终端分组
+            <view bindtap='tem_more' style='float:right;color:#98A0B3'>更多 ></view>
+          </view>
+          <view data-text="{{team_fir}}" class="btn_" bindtap="bindtapFuncTe">{{team_fir}}</view>
+          <view data-text="{{team_sec}}" class="btn_" bindtap="bindtapFuncTe">{{team_sec}}</view>
+        </view>
 
-      <view class='clearfix turn'>
-        <view style='float:left'>所属区域</view>
-        <button bindtap='upArea' style='float:right'>全部
-          <image src='../../img/u502.png'></image>
-        </button>
+        <view class='clearfix turn'>
+          <view style='float:left'>所属区域</view>
+          <button bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
+          </button>
+        </view>
+
+        <view class='ok_off'>
+          <button bindtap='reset'>重置</button>
+          <button type="primary" form-type='submit'>确定</button>
+        </view>
       </view>
 
-      <view class='ok_off'>
-        <button>重置</button>
-        <button type="primary">确定</button>
-      </view>
     </view>
-
-  </view>
+  </form>
   <!-- 遮罩 -->
 
   <view class="bg" bindtap='hideview' style='display:{{display}}'></view>
@@ -53,20 +68,15 @@
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input class="" placeholder="终端名称/终端编号" />
+        <input class="" placeholder="终端名称/终端编号" bindconfirm='search' />
       </view>
       <view class='weui-cell_input sea'>
         <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
       </view>
       <!-- </view> -->
     </view>
-    <scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+    <scroll-view scroll-y="true" class='scroll_view' bindscroll="scroll" bindscrolltolower="lower">
       <navigator class='nav' wx:for="{{datalist}}" wx:key="item" url='../detail/detail?id={{item.id}}&name={{item.name}}&no={{item.no}}&status={{item.status}}&resolution={{item.resolution}}&hasProgram={{item.hasProgram}}'>
-        <!-- <view class='img'> -->
-        <!-- <image src='../../img/icon_name.png'></image> -->
-        <!-- <image src='../../img/icon_res.png'></image> -->
-        <!-- <image src='../../img/terminal1_icon_number.png'></image> -->
-        <!-- </view> -->
         <view class='test'>
           <view class='tit'>
             <image src='../../img/icon_name.png'></image>

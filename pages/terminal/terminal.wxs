@@ -8,6 +8,8 @@ function status(data) {
     return "离线"
   } else if (data == 3) {
     return "异常"
+  } else if (data == 4) {
+    return "到期"
   }
 };
 

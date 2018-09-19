@@ -32,28 +32,35 @@
     <view style='margin:30rpx'>
 
       <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%">
-
         <view class='scroll_img open_close' bindtap='open_close'>开关机时间</view>
         <view class='scroll_img sounds' bindtap='sounds'>音量设置</view>
         <view class='scroll_img restart' bindtap='restart'>远程重启</view>
         <view class='scroll_img screen' bindtap='screen'>终端截屏</view>
         <view class='scroll_img temInfo' bindtap='temInfo'>获取终端信息</view>
         <view class='scroll_img temInit' bindtap='temInit'>终端初始化</view>
-        </scroll-view>
+      </scroll-view>
     </view>
     <!-- 终端节目数 -->
     <view class='pro'>终端节目数:
       <text>{{hasProgram}}</text>
     </view>
     <view class='program' wx:for="{{proList}}" wx:key="item">
-      <view class='tit'>节目名称:{{item.name}}</view>
-      <view>播放时间：{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
-      <view>播放周期：{{filter.strArr(item.periodArray)}}</view>
+      <view class='left'>
+        <view>节目名称</view>
+        <view>播放时间</view>
+        <view>播放周期</view>
+      </view>
+      <view class='right'>
+        <view>{{item.name}}</view>
+        <view>{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
+        <view>{{filter.strArr(item.periodArray)}}</view>
+      </view>
       <view class='foot'>
-        <button>预览</button>
-        <button>停播</button>
+        <view>预览</view>
+        <view>停播</view>
       </view>
     </view>
+
   </view>
   <view class="{{selected1?'show':'hidden'}}">
     <view class='info'>
@@ -143,20 +150,22 @@
   </view>
   <view class="{{selected2?'show':'hidden'}}">
     <scroll-view style='height:100vh' scroll-y="true" bindscrolltolower="lower">
-    <view class='order' wx:for="{{orderList}}" wx:key='item'>
-      <view class='left'>
-        <view>命令名称：</view>
-        <view>下发状态: </view>
-        <view>用户账号：</view>
-        <view>下发时间：</view>
+      <view wx:for="{{orderList}}" wx:key='item' style='background:#fff;margin-bottom: 10rpx;padding: 30rpx 20rpx;'>
+        <view>下发时间：{{filter.format(item.sendTime)}}</view>
+        <view class='order'>
+          <view class='left'>
+            <view>命令名称：</view>
+            <view>下发状态: </view>
+            <view>用户账号：</view>
+          </view>
+          <view class='right'>
+            <view>{{filter.options(item.cmdCode)}}</view>
+            <view>{{filter.status(item.status)}}</view>
+            <view>{{item.userAccount}}</view>
+            <!-- <view></view> -->
+          </view>
+        </view>
       </view>
-      <view class='right'>
-        <view>{{filter.options(item.cmdCode)}}</view>
-        <view>{{filter.status(item.status)}}</view>
-        <view>{{item.userAccount}}</view>
-        <view>{{filter.format(item.sendTime)}}</view>
-      </view>
-    </view>
-  </scroll-view>
+    </scroll-view>
   </view>
 </view>

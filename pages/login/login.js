@@ -48,7 +48,6 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: function(res) {
-        console.log(res);
         wx.setStorage({
           key: "sessionid",
           data: res.data.content.sessionid
@@ -61,7 +60,7 @@ Page({
             wx.showToast({
               title: '登录成功',
               icon: 'success',
-              duration: 2000,
+              // duration: 2000,
               success:function(){
                 setTimeout(function () {
                   wx.switchTab({
@@ -80,12 +79,6 @@ Page({
 
       }
     })
-
-
-
-
-
-
 
   }
 

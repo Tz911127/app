@@ -1,0 +1,1 @@
+<button data-text="{{item}}" wx:for="{{tem_res}}" wx:key='item' style="margin:20rpx" bindtap='bindFunc'>{{item}}</button>

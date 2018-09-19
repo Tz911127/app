@@ -6,44 +6,44 @@ Page({
    */
   data: {
     items: [{
-        value: 'Mon',
+      value: '周一',
         name: '周一',
         checked: 'true'
       },
       {
-        value: 'Tue',
+        value: '周二',
         name: '周二',
         checked: 'true'
       },
       {
-        value: 'Wed',
+        value: '周三',
         name: '周三',
         checked: 'true'
       },
       {
-        value: 'Thu',
+        value: '周四',
         name: '周四',
         checked: 'true'
       },
       {
-        value: 'Fri',
+        value: '周五',
         name: '周五',
         checked: 'true'
       },
       {
-        value: 'Sat',
+        value: '周六',
         name: '周六',
         checked: 'true'
       },
       {
-        value: 'Sun',
+        value: '周日',
         name: '周日',
         checked: 'true'
       }
     ],
-    week: 'Mon,Tue,Wed,Thu,Fri,Sat,Sun',
+    week: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     startTime: '00:00',
-    endTime:'23:59'
+    endTime: '23:59'
   },
 
   checkboxChange: function(e) {
@@ -69,20 +69,34 @@ Page({
     })
   },
 
-  bindStartTimeChange: function (e) {
+  bindStartTimeChange: function(e) {
     this.setData({
       startTime: e.detail.value
     })
   },
-  bindEndTimeChange:function(e){
+  bindEndTimeChange: function(e) {
     this.setData({
       endTime: e.detail.value
     })
   },
-  btn:function(){
-    console.log(this.data.week);
+  formSubmit: function(e) {
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    var timeArray = [];
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    var timeArr = {
+      id: timestamp,
+      startTime: this.data.startTime,
+      endTime: this.data.endTime,
+      week: this.data.week
+    }
+    timeArray.push(timeArr);
+    prevPage.setData({
+      timeArray: timeArray
+    });
     wx.navigateBack({
-      delta: 2
+      delta: 1
     })
   }
 })

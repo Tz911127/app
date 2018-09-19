@@ -16,27 +16,27 @@
       <text>{{ter_ok_num}}</text>
     </view>
     <view class='btn_offline'>
-    <image src='../../img/home_content_offline.png'></image>
-    <text>离线</text>
-    <text>{{ter_offline_num}}</text>
+      <image src='../../img/home_content_offline.png'></image>
+      <text>离线</text>
+      <text>{{ter_offline_num}}</text>
     </view>
     <view class='btn_error'>
-       <image src='../../img/home_content_abnormal.png'></image>
-    <text>异常</text>
-    <text>{{ter_error_num}}</text>
-    
+      <image src='../../img/home_content_abnormal.png'></image>
+      <text>异常</text>
+      <text>{{ter_error_num}}</text>
+
     </view>
     <view class='btn_out'>
-     <image src='../../img/home_content_expire.png'></image>
-    <text>到期</text>
-    <text>{{ter_out_num}}</text>
+      <image src='../../img/home_content_expire.png'></image>
+      <text>到期</text>
+      <text>{{ter_out_num}}</text>
     </view>
 
   </scroll-view>
   <!-- </view> -->
   <view class="page-body">
     <view class="page-section page-section-gap">
-      <map id="myMap" style="width: 100%; height: 100vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" show-location></map>
+      <map id="myMap" style="width: 100%; height: 100vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" scale="{{scale}}" controls="{{controls}}" show-location="true"></map>
 
     </view>
 

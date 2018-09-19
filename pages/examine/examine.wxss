@@ -7,9 +7,9 @@ page {
 .red {
   line-height: 100rpx;
   text-align: center;
-  color: #fc5558;
+  color: #096DD9;
   flex: 1;
-  border-bottom: 2px solid rgb(139, 127, 127);
+  border-bottom: 2px solid #096DD9;
   font-weight: bold;
   font-size: 28rpx;
 }
