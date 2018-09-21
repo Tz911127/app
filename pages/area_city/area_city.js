@@ -77,6 +77,7 @@ Page({
     let prevPage = pages[pages.length - 3];
     prevPage.setData({
       city_no: e.currentTarget.dataset.code,
+      city_name: e.currentTarget.dataset.name,
       provinceCode: this.data.provinceCode
     });
     wx.navigateBack({

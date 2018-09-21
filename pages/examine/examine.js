@@ -33,10 +33,9 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success: function(res) {
-            console.log(res.data);
-            that.setData({
-              dataList:res.data.content.data
-            })
+              that.setData({
+                dataList: res.data.content.data
+              })
           }
         })
       }
@@ -73,7 +72,9 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success: function(res) {
-            console.log(res.data)
+            that.setData({
+              dataList: res.data.content.data
+            })
           }
         })
       }
@@ -106,7 +107,10 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success: function(res) {
-            console.log(res.data)
+            
+            that.setData({
+              dataMatList: res.data.content.data
+            })
           }
         })
       }

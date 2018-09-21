@@ -208,7 +208,7 @@ input {
 
 .foot view {
   width: 50%;
-  font-size: 25rpx;
+  font-size: 35rpx;
   color: #096dd9;
   text-align: center;
 }
@@ -245,6 +245,7 @@ input {
   width: 60rpx;
   height: 60rpx;
   margin-left: 20rpx;
+  margin-top: 9rpx
 }
 
 .btn input {

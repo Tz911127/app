@@ -15,12 +15,15 @@ Page({
     gid: '',
     tem_fir: '',
     provinceCode: '',
-    city_no: ''
+    city_no: '',
+    city_name: ''
   },
   onLoad: function(e) {
     var that = this;
     that.data.tem_fir = that.data.resolution
-    console.log(that.data.provinceCode, that.data.city_no)
+    that.setData({
+      tem_fir: that.data.resolution
+    })
   },
 
   onShow: function(e) {
@@ -30,7 +33,10 @@ Page({
     if (currPages.data.resolution) {
       that.data.tem_fir = that.data.resolution;
     }
-    console.log(that.data.provinceCode, that.data.city_no)
+    console.log(that.data.provinceCode, that.data.city_name);
+    that.setData({
+      city_name: that.data.city_name
+    })
     wx.getStorage({
       key: 'sessionid',
       success: function(res) {
@@ -215,7 +221,10 @@ Page({
     this.data.gid = '';
     this.data.resolution = '';
     this.data.provinceCode = '';
-    this.data.city_no = ''
+    this.data.city_no = '';
+    this.setData({
+      city_name:''
+    })
   },
 
   formSubmit: function(e) {

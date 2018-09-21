@@ -26,9 +26,13 @@
         <button class="mini-btn" type="default" size="mini" bindtap='proExa'>审核</button>
       </view>
     </view>
-
+    <view class='hide' wx:if="{{dataList.length == 0}}">暂无数据</view>
   </view>
 </view>
 <view class="{{selected1?'show':'hidden'}}">
 
+  <view class='main' wx:for="{{dataMatList}}" wx:key="item">
+    
+  </view>
+  <view class='hide' wx:if="{{dataMatList.length == 0}}">暂无数据</view>
 </view>

@@ -61,7 +61,6 @@ Page({
     wx.navigateBack({
       delta: 1
     });
-    console.log(e)
   }
 
 })

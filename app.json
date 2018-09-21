@@ -21,7 +21,8 @@
     "pages/res_more/res_more",
     "pages/pro_more/pro_more",
     "pages/tem_res_more/tem_res_more",
-    "pages/area_city/area_city"
+    "pages/area_city/area_city",
+    "pages/sel_tem/sel_tem"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -96,3 +96,9 @@ page {
 .mini-btn{
   margin-right: 10rpx;
 }
+
+.hide {
+  background: #edf0f3;
+  color: #2B344A;
+  text-align: center
+}

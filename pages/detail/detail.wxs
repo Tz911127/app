@@ -48,14 +48,13 @@ function getTime(time) {
   var newTime = timeStr.slice(0, 4) + '-' + timeStr.slice(4, 6) + '-' + timeStr.slice(6, 8);
   return newTime;
 };
-function strArr(str, separator) {
+function strArr(str) {
   str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
   var source = str.split("#");
   var target = [];
   for (var i = 0; i < source.length; i++) {
     target[i] = JSON.parse(source[i]);
   }
-  console.log(target[0].weeks, source, target[0].startTime, target[0].endTime);
   var weekData = (target[0].weeks).split(",");
   var du = ''
   if (weekData.length == 7) {

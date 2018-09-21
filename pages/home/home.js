@@ -53,7 +53,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: function(res) {
-            var dataList = res.data.content;
+            var dataList = res.data.content.statusSummary;
             var ter_ok = [];
             var ter_offline = [];
             var ter_error = [];
@@ -61,27 +61,21 @@ Page({
             var tem_covers = [];
             var tem_cover = {};
             for (var i = 0; i < dataList.length; i++) {
-              tem_covers.push(dataList[i].p);
-
-              // tem_cover.latitude = dataList[i].p.x;
-              // tem_cover.longitude = dataList[i].p.y;
-
-
               if (dataList[i].status == 1) {
                 that.setData({
-                  ter_ok: ter_ok.push(dataList[i])
+                  ter_ok: dataList[i].count
                 });
               } else if (dataList[i].status == 2) {
                 that.setData({
-                  ter_offline: ter_offline.push(dataList[i])
+                  ter_offline: dataList[i].count
                 });
               } else if (dataList[i].status == 3) {
                 that.setData({
-                  ter_error: ter_error.push(dataList[i])
+                  ter_error: dataList[i].count
                 });
               } else if (dataList[i].status == 4) {
                 that.setData({
-                  ter_out: ter_out.push(dataList[i])
+                  ter_out: dataList[i].count
                 });
               }
             }
@@ -89,16 +83,8 @@ Page({
             for (var i = 0; i < tem_covers.length; i++) {
               tem_cover.latitude = tem_covers[i].x;
               tem_cover.longitude = tem_covers[i].y;
-              // that.data.covers.push(tem_cover);
             }
-
-            console.log(ter_ok)
-            that.setData({
-              ter_ok_num: ter_ok.length,
-              ter_offline_num: ter_offline.length,
-              ter_error_num: ter_error.length,
-              ter_out_num: ter_out.length,
-            })
+        
           }
         })
       }

@@ -35,7 +35,7 @@ page {
   padding: 3rpx 10rpx;
   border-radius: 6rpx;
   color: #096dd9;
-  margin-top: -11rpx
+  margin-top: -20rpx
 }
 
 .left {

@@ -4,39 +4,81 @@
     <image bindtap='scanCode' src='../../img/home_icon_scan.png'></image>
     <view class="btn">
       <image src='../../img/home_nav-2_icon_search.png'></image>
-      <input bindfocus="chooseLocation" placeholder="输入地址" value="{{locationAddress}}" />
+      <input style='padding-bottom:6rpx' bindfocus="chooseLocation" placeholder="输入地址" value="{{locationAddress}}" />
     </view>
   </view>
   <!-- <view class='clearfix'> -->
   <scroll-view class="scroll-view_H btns" scroll-x="true">
-
     <view class='btn_ok'>
       <image src='../../img/home_content_normal.png'></image>
       <text>在线</text>
-      <text>{{ter_ok_num}}</text>
+      <text>{{ter_ok}}</text>
     </view>
     <view class='btn_offline'>
       <image src='../../img/home_content_offline.png'></image>
       <text>离线</text>
-      <text>{{ter_offline_num}}</text>
+      <text>{{ter_offline}}</text>
     </view>
     <view class='btn_error'>
       <image src='../../img/home_content_abnormal.png'></image>
       <text>异常</text>
-      <text>{{ter_error_num}}</text>
+      <text>{{ter_error}}</text>
 
     </view>
     <view class='btn_out'>
       <image src='../../img/home_content_expire.png'></image>
       <text>到期</text>
-      <text>{{ter_out_num}}</text>
+      <text>{{ter_out}}</text>
     </view>
 
   </scroll-view>
   <!-- </view> -->
-  <view class="page-body">
+  <view class="page-body" style='margin-top:140rpx'>
     <view class="page-section page-section-gap">
-      <map id="myMap" style="width: 100%; height: 100vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" scale="{{scale}}" controls="{{controls}}" show-location="true"></map>
+      <map id="myMap" style="width: 100%; height: 100vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" scale="{{scale}}" controls="{{controls}}" show-location="true">
+
+        <!-- <cover-view>
+          <cover-view class='sea'>
+            <cover-image bindtap='scanCode' src='../../img/home_icon_scan.png'></cover-image>
+            <cover-view class="btn">
+              <cover-image src='../../img/home_nav-2_icon_search.png'></cover-image>
+              <input style='padding-bottom:6rpx' bindfocus="chooseLocation" placeholder="输入地址" value="{{locationAddress}}" />
+            </cover-view>
+          </cover-view>
+        </cover-view> -->
+
+
+        <!-- <cover-view>
+
+          <scroll-view class="scroll-view_H btns" scroll-x="true">
+            <view class='btn_ok'>
+              <cover-image src='../../img/home_content_normal.png'></cover-image>
+              <text>在线</text>
+              <text>{{ter_ok}}</text>
+            </view>
+            <view class='btn_offline'>
+              <cover-image src='../../img/home_content_offline.png'></cover-image>
+              <text>离线</text>
+              <text>{{ter_offline}}</text>
+            </view>
+            <view class='btn_error'>
+              <cover-image src='../../img/home_content_abnormal.png'></cover-image>
+              <text>异常</text>
+              <text>{{ter_error}}</text>
+
+            </view>
+            <view class='btn_out'>
+              <cover-image src='../../img/home_content_expire.png'></cover-image>
+              <text>到期</text>
+              <text>{{ter_out}}</text>
+            </view>
+
+          </scroll-view>
+
+        </cover-view> -->
+
+
+      </map>
 
     </view>
 

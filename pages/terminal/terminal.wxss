@@ -66,7 +66,7 @@ page {
   padding-bottom: 20rpx;
   border-radius: 20rpx;
   margin: 0 20rpx;
-  font-size: 24rpx
+  font-size: 24rpx;
 }
 
 .scroll-view_H {
@@ -142,6 +142,8 @@ page {
   display: flex;
   background: #fff;
   padding-left: 30rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
   margin: 10rpx 10rpx 0 10rpx;
 }
 
@@ -162,8 +164,18 @@ page {
   color: #2b344a;
 }
 
+.test .tit text:nth-child(2) {
+  margin-left: 40rpx;
+  margin-right: 20rpx;
+}
+
 .test .main {
   color: #98a0b3;
+  font-size: 32rpx;
+}
+
+.test .main text {
+  margin-left: 40rpx;
 }
 
 .num {
@@ -177,7 +189,7 @@ page {
   justify-content: center;
   width: 45%;
   margin: 0 10rpx;
-  font-size: 30rpx
+  font-size: 30rpx;
 }
 
 .page-tab .btn {
@@ -200,11 +212,9 @@ page {
 }
 
 .turn {
-  /* border-top: 1px solid rgba(242, 242, 242, 1); */
-  /* border-bottom: 1px solid rgba(242, 242, 242, 1); */
-  /* margin: 60rpx 0; */
+  /* border-top: 1px solid rgba(242, 242, 242, 1); *//* border-bottom: 1px solid rgba(242, 242, 242, 1); *//* margin: 60rpx 0; */
   padding: 25rpx 0;
-  font-size: 30rpx
+  font-size: 30rpx;
 }
 
 .turn image {
@@ -219,7 +229,7 @@ page {
 
 .ok_off button {
   width: 45%;
-  font-size: 30rpx
+  font-size: 30rpx;
 }
 
 .scroll_view {
@@ -231,11 +241,13 @@ page {
   width: 60rpx;
   height: 60rpx;
   margin-right: 20rpx;
+  margin-left: 20rpx;
+  margin-top: 8rpx;
 }
 
 .btn input {
   display: inline-block;
-  width: 86%;
+  width: 80%;
 }
 
 .sear {

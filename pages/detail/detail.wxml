@@ -29,7 +29,7 @@
       </view> -->
     </view>
     <!-- btn -->
-    <view style='margin:30rpx'>
+    <view style='{{hide}}'>
 
       <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%">
         <view class='scroll_img open_close' bindtap='open_close'>开关机时间</view>

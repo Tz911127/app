@@ -19,8 +19,8 @@
         <view>终端分辨率
           <view bindtap='pro_more' style='float:right;color:#98A0B3'>更多 ></view>
         </view>
-        <button class='btn_'>1920*1080</button>
-        <button class='btn_'>1024*768</button>
+        <button class='btn_'>{{fir_res}}</button>
+        <button class='btn_'>{{sec_res}}</button>
 
         <!-- <view>发布终端</view>
         <button class='btn_'>有</button>
@@ -29,8 +29,10 @@
         <view>节目分组
           <view bindtap='tem_res_more' style='float:right;color:#98A0B3'>更多 ></view>
         </view>
-        <button class='btn_'>小组A</button>
-        <button class='btn_'>小组B</button>
+        <button class='btn_'>{{fir_team}}</button>
+        <button class='btn_'>{{sec_team}}</button>
+        <!-- <button class='btn_'>小组A</button>
+        <button class='btn_'>小组B</button> -->
 
         <view class='ok_off'>
           <button bindtap='reset'>重置</button>
@@ -80,8 +82,8 @@
           </view>
         </view>
         <view class='foot'>
-          <view bindtap='preview'>预览</view>
-          <view bindtap='pub' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}'>发布</view>
+          <view catchtap='preview'>预览</view>
+          <view catchtap='pub' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}' data-id='{{item.id}}'>发布</view>
         </view>
       </navigator>
     </scroll-view>

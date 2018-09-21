@@ -18,6 +18,15 @@ Page({
       resolution: options.resolution,
       hasProgram: options.hasProgram
     });
+    if (options.status != 1) {
+      this.setData({
+        hide: 'visibility:hidden;margin:30rpx'
+      })
+    } else {
+      this.setData({
+        hide: 'margin:30rpx'
+      })
+    }
   },
   onShow: function() {
     var that = this;
@@ -40,7 +49,22 @@ Page({
           success: function(res) {
             that.setData({
               proList: res.data.content.data
-            })
+            });
+            for (var i = 0; i < that.data.proList.length; i++) {
+              console.log(that.data.proList[i].periodArray);
+              var str = that.data.proList[i].periodArray;
+              str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
+              var source = str.split("#");
+              var target = [];
+              for (var i = 0; i < source.length; i++) {
+                target[i] = JSON.parse(source[i]);
+              }
+              var weekData = (target[0].weeks).split(",");
+              console.log(target[0].weeks);
+              that.setData({
+                weeks: target[0].weeks
+              })
+            }
           }
         })
       },
@@ -155,13 +179,15 @@ Page({
     })
   },
   open_close: function() {
+    var that = this
     wx.navigateTo({
-      url: '../open_close/open_close',
+      url: '../open_close/open_close?tids=' + that.data.id + '&weeks=' + that.data.weeks
     })
   },
   sounds: function() {
+    var that = this
     wx.navigateTo({
-      url: '../sounds/sounds',
+      url: '../sounds/sounds?tids=' + that.data.id,
     })
   },
   restart: function() {
@@ -170,7 +196,27 @@ Page({
       content: '确定当前终端要执行命令：远程重启？',
       success: function(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          wx.request({
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            method: 'POST',
+            data: {
+              tids: that.data.tids,
+              command: 4,
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            success: function(res) {
+              if (res.data.code === 1) {
+                wx.showToast({
+                  title: '重启成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success: function() {}
+                })
+              }
+            }
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -183,7 +229,27 @@ Page({
       content: '确定当前终端要执行命令：截屏？',
       success: function(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          wx.request({
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            method: 'POST',
+            data: {
+              tids: that.data.tids,
+              command: 7,
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            success: function(res) {
+              if (res.data.code === 1) {
+                wx.showToast({
+                  title: '重启成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success: function() {}
+                })
+              }
+            }
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -196,7 +262,27 @@ Page({
       content: '确定当前终端要执行命令：获取信息？',
       success: function(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          wx.request({
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            method: 'POST',
+            data: {
+              tids: that.data.tids,
+              command: 8,
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            success: function(res) {
+              if (res.data.code === 1) {
+                wx.showToast({
+                  title: '重启成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success: function() {}
+                })
+              }
+            }
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -209,7 +295,27 @@ Page({
       content: '确定当前终端要执行命令：初始化？',
       success: function(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+          wx.request({
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            method: 'POST',
+            data: {
+              tids: that.data.tids,
+              command: 9,
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            success: function(res) {
+              if (res.data.code === 1) {
+                wx.showToast({
+                  title: '重启成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success: function() {}
+                })
+              }
+            }
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

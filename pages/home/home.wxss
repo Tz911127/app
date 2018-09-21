@@ -9,7 +9,7 @@
 }
 
 .sea {
-  position: fixed;
+  /* position: fixed; */
   z-index: 2;
   background: #fff;
   /* margin-top: 15rpx; */
@@ -42,7 +42,7 @@
   display: flex;
   z-index: 3;
   position: fixed;
-  top: 100rpx;
+  top: 75rpx;
   width: 98%;
 }
 
@@ -58,6 +58,7 @@
   width: 60rpx;
   height: 60rpx;
   margin-right: 20rpx;
+  margin-top: 9rpx;
 }
 
 .btn input {

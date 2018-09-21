@@ -7,7 +7,7 @@ const formatTime = date => {
   // const minute = date.getMinutes()
   // const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('-') 
+  return [year, month, day].map(formatNumber).join('-')
   // + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
@@ -83,6 +83,38 @@ function myTimeToLocal(inputTime) {
   return localTime;
 }
 
+function format(arr) {
+  function weekToInt(str) {
+    switch (str) {
+      case "周一":
+        return 1;
+      case "周二":
+        return 2;
+      case "周三":
+        return 3;
+      case "周四":
+        return 4;
+      case "周五":
+        return 5;
+      case "周六":
+        return 6;
+      case "周日":
+        return 7;
+      default:
+        return "unsupported week string"
+    }
+  }
+  var intArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    intArr[i] = weekToInt(arr[i]);
+  }
+  return intArr.join();
+}
+
+function rep(str) {
+  var newStr = (str.replace(/-/g, ''));
+  return newStr
+}
 
 
 module.exports = {
@@ -90,5 +122,7 @@ module.exports = {
   formatLocation: formatLocation,
   forTime: forTime,
   getTime: getTime,
-  myTimeToLocal: myTimeToLocal
+  myTimeToLocal: myTimeToLocal,
+  format: format,
+  rep: rep
 }

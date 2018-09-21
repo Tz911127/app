@@ -1,4 +1,4 @@
-var ip = "http://www.e-media.vip";
+var ip = "https://www.e-media.vip";
 
 function init(){
   return ip

@@ -1,4 +1,5 @@
 // pages/setTime/setTime.js
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -6,7 +7,7 @@ Page({
    */
   data: {
     items: [{
-      value: '周一',
+        value: '周一',
         name: '周一',
         checked: 'true'
       },
@@ -41,15 +42,20 @@ Page({
         checked: 'true'
       }
     ],
-    week: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    weeks: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     startTime: '00:00',
     endTime: '23:59'
   },
-
+  onLoad: function(e) {
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    prevPage.setData({
+      timeArray: []
+    });
+  },
   checkboxChange: function(e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
     this.setData({
-      week: e.detail.value
+      weeks: e.detail.value
     })
     var items = this.data.items,
       values = e.detail.value;
@@ -79,7 +85,7 @@ Page({
       endTime: e.detail.value
     })
   },
-  formSubmit: function(e) {
+  submit: function(e) {
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     var timeArray = [];
@@ -89,7 +95,7 @@ Page({
       id: timestamp,
       startTime: this.data.startTime,
       endTime: this.data.endTime,
-      week: this.data.week
+      weeks: util.format(this.data.weeks)
     }
     timeArray.push(timeArr);
     prevPage.setData({
@@ -97,6 +103,6 @@ Page({
     });
     wx.navigateBack({
       delta: 1
-    })
+    });
   }
 })

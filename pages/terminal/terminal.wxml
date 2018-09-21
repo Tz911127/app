@@ -44,9 +44,12 @@
         </view>
 
         <view class='clearfix turn'>
-          <view style='float:left'>所属区域</view>
-          <button bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
-          </button>
+          <view class='clearfix'>
+            <view style='float:left'>所属区域</view>
+            <button bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
+            </button>
+          </view>
+          <view>{{city_name}}</view>
         </view>
 
         <view class='ok_off'>

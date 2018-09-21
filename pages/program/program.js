@@ -10,7 +10,11 @@ Page({
     gid: '',
     status: '',
     resolution: '',
-    type: ''
+    type: '',
+    fir_team: '',
+    sec_team: '',
+    fir_res: '',
+    sec_res: ''
   },
 
   onShow: function(e) {
@@ -37,6 +41,50 @@ Page({
             that.setData({
               dataList: res.data.content.data
             })
+          }
+        })
+
+
+        wx.request({
+          url: ip.init + '/api/program/getProgramGroups;JSESSIONID=' + res.data,
+          method: 'GET',
+          data: {
+            oid: 0
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            that.setData({
+              fir_team: res.data.content[0].name,
+              new_fir_team: res.data.content[0].name,
+              sec_team: res.data.content[1].name
+            })
+            for (var i = 0; i < res.data.content.length; i++) {
+              if (that.data.gid == res.data.content[i].id) {
+                that.setData({
+                  fir_team: res.data.content[i].name,
+                })
+              }
+            }
+
+          }
+        })
+
+        wx.request({
+          url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + res.data,
+          method: 'GET',
+          data: {},
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            that.setData({
+              fir_res: that.data.resolution ? that.data.resolution : res.data.content.root_terminalReslotions[0],
+              new_fir_res: res.data.content.root_terminalReslotions[0],
+              sec_res: res.data.content.root_terminalReslotions[1]
+            });
+
           }
         })
       }
@@ -75,18 +123,18 @@ Page({
       url: '../detail/detail',
     })
   },
-  preview: function() {
+  preview: function(e) {
     wx.navigateTo({
       url: '../preview/preview',
     })
   },
   pub: function(e) {
-    console.log(e)
     var title = e.currentTarget.dataset.title;
     var pixlh = e.currentTarget.dataset.pixlh;
-    var pixlv = e.currentTarget.dataset.pixlv
+    var pixlv = e.currentTarget.dataset.pixlv;
+    var id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../pub/pub?pub=' + title + '|' + pixlh + '|' + pixlv,
+      url: '../pub/pub?pub=' + title + '|' + pixlh + '|' + pixlv + '|' + id,
     })
   },
   proDetail: function() {
@@ -131,12 +179,12 @@ Page({
     // console.log(e)
   },
 
-  tem_res_more:function(){
+  tem_res_more: function() {
     wx.navigateTo({
       url: '../tem_res_more/tem_res_more',
     })
   },
-  pro_more:function(){
+  pro_more: function() {
     wx.navigateTo({
       url: '../pro_more/pro_more',
     })
@@ -191,10 +239,15 @@ Page({
     });
   },
   reset: function() {
-    this.data.type = '';
-    this.data.status = '';
-    this.data.gid = '';
-    this.data.resolution = ''
+
+    this.setData({
+      type: '',
+      status: '',
+      gid: '',
+      resolution: '',
+      fir_team: this.data.new_fir_team,
+      fir_res: this.data.new_fir_res,
+    })
   },
 
   bindtapFuncSt: function(e) {

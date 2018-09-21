@@ -6,21 +6,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-    domain: 'whkm',
-    account: 'xuweilin',
-    password: 'Kmsz123456'
+    domain: '',
+    account: '',
+    password: ''
   },
   codeInput: function(e) {
     this.setData({
       domain: e.detail.value
-    })
+    });
+
   },
 
   // 获取输入账号
   phoneInput: function(e) {
-    this.setData({
-      account: e.detail.value
-    })
+    if (e.detail.value) {
+      this.setData({
+        account: e.detail.value
+      })
+    } else {
+      console.log(12)
+    }
+
   },
 
   // 获取输入密码
@@ -34,51 +40,57 @@ Page({
   },
 
   formSubmit: function(e) {
+    if (e.detail.value.code == '' || e.detail.value.no == '' || e.detail.value.pwd == '') {
+      wx.showToast({
+        title: "公司代码，用户名，密码不能为空",
+      })
+    } else {
+      wx.request({
+        url: ip.init + '/api/auth/login',
+        method: 'POST',
+        data: {
+          domain: e.detail.value.code,
+          account: e.detail.value.no,
+          password: pwd.md5_pwd(e.detail.value.pwd)
+        },
 
-    wx.request({
-      url: ip.init + '/api/auth/login',
-      method:'POST',
-      data: {
-        domain: e.detail.value.code,
-        account: e.detail.value.no,
-        password: pwd.md5_pwd(e.detail.value.pwd)
-      },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' // 默认值
+        },
+        success: function(res) {
 
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function(res) {
-        wx.setStorage({
-          key: "sessionid",
-          data: res.data.content.sessionid
-        });
-        wx.setStorage({
-          key: 'token',
-          data: res.data.content.token,
-        })
-        if (res.data.code === 1) {
+          if (res.data.code === 1) {
+            wx.setStorage({
+              key: "sessionid",
+              data: res.data.content.sessionid
+            });
+            wx.setStorage({
+              key: 'token',
+              data: res.data.content.token,
+            });
+            wx.setStorage({
+              key: 'account',
+              data: res.data.content.account,
+            })
             wx.showToast({
               title: '登录成功',
               icon: 'success',
-              // duration: 2000,
-              success:function(){
-                setTimeout(function () {
-                  wx.switchTab({
-                    url: '../home/home',
-                  })
-                }, 2000)
+              success: function() {
+                wx.switchTab({
+                  url: '../home/home',
+                })
 
               }
             })
-        }
-        else {
-          wx.showToast({
-            title: res.data.message,
-          })
-        }
+          } else {
+            wx.showToast({
+              title: res.data.message,
+            })
+          }
 
-      }
-    })
+        }
+      })
+    }
 
   }
 
