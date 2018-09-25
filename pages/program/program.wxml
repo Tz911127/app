@@ -52,7 +52,7 @@
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input class="" placeholder="节目名称" bindconfirm='search' />
+        <input style='padding-bottom:15rpx' placeholder="节目名称" bindconfirm='search' />
       </view>
       <view class='weui-cell_input sea'>
         <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
@@ -67,7 +67,7 @@
         </view>
         <view class='nav'>
           <view class='img'>
-            <image src='../../img/u260.png'></image>
+            <image src='../../img/pre.png'></image>
           </view>
           <view class='test'>
             <view class='num'>

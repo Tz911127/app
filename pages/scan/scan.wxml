@@ -1,6 +1,6 @@
 <view class='time'>
   <view class='scan'>
-    <image src='../../img/u260.png'></image>
+    <image src='../../img/icon_name@3x_4.png'></image>
     <view>{{reso}}</view>
   </view>
 

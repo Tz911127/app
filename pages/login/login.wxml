@@ -1,9 +1,9 @@
 <!--pages/login/login.wxml-->
 
 <view style='text-align:center'>
-  <image style='width:400rpx;height:160rpx' src='../../img/sign up_logo.png'></image>
+  <image style='width:200rpx;height:180rpx' src='../../img/icon_logo .png'></image>
 </view>
-<view class='title'>智能营销传播</view>
+<view class='title'>智能营销传播系统</view>
 
 
 <form bindsubmit="formSubmit">

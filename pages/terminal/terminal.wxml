@@ -71,7 +71,7 @@
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input class="" placeholder="终端名称/终端编号" bindconfirm='search' />
+        <input style='padding-bottom:15rpx;' placeholder="终端名称/终端编号" bindconfirm='search' />
       </view>
       <view class='weui-cell_input sea'>
         <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
@@ -82,9 +82,12 @@
       <navigator class='nav' wx:for="{{datalist}}" wx:key="item" url='../detail/detail?id={{item.id}}&name={{item.name}}&no={{item.no}}&status={{item.status}}&resolution={{item.resolution}}&hasProgram={{item.hasProgram}}'>
         <view class='test'>
           <view class='tit'>
-            <image src='../../img/icon_name.png'></image>
+            <image wx-if="{{item.status == 1}}" src='../../img/icon_name@2x_4.png'></image>
+            <image wx-if="{{item.status == 2}}" src='../../img/icon_name@2x_2.png'></image>
+            <image wx-if="{{item.status == 3}}" src='../../img/icon_name@2x.png'></image>
+            <image wx-if="{{item.status == 4}}" src='../../img/icon_name@2x_3.png'></image>
             <text>{{item.name}}</text>
-            <text class='stu'>{{ filter.status(item.status)}}</text>
+            <text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text>
           </view>
           <view class='main'>
             <image src='../../img/icon_res.png'></image>

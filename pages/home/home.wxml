@@ -4,7 +4,7 @@
     <image bindtap='scanCode' src='../../img/home_icon_scan.png'></image>
     <view class="btn">
       <image src='../../img/home_nav-2_icon_search.png'></image>
-      <input style='padding-bottom:6rpx' bindfocus="chooseLocation" placeholder="输入地址" value="{{locationAddress}}" />
+      <input style='padding-bottom:15rpx' bindtap="chooseLocation" placeholder="" value="{{locationAddress}}" />
     </view>
   </view>
   <!-- <view class='clearfix'> -->

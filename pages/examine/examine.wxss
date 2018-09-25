@@ -100,5 +100,6 @@ page {
 .hide {
   background: #edf0f3;
   color: #2B344A;
-  text-align: center
+  text-align: center;
+  line-height: 100vh
 }

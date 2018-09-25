@@ -31,37 +31,39 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
+    "selectedColor": "#096dd9",
     "list": [
       {
         "pagePath": "pages/home/home",
         "text": "首页",
-        "iconPath": "img/tab1_unselect @2x.png",
-        "selectedIconPath": "img/tab1_select@2x.png"
+        "iconPath": "img/tab1_unselect .png",
+        "selectedIconPath": "img/tab1_select.png"
       },
       {
         "pagePath": "pages/terminal/terminal",
         "text": "终端",
-        "iconPath": "img/tab2_unselect@2x.png",
-        "selectedIconPath": "img/tab2_select@2x.png"
+        "iconPath": "img/tab2_unselect.png",
+        "selectedIconPath": "img/tab2_select.png"
       },
-      {
-        "pagePath": "pages/program/program",
-        "text": "节目",
-        "iconPath": "img/tab3_unselect@2x.png",
-        "selectedIconPath": "img/tab3_select@2x.png"
-      },
-      {
-        "pagePath": "pages/examine/examine",
-        "text": "审核",
-        "iconPath": "img/tab4_unselect@2x.png",
-        "selectedIconPath": "img/tab4_select@2x.png"
-      },
-      {
-        "pagePath": "pages/me/me",
-        "text": "我的",
-        "iconPath": "img/tab5_unselect@2x.png",
-        "selectedIconPath": "img/tab5_select@2x.png"
-      }
+        {
+          "pagePath": "pages/program/program",
+          "text": "节目",
+          "iconPath": "img/tab3_unselect.png",
+          "selectedIconPath": "img/tab3_select.png"
+        },
+        {
+          "pagePath": "pages/examine/examine",
+          "text": "审核",
+          "iconPath": "img/tab4_unselect.png",
+          "selectedIconPath": "img/tab4_select.png"
+        },
+        {
+          "pagePath": "pages/me/me",
+          "text": "我的",
+          "iconPath": "img/tab5_unselect.png",
+          "selectedIconPath": "img/tab5_select.png"
+        }
+   
     ]
   }
 }

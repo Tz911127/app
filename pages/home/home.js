@@ -4,13 +4,7 @@ Page({
     result: '',
     scale: 10,
     controls: '40',
-    covers: [
-
-      {
-        latitude: 30.461552470716,
-        longitude: 114.32383792579
-      }
-    ],
+    covers: [],
     longitude: [],
     latitude: [],
     markers: []
@@ -44,10 +38,10 @@ Page({
           url: ip.init + '/api/terminal/getAllTerminalInfoForMap;JSESSIONID=' + res.data,
           method: 'POST',
           data: {
-            latitude: 30.57646624896193,
-            longitude:114.11743750339399,
+            latitude: 33.57646624896193,
+            longitude: 114.11743750339399,
             maxDistance: 1,
-            length:100
+            length: 100
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -58,7 +52,7 @@ Page({
             var ter_offline = [];
             var ter_error = [];
             var ter_out = [];
-            var tem_covers = [];
+            var tem_covers = res.data.content.terminalList;
             var tem_cover = {};
             for (var i = 0; i < dataList.length; i++) {
               if (dataList[i].status == 1) {
@@ -81,10 +75,15 @@ Page({
             }
 
             for (var i = 0; i < tem_covers.length; i++) {
-              tem_cover.latitude = tem_covers[i].x;
-              tem_cover.longitude = tem_covers[i].y;
+              tem_cover.latitude = tem_covers[i].p.y;
+              tem_cover.longitude = tem_covers[i].p.x;
+              that.data.covers.push(tem_cover)
             }
-        
+            console.log(that.data.covers);
+            that.setData({
+              covers: that.data.covers
+            })
+
           }
         })
       }

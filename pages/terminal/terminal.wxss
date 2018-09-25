@@ -260,7 +260,7 @@ page {
 }
 
 .stu {
-  background: #096dd9;
+  /* background: #096dd9; */
   font-size: 25rpx;
   display: inline-block;
   color: #fff;
@@ -276,4 +276,16 @@ page {
 .num view:nth-child(1) {
   color: #98a0b3;
   font-size: 25rpx;
+}
+.red {
+  background: #FF4D4F
+}
+.blue {
+  background: #096dd9
+}
+.green {
+  background: #98A0B3
+}
+.yellow {
+  background:#FA8C16
 }

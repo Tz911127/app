@@ -71,8 +71,8 @@ input {
 }
 
 .img image {
-  width: 150rpx;
-  height: 150rpx;
+  width: 220rpx;
+  height: 220rpx;
 }
 
 .test {

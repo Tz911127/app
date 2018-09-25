@@ -33,7 +33,6 @@ Page({
     if (currPages.data.resolution) {
       that.data.tem_fir = that.data.resolution;
     }
-    console.log(that.data.provinceCode, that.data.city_name);
     that.setData({
       city_name: that.data.city_name
     })
@@ -58,7 +57,24 @@ Page({
           success: function(res) {
             that.setData({
               datalist: res.data.content.data
+            });
+            that.setData({
+              bg: 'background:red'
             })
+            for (var i = 0; i < that.data.datalist.length; i++) {
+              // if (that.data.datalist[i].status == 1) {
+              //   console.log(12)
+              // that.setData({
+              //   bg:'background:red'
+              // })
+              // }
+              // else if (that.data.datalist[i].status == 2) {
+              //   console.log(34)
+              //   that.setData({
+              //     bg: 'background:blue'
+              //   })
+              // }
+            }
           }
         });
 
@@ -223,7 +239,7 @@ Page({
     this.data.provinceCode = '';
     this.data.city_no = '';
     this.setData({
-      city_name:''
+      city_name: ''
     })
   },
 
