@@ -1,1 +1,12 @@
 /* pages/tem_more/tem_more.wxss */
+
+page {
+  background: #f5f7fb;
+}
+
+.pro {
+  padding: 15rpx;
+  color: #2b344a;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+}

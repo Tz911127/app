@@ -1,1 +1,11 @@
 /* pages/res_more/res_more.wxss */
+page {
+  background: #f5f7fb;
+}
+
+.pro {
+  padding: 15rpx;
+  color: #2b344a;
+  border-bottom: 1px solid #E5E5E5;
+  background: #fff
+}

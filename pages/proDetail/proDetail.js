@@ -9,13 +9,14 @@ Page({
   data: {
     selected: true,
     selected1: false,
-    start:0
+    start: 0
 
   },
   onLoad: function(options) {
     this.setData({
       id: options.id,
-      playTers: options.playTers
+      playTers: options.playTers,
+      name: options.name
     });
   },
   onShow: function(e) {
@@ -27,7 +28,7 @@ Page({
             JSESSIONID: res.data
           }),
 
-//节目
+          //节目
           wx.request({
             url: ip.init + '/api/program/getProgramById;JSESSIONID=' + res.data,
             method: 'POST',
@@ -48,7 +49,7 @@ Page({
             }
           }),
 
-//终端
+          //终端
           wx.request({
             url: ip.init + '/api/program/getProgramPlayPageByPid;JSESSIONID=' + res.data,
             method: 'POST',
@@ -62,9 +63,9 @@ Page({
               'content-type': 'application/x-www-form-urlencoded' // 默认值
             },
             success: function(res) {
-              console.log(res.data)
               that.setData({
                 temList: res.data.content.data,
+                playTers: res.data.content.recordsTotal
               })
             }
           })
@@ -122,7 +123,8 @@ Page({
           method: 'POST',
           data: {
             length: 10,
-            start: that.data.start
+            start: that.data.start,
+            program: that.data.name
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -137,14 +139,14 @@ Page({
       }
     })
   },
-  scroll:function(e){
+  scroll: function(e) {
 
   },
-  lower:function(e){
+  lower: function(e) {
     var that = this;
     wx.getStorage({
       key: 'sessionid',
-      success: function (res) {
+      success: function(res) {
         that.setData({
           JSESSIONID: res.data
         })
@@ -154,17 +156,71 @@ Page({
           method: 'POST',
           data: {
             length: 10,
-            start: that.data.start += 10
+            start: that.data.start += 10,
+            program: that.data.name
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
-          success: function (res) {
+          success: function(res) {
             that.setData({
               orderList: that.data.orderList.concat(res.data.content.data)
             })
           }
         })
+      }
+    })
+  },
+  proStop: function(e) {
+    var that = this;
+    // wx.showModal({
+    //   title: '',
+    //   content: '',
+    // })
+    wx.request({
+      url: ip.init + '/api/program/programManage_sendCommand;JSESSIONID=' + that.data.JSESSIONID,
+      method: 'POST',
+      data: {
+        tids: e.currentTarget.dataset.tid,
+        type: 0,
+        pid: that.data.id,
+        oid: 0,
+        gid: '',
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function(res) {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none',
+          success: function(res) {
+            setTimeout(function() {
+              wx.request({
+                url: ip.init + '/api/program/getProgramPlayPageByPid;JSESSIONID=' + that.data.JSESSIONID,
+                method: 'POST',
+                data: {
+                  pid: that.data.id,
+                  oid: 0,
+                  length: 10,
+                  start: 0
+                },
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded' // 默认值
+                },
+                success: function(res) {
+                  console.log(res.data)
+                  that.setData({
+                    temList: res.data.content.data,
+                    playTers: res.data.content.recordsTotal,
+                  })
+                }
+              })
+            }, 2000)
+
+          }
+        });
+
       }
     })
   }

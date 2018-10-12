@@ -1,12 +1,12 @@
 <view class='time'>
- <form bindsubmit="formSubmit">
-  <view class='timeView'>
-    <view class='open'>音量：</view>
-    <view class='openTime'>
-      <input placeholder='输入1-100之间的数字' bindinput="getVolumn"></input>
+  <form bindsubmit="formSubmit">
+    <view class='timeView'>
+      <view class='open'>音量</view>
+      <view class='openTime'>
+        <input placeholder='输入1-100之间的数字' type="number" bindinput="getVolumn"></input>
+      </view>
     </view>
-  </view>
 
-  <button type="primary"  form-type='submit'>确定</button>
+    <button type="primary" form-type='submit'>确定</button>
   </form>
 </view>

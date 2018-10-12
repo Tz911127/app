@@ -5,16 +5,16 @@
   </view>
 
   <view class='timeView'>
-    <view class='close'>终端名称：</view>
+    <!-- <view class='close'>终端名称</view> -->
     <view class='closeTime'>
-      <input></input>
+      <input placeholder='终端名称' bindinput='nameInput'></input>
     </view>
   </view>
 
   <view class='timeView'>
-    <view class='close'>备注(选填)：</view>
+    <!-- <view class='close'>备注(选填)</view> -->
     <view class='closeTime'>
-      <input></input>
+      <input placeholder='备注(选填)' bindinput='remarkInput'></input>
     </view>
   </view>
 
@@ -22,12 +22,11 @@
   <!-- <input bindtap="chooseLocation">{{locationAddress}}</input> -->
   <view class='timeView'>
     <!-- <view class='close'>：</view> -->
-    <view style='width:100%'>
+    <view style='width:100%;'>
       <input class='btn' value='{{locationAddress}}'></input>
-      <view style='float:right' bindtap="chooseLocation">修改</view>
+      <view class='change' bindtap="chooseLocation">修改</view>
     </view>
   </view>
-  <!-- <view bindtap="chooseLocation" style='text-align:right'>修改</view> -->
 
   <button type="primary" bindtap='ok_btn'>确定</button>
 

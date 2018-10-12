@@ -56,7 +56,10 @@ Page({
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
-      resolution: e.currentTarget.dataset.text
+      resolution: e.currentTarget.dataset.text,
+      hide_fir: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff',
+      hide_sec: ''
+
     });
     wx.navigateBack({
       delta: 1

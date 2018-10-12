@@ -43,14 +43,14 @@ Page({
           header: {
             'content-type': 'application/json'
           },
-          success: function (res) {
+          success: function(res) {
             that.setData({
               dataList: res.data.content
             })
           }
         })
       }
-     
+
     })
   },
 
@@ -88,11 +88,13 @@ Page({
   onShareAppMessage: function() {
 
   },
-  bindFunc: function (e) {
+  bindFunc: function(e) {
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
-      gid: e.currentTarget.dataset.text
+      gid: e.currentTarget.dataset.text,
+      teHide_fir: "background:#096dd9;color:#fff",
+      teHide_sec: ''
     });
     wx.navigateBack({
       delta: 1

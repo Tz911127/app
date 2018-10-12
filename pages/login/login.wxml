@@ -1,7 +1,7 @@
 <!--pages/login/login.wxml-->
 
-<view style='text-align:center'>
-  <image style='width:200rpx;height:180rpx' src='../../img/icon_logo .png'></image>
+<view style='text-align:center;margin-top:70rpx'>
+  <image style='width:180rpx;height:120rpx' src='../../img/loginIcon.png'></image>
 </view>
 <view class='title'>智能营销传播系统</view>
 
@@ -10,33 +10,29 @@
   <view class="page-section">
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <image src='../../img/sign up_icon_company_code.png'></image>
-        <input class="weui-input" name="code" placeholder="公司代码" value='whkm' bindinput="codeInput" />
+        <image src='../../img/company.png'></image>
+        <input class="weui-input" style='width:100%' name="code" placeholder="公司代码" value='{{domain}}' />
       </view>
     </view>
   </view>
   <view class="page-section">
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <image src='../../img/sign up_icon_account.png'></image>
-        <input class="weui-input" name="no" placeholder="账号" value='xuweilin' bindinput="phoneInput" />
+        <image src='../../img/account.png'></image>
+        <input class="weui-input" name="no" style='width:100%' placeholder="账号" value='{{account}}' />
       </view>
     </view>
   </view>
   <view class="page-section">
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <image src='../../img/sign up_password.png'></image>
-        <input class="weui-input" password name="pwd" value='Kmsz123456' placeholder="密码" bindinput="passwordInput" />
+        <image src='../../img/pwd.png'></image>
+        <input class="weui-input" password name="pwd" style='width:100%' value='{{password}}' placeholder="密码" />
       </view>
     </view>
   </view>
 
   <view class='btn-area'>
-    <button type="primary" form-type='submit'>登录</button>
+    <button form-type='submit'>登录</button>
   </view>
 </form>
-
-<!-- <view class='btn-area'>
-  <button type="primary" bindtap = "toHome">登录</button>
-</view> -->

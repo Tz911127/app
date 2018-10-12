@@ -1,4 +1,4 @@
 <view style='padding:15rpx'>
-  <view class='pro' wx:for="{{pro}}" wx:key="item" data-code='{{item.code}}' bindtap='click'>{{item.address}}
+  <view class='pro' wx:for="{{pro}}" wx:key="item" data-name='{{item.address}}' data-code='{{item.code}}' bindtap='click'>{{item.address}}
   </view>
 </view>

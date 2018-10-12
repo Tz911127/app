@@ -1,28 +1,33 @@
 <wxs module='filter' src='./detail.wxs'></wxs>
 <view class="body">
-  <view class="nav bc_white">
+  <view class="nav">
     <view class="{{selected?'red':'default'}}" bindtap="selected">终端操作</view>
     <view class="{{selected1?'red':'default'}}" bindtap="selected1">终端信息</view>
     <view class="{{selected2?'red':'default'}}" bindtap="selected2">命令记录</view>
   </view>
   <view class="{{selected?'show':'hidden'}}">
+    <view class='exception' wx-if="{{status == 3}}">
+      {{exception}}
+    </view>
     <view class='detail'>
-      <!-- <view class='img'>
-        <image src='../../img/u260.png'></image>
-      </view> -->
       <view class='test'>
-        <view class='title'>
-          <view>{{name}}</view>
-          <view>{{filter.proStatus(status)}}</view>
+        <view class='title clearfix'>
+          <image wx-if="{{status == 1}}" src='../../img/icon_name@2x_4.png'></image>
+          <image wx-if="{{status == 2}}" src='../../img/icon_name@2x_2.png'></image>
+          <image wx-if="{{status == 3}}" src='../../img/icon_name@2x.png'></image>
+          <image wx-if="{{status == 4}}" src='../../img/icon_name@2x_3.png'></image>
+          <view class='na'>{{name}}</view>
+          <view class="{{status==1?'online':status==2?'offline':status==3?'outline':status==4?'inline':''}} sta">{{filter.proStatus(status)}}</view>
         </view>
         <view class='image'>
           <image src='../../img/icon_res.png'></image>
-          {{no}}
+          {{resolution}}
         </view>
         <view class='image'>
           <image src='../../img/terminal1_icon_number.png'></image>
-          {{resolution}}
+          {{no}}
         </view>
+
       </view>
       <!-- <view class='num'>
         <view>{{filter.proStatus(status)}}</view>
@@ -30,7 +35,6 @@
     </view>
     <!-- btn -->
     <view style='{{hide}}'>
-
       <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%">
         <view class='scroll_img open_close' bindtap='open_close'>开关机时间</view>
         <view class='scroll_img sounds' bindtap='sounds'>音量设置</view>
@@ -40,11 +44,20 @@
         <view class='scroll_img temInit' bindtap='temInit'>终端初始化</view>
       </scroll-view>
     </view>
+    <view wx-if="{{status == 3}}">
+      <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%;margin:30rpx">
+        <view class='scroll_img temInit' bindtap='temInit'>终端初始化</view>
+      </scroll-view>
+    </view>
     <!-- 终端节目数 -->
     <view class='pro'>终端节目数:
       <text>{{hasProgram}}</text>
     </view>
     <view class='program' wx:for="{{proList}}" wx:key="item">
+      <!-- <view class='tit'>
+        <view class='left'>节目名称</view>
+        <view class='right'>{{item.name}}</view>
+      </view> -->
       <view class='left'>
         <view>节目名称</view>
         <view>播放时间</view>
@@ -52,59 +65,62 @@
       </view>
       <view class='right'>
         <view>{{item.name}}</view>
-        <view>{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
-        <view>{{filter.strArr(item.periodArray)}}</view>
+        <view>
+          {{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}
+        </view>
+        <view>
+          {{filter.strArr(item.periodArray)}}
+        </view>
       </view>
       <view class='foot'>
-        <view>预览</view>
-        <view>停播</view>
+        <view bindtap='pre' data-pid="{{item.pid}}">预览</view>
+        <view bindtap='proStop' data-pid="{{item.pid}}">停播</view>
       </view>
     </view>
 
   </view>
   <view class="{{selected1?'show':'hidden'}}">
     <view class='info'>
-      <!-- <image src='../../img/close-circle.png'></image> -->
+      <image wx:if="{{screenshot != ''}}" src='{{screenshot}}'></image>
       <view class='basic'>基本信息</view>
       <view class='main'>
+        <!-- <view class='basic'>基本信息</view> -->
         <view class='left'>
-          <view>编号信息:</view>
-          <view>终端名称:</view>
-          <view>有效期: </view>
-          <view>组织机构:</view>
-          <view>备注:</view>
-          <view>地址:</view>
+          <view>编号信息</view>
+          <view>终端名称</view>
+          <view>有效期</view>
+          <view>组织机构</view>
+          <!-- <view>备注:</view> -->
+          <view>地址</view>
         </view>
         <view class='right'>
           <view>{{datalist.no}}</view>
           <view>{{datalist.name}}</view>
           <view>{{billingDate}} 至 {{dueDate}}</view>
           <view>{{datalist.domain}}</view>
-          <view>{{}}</view>
+          <!-- <view>{{}}</view> -->
           <view>{{datalist.addr}}</view>
         </view>
-
-
 
       </view>
       <!-- order -->
       <view class='basic'>命令信息</view>
       <view class='main'>
         <view class='left'>
-          <view>截图更新时间:</view>
-          <view>终端时间:</view>
-          <view>服务端时间:</view>
-          <view>最后上线时间:</view>
-          <view>开关机时间:</view>
-          <view>音量:</view>
+          <view style="{{screenshot_time.length ==0?'display:none':''}}">截图更新时间</view>
+          <view style="{{terminal_time.length ==0?'display:none':''}}">终端时间</view>
+          <view style="{{sync_time.length ==0?'display:none':''}}">服务端时间</view>
+          <view style="{{lastOnline.length ==0?'display:none':''}}">最后上线时间</view>
+          <!-- <view>开关机时间:</view> -->
+          <view style="{{volumn.length ==0?'display:none':''}}">音量</view>
         </view>
         <view class='right'>
-          <view>{{}}</view>
-          <view>{{terminal_time}}</view>
-          <view>{{sync_time}}</view>
-          <view>{{lastOnline}}</view>
-          <view>{{}}</view>
-          <view>{{}}</view>
+          <view style="{{screenshot_time.length ==0?'display:none':''}}">{{screenshot_time}}</view>
+          <view style="{{terminal_time.length ==0?'display:none':''}}">{{terminal_time}}</view>
+          <view style="{{sync_time.length ==0?'display:none':''}}">{{sync_time}}</view>
+          <view style="{{lastOnline.length ==0?'display:none':''}}">{{lastOnline}}</view>
+          <!-- <view>{{}}</view> -->
+          <view style="{{volumn.length ==0?'display:none':''}}">{{volumn}}</view>
         </view>
 
 
@@ -114,58 +130,60 @@
       <view class='basic'>版本信息</view>
       <view class='main'>
         <view class='left'>
-          <view>APP版本:</view>
-          <view>目标版本:</view>
-          <view>Setting版本:</view>
+          <view style="{{appVersion == ''?'display:none':''}}">APP版本</view>
+          <!-- <view style="{{settingVer == ''?'display:none':''}}">目标版本</view> -->
+          <view style="{{target_ver == ''?'display:none':''}}">目标版本</view>
         </view>
         <view class='right'>
-          <view>{{datalist.appVersion}}</view>
-          <view>{{}}</view>
-          <view>{{}}</view>
+          <view style="{{appVersion == ''?'display:none':''}}">{{appVersion}}</view>
+          <!-- <view style="{{settingVer == ''?'display:none':''}}">{{settingVer}}</view> -->
+          <view style="{{target_ver == ''?'display:none':''}}">{{target_ver}}</view>
         </view>
       </view>
       <!-- 硬件信息 -->
       <view class='basic'>硬件信息</view>
       <view class='main'>
         <view class='left'>
-          <view>系统:</view>
-          <view>MAC地址:</view>
-          <view>硬盘信息:</view>
-          <view>内存信息:</view>
-          <view>板卡信息:</view>
-          <view>软件信息:</view>
-          <view>网络类型:</view>
+          <view style="{{op.length ==0?'display:none':''}}">系统</view>
+          <view style="{{mac.length ==0?'display:none':''}}">MAC地址</view>
+          <view style="{{disk_info.length ==0?'display:none':''}}">硬盘信息</view>
+          <view style="{{hw_info.length ==0?'display:none':''}}">内存信息</view>
+          <view style="{{cardModel.length ==0?'display:none':''}}">板卡信息</view>
+          <view style="{{sw_info.length ==0?'display:none':''}}">软件信息</view>
+          <view style="{{netType.length ==0?'display:none':''}}">网络类型</view>
+          <view style="{{ip.length ==0?'display:none':''}}">IP地址</view>
         </view>
         <view class='right'>
-          <view>{{datalist.sw_info}}</view>
-          <view>{{datalist.mac}}</view>
-          <view>{{datalist.disk_info}}</view>
-          <view>{{datalist.hw_info}}</view>
-          <view>{{}}</view>
-          <view>{{}}</view>
-          <view>{{}}</view>
+          <view style="{{op.length ==0?'display:none':''}}">{{filter.op(op)}}</view>
+          <view style="{{mac.length ==0?'display:none':''}}">{{mac}}</view>
+          <view style=" {{disk_info.length==0? 'display:none':''}}">{{disk_info}}</view>
+          <view style="{{hw_info.length ==0?'display:none':' '}}">{{hw_info}}</view>
+          <view style="{{cardModel.length ==0?'display:none': ''}} ">{{cardModel}}</view>
+          <view style="{{sw_info.length==0? 'display:none': ''}} ">{{sw_info}}</view>
+          <view style="{{netType.length==0? 'display:none': ''}} ">{{filter.netType(netType)}}</view>
+          <view style="{{ip.length==0? 'display:none': ''}} ">{{ip}}</view>
         </view>
       </view>
     </view>
   </view>
-  <view class="{{selected2?'show':'hidden'}}">
-    <scroll-view style='height:100vh' scroll-y="true" bindscrolltolower="lower">
-      <view wx:for="{{orderList}}" wx:key='item' style='background:#fff;margin-bottom: 10rpx;padding: 30rpx 20rpx;'>
-        <view>下发时间：{{filter.format(item.sendTime)}}</view>
+  <view class="{{selected2? 'show': 'hidden'}} ">
+    <scroll-view style='height:100vh' scroll-y="true " bindscrolltolower="lower ">
+      <view wx:for="{{orderList}}" wx:key="item" class='scroll'>
+        <view style='padding:20rpx'>下发时间{{filter.format(item.sendTime)}}</view>
         <view class='order'>
           <view class='left'>
-            <view>命令名称：</view>
-            <view>下发状态: </view>
-            <view>用户账号：</view>
+            <view>命令名称</view>
+            <view>下发状态</view>
+            <view>用户账号</view>
           </view>
           <view class='right'>
             <view>{{filter.options(item.cmdCode)}}</view>
-            <view>{{filter.status(item.status)}}</view>
+            <view class="{{item.status == 1?'suc':item.status == 2?'fail':''}}">{{filter.status(item.status)}}</view>
             <view>{{item.userAccount}}</view>
-            <!-- <view></view> -->
           </view>
         </view>
       </view>
+      <view wx:if="{{orderList.length == 0}}" style='color:#2b344a;line-height:100vh;text-align:center'>暂无数据</view>
     </scroll-view>
   </view>
 </view>

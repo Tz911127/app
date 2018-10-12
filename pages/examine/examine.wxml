@@ -1,38 +1,74 @@
 <wxs module='filter' src='./examine.wxs'></wxs>
-<view class="nav bc_white">
+<view class="bc_white">
   <view class="{{selected?'red':'default'}}" bindtap="selected">节目审核</view>
   <view class="{{selected1?'red':'default'}}" bindtap="selected1">素材审核</view>
 </view>
 
 <view class="{{selected?'show':'hidden'}}">
-  <view bindtap='proDetail' style='background:#fff;'>
-    <view class='main' wx:for="{{dataList}}" wx:key="item">
+  <view style='background:#fff; margin-bottom:20rpx;padding-bottom:20rpx' wx:for="{{dataList}}" wx:key="item">
+    <view class='title'>
+      <!-- <view>节目名称</view> -->
+      <view>{{item.name}}</view>
+    </view>
+    <view class='nav'>
       <view class='img'>
-        <image src='../../img/u260.png'></image>
+        <!-- <image src='../../img/pre.png'></image> -->
+         <view class='sta'>
+          节目大小
+        </view>
+        <view class='sta'>
+          创建时间
+        </view>
+        <view class='sta'>
+          审核状态
+        </view>
       </view>
       <view class='test'>
-        <view class='tit'>{{item.name}}</view>
-        <view>
-          <text>节目大小：</text>
-          <text>{{filter.size(item.size)}}KB</text>
+        <view class='num'>
+          {{filter.size(item.size)}}KB
         </view>
-        <view>
-          <text>创建时间：</text>
-          <text>{{filter.format(item.createTime)}}</text>
+        <view class='num'>
+          {{filter.format(item.createTime)}}
         </view>
-        <view>{{filter.status(item.status)}}</view>
-      </view>
-      <view class='foot'>
-        <button class="mini-btn" type="default" size="mini" bindtap='proExa'>审核</button>
+        <view class='num'>
+          {{filter.status(item.status)}}
+        </view>
       </view>
     </view>
-    <view class='hide' wx:if="{{dataList.length == 0}}">暂无数据</view>
+    <view class='foot'>
+      <view catchtap='preview' data-id='{{item.id}}' data-type='{{item.type}}' data-path="{{item.path}}">审核</view>
+    </view>
+
   </view>
+  <view class='hide' wx:if="{{dataList.length == 0}}">暂无数据</view>
 </view>
 <view class="{{selected1?'show':'hidden'}}">
 
-  <view class='main' wx:for="{{dataMatList}}" wx:key="item">
-    
+  <view style='background:#fff; margin-bottom:16rpx;padding-bottom:20rpx' wx:for="{{dataMatList}}" wx:key="item">
+    <view class='title'>
+      <!-- <view>素材名称</view> -->
+      <view>{{item.name}}</view>
+    </view>
+    <view class='nav'>
+      <view class='img'>
+        <image wx:if="{{item.type ==1 }}" src='{{item.snapshot}}'></image>
+        <image wx:if="{{item.type == 0}}" src='{{item.path}}'></image>
+      </view>
+      <view class='test'>
+        <view class='num'>
+          节目大小：{{filter.size(item.size)}}KB
+        </view>
+        <view class='num'>
+          创建时间：{{filter.format(item.createTime)}}
+        </view>
+        <view class='num'>
+          {{filter.status(item.status)}}
+        </view>
+      </view>
+    </view>
+    <view class='foot'>
+      <view catchtap='pre_mate' data-id="{{item.id}}" data-type='{{item.type}}' data-path="{{item.path}}">审核</view>
+    </view>
   </view>
   <view class='hide' wx:if="{{dataMatList.length == 0}}">暂无数据</view>
 </view>

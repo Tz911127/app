@@ -34,7 +34,7 @@ Page({
 
   click: function(e) {
     wx.navigateTo({
-      url: '../area_city/area_city?code=' + e.currentTarget.dataset.code,
+      url: '../area_city/area_city?code=' + e.currentTarget.dataset.code + '&name=' + e.currentTarget.dataset.name,
     })
   }
 

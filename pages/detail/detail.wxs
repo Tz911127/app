@@ -1,70 +1,84 @@
 function format(ts) {
   var d = getDate(ts)
   return [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-') +
-    ' ' +
-    [d.getHours(), d.getMinutes(), d.getSeconds()].join(':')
+    ' ' + [d.getHours(), d.getMinutes(), d.getSeconds()].join(':')
 }
 
 function status(data) {
   if (data == 0) {
     return "待下发";
   } else if (data == 1) {
-    return "成功";
+    return "下发成功";
   } else if (data == 2) {
-    return "失败"
+    return "下发失败"
   }
 };
 
 function options(data) {
-  if(data == '') {
+  if (data == '') {
     return "下发命令"
-  }else if(data == 2) {
+  } else if (data == 2) {
     return "工作时间设置"
-  }else if(data == 3) {
+  } else if (data == 3) {
     return "音量设置"
-  }else if(data == 4) {
+  } else if (data == 4) {
     return "远程重启"
-  }else if(data == 7) {
+  } else if (data == 7) {
     return "终端截屏"
-  }else if(data == 8) {
+  } else if (data == 8) {
     return "获取终端信息"
+  } else if (data == 9) {
+    return "终端初始化"
   }
 }
 
 function proStatus(data) {
-  if (data == 0) {
-    return "未激活";
-  }
-  else if (data == 1) {
-    return "正常";
+  if (data == 1) {
+    return "在线";
   } else if (data == 2) {
-    return "离线"
+    return "离线";
   } else if (data == 3) {
     return "异常"
+  } else if (data == 4) {
+    return "到期"
   }
 };
+
 function getTime(time) {
-  var timeStr = JSON.stringify(time);
-  var newTime = timeStr.slice(0, 4) + '-' + timeStr.slice(4, 6) + '-' + timeStr.slice(6, 8);
-  return newTime;
-};
-function strArr(str) {
-  str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
-  var source = str.split("#");
-  var target = [];
-  for (var i = 0; i < source.length; i++) {
-    target[i] = JSON.parse(source[i]);
-  }
-  var weekData = (target[0].weeks).split(",");
-  var du = ''
-  if (weekData.length == 7) {
-    du = '每天' + target[0].startTime + "至" + target[0].endTime
+  if (time) {
+    var timeStr = JSON.stringify(time);
+    var newTime = timeStr.slice(0, 4) + '-' + timeStr.slice(4, 6) + '-' + timeStr.slice(6, 8);
+    return newTime;
   } else {
-    for (var i = 0; i < weekData.length; i++) {
-      du = '周' + day_time(weekData[i]) + target[0].startTime + "至" + target[0].endTime
-    }
+    return ''
   }
-  return du;
+};
+
+function strArr(str) {
+  if (str) {
+    if (str.length > 0) {
+      str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
+      var source = str.split("#");
+      var target = [];
+      for (var i = 0; i < source.length; i++) {
+        target[i] = JSON.parse(source[i]);
+      }
+      var weekData = (target[0].weeks).split(",");
+      var du = ''
+      if (weekData.length == 7) {
+        du = '每天' + target[0].startTime + "至" + target[0].endTime
+      } else {
+        for (var i = 0; i < weekData.length; i++) {
+          du = '周' + day_time(weekData[i]) + target[0].startTime + "至" + target[0].endTime
+        }
+      }
+      return du;
+
+    }
+  } else {
+    return "每天";
+  }
+
 };
 
 function day_time(num) {
@@ -84,11 +98,31 @@ function day_time(num) {
     return "日"
   }
 };
+
+function op(num){
+  if(num == 1) {
+    return 'android'
+  }else {
+    return 'window'
+  }
+}
+
+function netType(num) {
+  if(num == 1) {
+    return 'LAN'
+  }else if(num == 2) {
+    return 'WIFI'
+  }
+}
+
+
 module.exports = {
   format: format,
   status: status,
   options: options,
   proStatus: proStatus,
   getTime: getTime,
-  strArr: strArr
+  strArr: strArr,
+  netType: netType,
+  op: op
 }

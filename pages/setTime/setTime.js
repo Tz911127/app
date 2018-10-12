@@ -52,6 +52,10 @@ Page({
     prevPage.setData({
       timeArray: []
     });
+    // console.log(JSON.parse(e.pubTime));
+    this.setData({
+      pubTime: JSON.parse(e.pubTime)
+    })
   },
   checkboxChange: function(e) {
     this.setData({
@@ -86,6 +90,9 @@ Page({
     })
   },
   submit: function(e) {
+    var that = this;
+    var pubTime = that.data.pubTime
+
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     var timeArray = [];
@@ -97,12 +104,21 @@ Page({
       endTime: this.data.endTime,
       weeks: util.format(this.data.weeks)
     }
-    timeArray.push(timeArr);
-    prevPage.setData({
-      timeArray: timeArray
-    });
-    wx.navigateBack({
-      delta: 1
-    });
+    console.log(util.checkCross(pubTime, timeArr).cross.length)
+    if (util.checkCross(pubTime, timeArr).cross.length > 0) {
+      wx.showToast({
+        title: '请不要添加交叉时段',
+        icon:'none'
+      })
+    }else {
+      timeArray.push(timeArr);
+      prevPage.setData({
+        timeArray: timeArray
+      });
+      wx.navigateBack({
+        delta: 1
+      });
+    }
+    
   }
 })

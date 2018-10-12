@@ -32,13 +32,14 @@ page {
   position: fixed;
   z-index: 3;
   /* margin-bottom: 10rpx */
+  box-shadow: 0rpx 8rpx 16rpx #f5f7f8;
 }
 
 .default {
   line-height: 100rpx;
   text-align: center;
   flex: 1;
-  border-bottom: 2px solid gainsboro;
+  /* border-bottom: 2px solid gainsboro; */
   color: #000;
   font-weight: bold;
   font-size: 28rpx;
@@ -88,7 +89,7 @@ page {
 .main .tit view:nth-child(2) {
   font-size: 28rpx;
   color: #fff;
-  background: #1890ff;
+  background: #096dd9;
   border-radius: 25rpx;
   padding: 3rpx 10rpx;
 }
@@ -101,7 +102,8 @@ page {
 
 .tem {
   background: #fff;
-  margin-bottom: 10rpx;
+  margin-bottom: 16rpx;
+  padding-top: 10rpx;
 }
 
 .tem .time {
@@ -147,7 +149,7 @@ page {
 }
 
 .test {
-  /* flex: 45%; */
+  border-top: 1px solid #e5e5e5;
 }
 
 .title {
@@ -159,14 +161,21 @@ page {
   display: inline-block;
 }
 
-.title view:nth-child(1) {
-  color: #2b344a;
-  font-weight: 400;
-  margin-right: 20rpx;
+.title image {
+  width: 28rpx;
+  height: 28rpx;
 }
 
-.title view:nth-child(2) {
-  background: #1890ff;
+.title .na {
+  color: #2b344a;
+  font-weight: 600;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+  margin-left: 20rpx;
+}
+
+.title .stu {
+  /* background: #1890ff; */
   color: #fff;
   border-radius: 25rpx;
   padding: 3rpx 10rpx;
@@ -182,6 +191,7 @@ page {
   text-align: center;
   color: #ff4d4f;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 28rpx;
 }
 
 /* order */
@@ -191,6 +201,7 @@ page {
   margin-bottom: 10rpx;
   padding: 20rpx;
   font-size: 28rpx;
+  border-top: 1px solid #e5e5e5;
 }
 
 .order .left, .order .right {
@@ -204,10 +215,40 @@ page {
 
 .order .right {
   text-align: right;
-  width: 75%;
+  width: 80%;
   color: #98a0b3;
 }
 
 .order .right view, .order .left view {
   margin: 20rpx 0;
+}
+
+.online {
+  background: #096dd9;
+}
+
+.offline {
+  background: #98a0b3;
+}
+
+.outline {
+  background: #ff4d4f;
+}
+
+.inline {
+  background: #fa8c16;
+}
+
+.scroll {
+  background: #fff;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+}
+
+.suc {
+  color: #096dd9;
+}
+
+.fail {
+  color: #ff4d4f;
 }

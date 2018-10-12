@@ -1,11 +1,13 @@
 @import "../../lib/lib.wxss";
-
-.page {
-  background-color: rgba(242, 242, 242, 1);
+page {
+  background-color: #F5F7FB;
+}
+/* .page {
+  background-color: #F5F7FB;
   position: fixed;
   width: 100%;
   height: 100%;
-}
+} */
 
 .checkbox {
   background: #fff;
@@ -19,6 +21,17 @@ label {
   margin: 10rpx 15rpx;
 }
 
-button {
+/* button {
   margin: 50rpx 20rpx 0 20rpx;
+} */
+
+
+ button {
+   margin: 50rpx 20rpx 0 20rpx;
+  background: linear-gradient(to bottom right, #40a9ff, #096dd9);
+  color: #fff;
+}
+
+ button::after {
+  border: none;
 }

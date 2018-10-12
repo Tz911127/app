@@ -2,7 +2,15 @@
 @import "../../lib/lib.wxss";
 
 page {
-  background-color: rgba(242, 242, 242, 1);
+  background-color: #f5f7fb;
+}
+
+.title {
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 100rpx;
+  color: #2b344a;
 }
 
 .timeView {
@@ -11,6 +19,14 @@ page {
   display: flex;
   margin-top: 5rpx;
   margin-bottom: 5rpx;
+}
+
+.res {
+  text-align: center;
+  margin-bottom: 100rpx;
+  color: #2b344a;
+  font-size: 28rpx;
+  font-weight: 600;
 }
 
 .open {
@@ -30,14 +46,18 @@ page {
 
 .add {
   float: right;
-  font-size: 15px;
-  /* border: 1px solid #096dd9; */
-  padding: 3rpx 10rpx;
+  font-size: 28rpx;
+  padding: -1rpx 20rpx;
   border-radius: 6rpx;
   color: #096dd9;
-  margin-top: -20rpx
+  margin-top: -14rpx;
+  /* margin-top: -20rpx; */
+  background: #fff;
+  /* border: 1px solid #096DD9 */
 }
-
+button::after {
+  border: none;
+}
 .left {
   color: #000;
   float: left;
@@ -46,11 +66,12 @@ page {
 .right {
   color: #98a0b3;
   float: right;
+  text-align: right;
 }
 
 .addTime {
-  padding: 15rpx;
-  font-size: 35rpx;
+  padding: 15rpx 30rpx;
+  font-size: 28rpx;
   background-color: #fff;
   border-top: 1px solid #dbdfe8;
 }
@@ -62,6 +83,16 @@ page {
   border-top: 1px solid #dbdfe8;
   padding-top: 20rpx;
 }
-.btn {
+
+/* .btn {
   margin: 50rpx 20rpx 20rpx 20rpx;
+} */
+ .btn {
+   margin: 50rpx 20rpx 0 20rpx;
+  background: linear-gradient(to bottom right, #40a9ff, #096dd9);
+  color: #fff;
+}
+
+ .btn::after {
+  border: none;
 }

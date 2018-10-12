@@ -52,11 +52,13 @@ Page({
     })
   },
 
-  bindFunc: function (e) {
+  bindFunc: function(e) {
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
-      resolution: e.currentTarget.dataset.text
+      resolution: e.currentTarget.dataset.text,
+      hideRes_fir: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff',
+      hideRes_sec: ''
     });
     wx.navigateBack({
       delta: 1

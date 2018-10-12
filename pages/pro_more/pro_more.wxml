@@ -1,1 +1,4 @@
-<button data-text="{{item}}" wx:for="{{tem_res}}" wx:key='item' style="margin:20rpx" bindtap='bindFunc'>{{item}}</button>
+<view style='padding:15rpx'>
+
+  <view class='pro' data-text="{{item}}" wx:for="{{tem_res}}" wx:key='item'  bindtap='bindFunc'>{{item}}</view>
+</view>

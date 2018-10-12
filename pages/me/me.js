@@ -21,11 +21,13 @@ Page({
   },
 
   quit:function(){
+    var that = this;
     wx.showModal({
       title: '',
       content: '确定退出？',
       success: function (res) {
         if (res.confirm) {
+        
           wx.redirectTo({
             url: '../login/login',
           })

@@ -1,22 +1,29 @@
 //字符串转换成数组
-function strArr(str, separator) {
-  str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
-  var source = str.split("#");
-  var target = [];
-  for (var i = 0; i < source.length; i++) {
-    target[i] = JSON.parse(source[i]);
-  }
-  console.log(target[0].weeks, source, target[0].startTime, target[0].endTime);
-  var weekData = (target[0].weeks).split(",");
-  var du = ''
-  if (weekData.length == 7) {
-    du = '每天' + target[0].startTime + "至" + target[0].endTime
+function strArr(str) {
+  if (str == "[]") {
+    return "每天00:00至24:00"
   } else {
-    for (var i = 0; i < weekData.length; i++) {
-      du = '周' + day_time(weekData[i]) + target[0].startTime + "至" + target[0].endTime
+    
+console.log(str)
+    str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
+    var source = str.split("#");
+    var target = [];
+    for (var i = 0; i < source.length; i++) {
+      target[i] = JSON.parse(source[i]);
     }
+    console.log(target[0].weeks, source, target[0].startTime, target[0].endTime);
+    var weekData = (target[0].weeks).split(",");
+    var du = ''
+    if (weekData.length == 7) {
+      du = '每天' + target[0].startTime + "至" + target[0].endTime
+    } else {
+      for (var i = 0; i < weekData.length; i++) {
+        du = '周' + day_time(weekData[i]) + target[0].startTime + "至" + target[0].endTime
+      }
+    }
+    return du;
   }
-  return du;
+
 };
 
 function day_time(num) {
@@ -88,7 +95,7 @@ function temStatus(data) {
   if (data == 0) {
     return "未激活";
   } else if (data == 1) {
-    return "正常";
+    return "在线";
   } else if (data == 2) {
     return "离线"
   } else if (data == 3) {

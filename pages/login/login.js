@@ -5,53 +5,55 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    domain: '',
-    account: '',
-    password: ''
-  },
-  codeInput: function(e) {
-    this.setData({
-      domain: e.detail.value
+  data: {},
+  onLoad: function(e) {
+    var that = this;
+    wx.getStorage({
+      key: 'domain',
+      success: function(res) {
+        that.setData({
+          domain: res.data
+        })
+      },
+    });
+    wx.getStorage({
+      key: 'account',
+      success: function(res) {
+        that.setData({
+          account: res.data
+        })
+      },
+    });
+    wx.getStorage({
+      key: 'password',
+      success: function(res) {
+        that.setData({
+          password: res.data
+        })
+      },
     });
 
   },
-
-  // 获取输入账号
-  phoneInput: function(e) {
-    if (e.detail.value) {
-      this.setData({
-        account: e.detail.value
-      })
-    } else {
-      console.log(12)
-    }
-
-  },
-
-  // 获取输入密码
-  passwordInput: function(e) {
-
-    this.setData({
-      password: pwd.md5_pwd(e.detail.value.pwd)
-    });
-
-
-  },
-
   formSubmit: function(e) {
+    var that = this;
     if (e.detail.value.code == '' || e.detail.value.no == '' || e.detail.value.pwd == '') {
       wx.showToast({
         title: "公司代码，用户名，密码不能为空",
+        icon:'none'
       })
     } else {
+      that.setData({
+        domain: e.detail.value.code,
+        account: e.detail.value.no,
+        password: e.detail.value.pwd.length == 32 ? e.detail.value.pwd : pwd.md5_pwd(e.detail.value.pwd)
+      });
       wx.request({
         url: ip.init + '/api/auth/login',
         method: 'POST',
         data: {
           domain: e.detail.value.code,
           account: e.detail.value.no,
-          password: pwd.md5_pwd(e.detail.value.pwd)
+          password: that.data.password
         },
 
         header: {
@@ -71,6 +73,14 @@ Page({
             wx.setStorage({
               key: 'account',
               data: res.data.content.account,
+            });
+            wx.setStorage({
+              key: 'domain',
+              data: that.data.domain,
+            });
+            wx.setStorage({
+              key: 'password',
+              data: that.data.password,
             })
             wx.showToast({
               title: '登录成功',
@@ -85,6 +95,7 @@ Page({
           } else {
             wx.showToast({
               title: res.data.message,
+              icon:'none',
             })
           }
 

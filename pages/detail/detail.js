@@ -16,11 +16,12 @@ Page({
       no: options.no,
       status: options.status,
       resolution: options.resolution,
-      hasProgram: options.hasProgram
+      hasProgram: options.hasProgram,
+      exception: options.exception
     });
     if (options.status != 1) {
       this.setData({
-        hide: 'visibility:hidden;margin:30rpx'
+        hide: 'display:none;'
       })
     } else {
       this.setData({
@@ -48,23 +49,10 @@ Page({
           },
           success: function(res) {
             that.setData({
-              proList: res.data.content.data
+              proList: res.data.content.data,
+              hasProgram: res.data.content.recordsTotal
+              // pid: res.data.content.data.pid
             });
-            for (var i = 0; i < that.data.proList.length; i++) {
-              console.log(that.data.proList[i].periodArray);
-              var str = that.data.proList[i].periodArray;
-              str = str.substring(1, str.length - 1).replace("},{", "}" + "#" + "{");
-              var source = str.split("#");
-              var target = [];
-              for (var i = 0; i < source.length; i++) {
-                target[i] = JSON.parse(source[i]);
-              }
-              var weekData = (target[0].weeks).split(",");
-              console.log(target[0].weeks);
-              that.setData({
-                weeks: target[0].weeks
-              })
-            }
           }
         })
       },
@@ -90,6 +78,7 @@ Page({
           method: 'POST',
           data: {
             tid: that.data.id,
+
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -97,7 +86,8 @@ Page({
           success: function(res) {
             console.log(res.data.content.data)
             that.setData({
-              proList: res.data.content.data
+              proList: res.data.content.data,
+              hasProgram: res.data.content.recordsTotal
             })
           }
         })
@@ -136,7 +126,20 @@ Page({
               terminal_time: utils.myTimeToLocal(res.data.content.terminal_time),
               sync_time: utils.myTimeToLocal(res.data.content.sync_time),
               lastOnline: utils.myTimeToLocal(res.data.content.lastOnline),
-
+              volumn: res.data.content.volumn || '',
+              screenshot_time: res.data.content.screenshot_time || '',
+              appVersion: res.data.content.appVersion || '',
+              // settingVer: res.data.content.settingVer || '',
+              target_ver: res.data.content.target_ver || '',
+              op: res.data.content.op || '',
+              mac: res.data.content.mac || '',
+              disk_info: res.data.content.disk_info || '',
+              hw_info: res.data.content.hw_info || '',
+              cardModel: res.data.content.cardModel || '',
+              sw_info: res.data.content.sw_info || '',
+              netType: res.data.content.netType || '',
+              ip: res.data.content.settingVer || '',
+              screenshot: res.data.content.screenshot || ''
             })
           }
         })
@@ -163,13 +166,13 @@ Page({
           method: 'POST',
           data: {
             length: 10,
-            start: that.data.start
+            start: that.data.start,
+            terminal: that.data.no
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           success: function(res) {
-            console.log(res.data);
             that.setData({
               orderList: res.data.content.data,
             })
@@ -191,16 +194,17 @@ Page({
     })
   },
   restart: function() {
+    var that = this;
     wx.showModal({
       title: '',
       content: '确定当前终端要执行命令：远程重启？',
       success: function(res) {
         if (res.confirm) {
           wx.request({
-            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + that.data.JSESSIONID,
             method: 'POST',
             data: {
-              tids: that.data.tids,
+              tids: that.data.id,
               command: 4,
             },
             header: {
@@ -224,25 +228,27 @@ Page({
     })
   },
   screen: function() {
+    var that = this;
     wx.showModal({
       title: '',
       content: '确定当前终端要执行命令：截屏？',
       success: function(res) {
         if (res.confirm) {
           wx.request({
-            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + that.data.JSESSIONID,
             method: 'POST',
             data: {
-              tids: that.data.tids,
+              tids: that.data.id,
               command: 7,
             },
             header: {
               'content-type': 'application/x-www-form-urlencoded' // 默认值
             },
             success: function(res) {
+              console.log(res)
               if (res.data.code === 1) {
                 wx.showToast({
-                  title: '重启成功',
+                  title: '截屏成功',
                   icon: 'success',
                   duration: 2000,
                   success: function() {}
@@ -257,16 +263,17 @@ Page({
     })
   },
   temInfo: function() {
+    var that = this;
     wx.showModal({
       title: '',
       content: '确定当前终端要执行命令：获取信息？',
       success: function(res) {
         if (res.confirm) {
           wx.request({
-            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + that.data.JSESSIONID,
             method: 'POST',
             data: {
-              tids: that.data.tids,
+              tids: that.data.id,
               command: 8,
             },
             header: {
@@ -275,7 +282,7 @@ Page({
             success: function(res) {
               if (res.data.code === 1) {
                 wx.showToast({
-                  title: '重启成功',
+                  title: '获取信息成功',
                   icon: 'success',
                   duration: 2000,
                   success: function() {}
@@ -290,16 +297,17 @@ Page({
     })
   },
   temInit: function() {
+    var that = this;
     wx.showModal({
       title: '',
       content: '确定当前终端要执行命令：初始化？',
       success: function(res) {
         if (res.confirm) {
           wx.request({
-            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + res.data,
+            url: ip.init + '/api/terminal/sendCommand;JSESSIONID=' + that.data.JSESSIONID,
             method: 'POST',
             data: {
-              tids: that.data.tids,
+              tids: that.data.id,
               command: 9,
             },
             header: {
@@ -308,7 +316,7 @@ Page({
             success: function(res) {
               if (res.data.code === 1) {
                 wx.showToast({
-                  title: '重启成功',
+                  title: '初始化成功',
                   icon: 'success',
                   duration: 2000,
                   success: function() {}
@@ -336,7 +344,8 @@ Page({
           method: 'POST',
           data: {
             length: 10,
-            start: that.data.start += 10
+            start: that.data.start += 10,
+            terminal: that.data.no
           },
           header: {
             'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -344,10 +353,76 @@ Page({
           success: function(res) {
             that.setData({
               orderList: that.data.orderList.concat(res.data.content.data),
+
             })
           }
         })
       }
+    })
+  },
+  proStop: function(e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定要停播？',
+      success: function(res) {
+        console.log(res)
+        if (res.confirm) {
+          wx.request({
+            url: ip.init + '/api/program/programManage_sendCommand_StopPlayByPids;JSESSIONID=' + that.data.JSESSIONID,
+            method: 'POST',
+            data: {
+              tid: that.data.id,
+              type: 0,
+              pids: e.currentTarget.dataset.pid,
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            success: function(res) {
+
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                success: function(res) {
+                  setTimeout(function() {
+                    wx.request({
+                      url: ip.init + '/api/terminal/getTerminalProgramPlayPageByTid;JSESSIONID=' + that.data.JSESSIONID,
+                      data: {
+                        tid: that.data.id,
+                      },
+                      header: {
+                        'content-type': 'application/json' // 默认值
+                      },
+                      success: function(res) {
+                        that.setData({
+                          proList: res.data.content.data,
+                          hasProgram: res.data.content.recordsTotal
+                        });
+                      }
+                    })
+                  }, 2000)
+                }
+              });
+
+
+
+            }
+          })
+        }
+
+      }
+    })
+
+
+
+  },
+  pre: function(e) {
+    var that = this;
+    console.log(e.currentTarget.dataset.pid)
+    var id = e.currentTarget.dataset.pid;
+    wx.navigateTo({
+      url: '../preview/preview?id=' + id,
     })
   }
 })

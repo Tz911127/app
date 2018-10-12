@@ -1,1 +1,4 @@
-<button bindtap='bindFunc' data-text="{{item.id}}" wx:for="{{dataList}}" wx:key='item' style="margin:20rpx">{{item.name}}</button>
+
+<view style='padding:15rpx'>
+<view class='pro' bindtap='bindFunc' data-text="{{item.id}}" wx:for="{{dataList}}" wx:key='item'>{{item.name}}</view>
+</view>

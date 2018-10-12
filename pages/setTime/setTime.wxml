@@ -14,12 +14,12 @@
 
     <!-- startTime -->
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
+      <view class="weui-cell weui-cell_input" style='padding-left:30rpx;font-size:28rpx'>
         <view class="weui-cell__hd">
           <view class="weui-label">开始时间</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="time" value="{{startTime}}" bindchange="bindStartTimeChange">
+          <picker mode="time" value="{{startTime}}" end="{{endTime}}" bindchange="bindStartTimeChange">
             <view class="weui-input">{{startTime}}</view>
           </picker>
         </view>
@@ -29,19 +29,19 @@
 
     <!-- endTime -->
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
+      <view class="weui-cell weui-cell_input" style='padding-left:30rpx;font-size:28rpx'>
         <view class="weui-cell__hd">
           <view class="weui-label">结束时间</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="time" value="{{endTime}}" bindchange="bindEndTimeChange">
+          <picker mode="time" value="{{endTime}}" start="{{startTime}}" bindchange="bindEndTimeChange">
             <view class="weui-input">{{endTime}}</view>
           </picker>
         </view>
       </view>
     </view>
 
-    <button type="primary"  bindtap='submit'>确定</button>
+    <button bindtap='submit'>确定</button>
 
   <!-- </form> -->
 </view>

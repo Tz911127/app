@@ -8,53 +8,54 @@
       <view class='tab'>
         <view>终端状态</view>
         <view>
-          <view data-text="1" class="status_line online" bindtap="bindtapFuncSt">在线</view>
-          <view data-text="2" class="status_line offline" bindtap="bindtapFuncSt">离线</view>
-          <view data-text="3" class="status_line error" bindtap="bindtapFuncSt">异常</view>
-          <view data-text="4" class="status_line timeout" bindtap="bindtapFuncSt">到期</view>
+          <view data-text="1" class="status_line online" style='{{hideSt_fir}}' bindtap="bindtapFuncSt_fir">在线</view>
+          <view data-text="2" class="status_line offline" style='{{hideSt_sec}}' bindtap="bindtapFuncSt_sec">离线</view>
+          <view data-text="3" class="status_line error" style='{{hideSt_thr}}' bindtap="bindtapFuncSt_thr">异常</view>
+          <view data-text="4" class="status_line timeout" style='{{hideSt_fou}}' bindtap="bindtapFuncSt_fou">到期</view>
         </view>
 
 
-        <view>
-          <view>终端分辨率
-            <view bindtap='res_more' style='float:right;color:#98A0B3'>更多 ></view>
+        <view style='margin:20rpx 0'>
+          <view style='margin-bottom:15rpx'>终端分辨率
+            <view bindtap='res_more' style='float:right;color:#98A0B3;font-size:25rpx'>更多></view>
           </view>
-          <view data-text="{{tem_fir}}" class="btn_" bindtap="bindtapFuncRe">{{tem_fir}}</view>
-          <view data-text="{{tem_sec}}" class="btn_" bindtap="bindtapFuncRe">{{tem_sec}}</view>
+          <view  data-text="{{tem_fir}}" class="btn_" style='{{hide_fir}}' bindtap="bindtapFuncRe_fir">{{tem_fir}}</view>
+          <view  wx:if="{{tem_sec}}" wx:if="{{tem_sec}}" data-text="{{tem_sec}}" class="btn_" style='{{hide_sec}}' bindtap="bindtapFuncRe_sec">{{tem_sec}}</view>
         </view>
 
-        <view>
-          <view>系统类型</view>
-          <view data-text="1" class="btn_" bindtap="bindtapFuncOp">Android</view>
-          <view data-text="2" class="btn_" bindtap="bindtapFuncOp">Windows</view>
+        <view style='margin:20rpx 0'>
+          <view style='margin-bottom:15rpx'>系统类型</view>
+          <view data-text="1" class="btn_" style='{{opHide_fir}}' bindtap="bindtapFuncOp_fir">Android</view>
+          <view data-text="2" class="btn_" style='{{opHide_sec}}' bindtap="bindtapFuncOp_sec">Windows</view>
         </view>
 
-        <view>
-          <view>播放节目</view>
-          <view data-text="1" class="btn_" bindtap="bindtapFuncPro">有</view>
-          <view data-text="0" class="btn_" bindtap="bindtapFuncPro">无</view>
+        <view style='margin:20rpx 0'>
+          <view style='margin-bottom:15rpx'>播放节目</view>
+          <view data-text="1" class="btn_" style='{{proHide_fir}}' bindtap="bindtapFuncPro_fir">有</view>
+          <view data-text="0" class="btn_" style='{{proHide_sec}}' bindtap="bindtapFuncPro_sec">无</view>
         </view>
 
-        <view>
-          <view>终端分组
-            <view bindtap='tem_more' style='float:right;color:#98A0B3'>更多 ></view>
+        <view wx:if="{{groups.length != 0}}" style='margin:20rpx 0'>
+          <view style='margin-bottom:15rpx'>终端分组
+            <view bindtap='tem_more' style='float:right;color:#98A0B3;font-size:25rpx'>更多 >
+            </view>
           </view>
-          <view data-text="{{team_fir}}" class="btn_" bindtap="bindtapFuncTe">{{team_fir}}</view>
-          <view data-text="{{team_sec}}" class="btn_" bindtap="bindtapFuncTe">{{team_sec}}</view>
+          <view data-text="{{team_fir}}" class="btn_" style='{{teHide_fir}}' bindtap="bindtapFuncTe_fir">{{team_fir}}</view>
+          <view wx:if="{{team_sec}}" data-text="{{team_sec}}" class="btn_" style='{{teHide_sec}}' bindtap="bindtapFuncTe_sec">{{team_sec}}</view>
         </view>
 
         <view class='clearfix turn'>
           <view class='clearfix'>
-            <view style='float:left'>所属区域</view>
-            <button bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
-            </button>
+            <view style='float:left;margin-bottom:15rpx'>所属区域</view>
+            <view bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
+            </view>
           </view>
-          <view>{{city_name}}</view>
+          <view class="btn_city" style='{{hideCity}}'>{{city_name}}</view>
         </view>
 
         <view class='ok_off'>
-          <button bindtap='reset'>重置</button>
-          <button type="primary" form-type='submit'>确定</button>
+          <view bindtap='reset' style='background:#dbdfe8;padding:14rpx; color:#2B344A'>重置</view>
+          <button class='ok_btn' form-type='submit'>确定</button>
         </view>
       </view>
 
@@ -67,19 +68,17 @@
 
   <!-- nav -->
   <view class='home' style="{{translate}}">
-    <!-- <view class="page-section"> -->
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input style='padding-bottom:15rpx;' placeholder="终端名称/终端编号" bindconfirm='search' />
+        <input style='padding-bottom:15rpx;' value='{{searchInput}}' placeholder="终端名称/终端编号" bindconfirm='search' />
       </view>
-      <view class='weui-cell_input sea'>
-        <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
+      <view bindtap='filter' class='weui-cell_input sea'>
+        <image src='../../img/home_icon_filter.png'></image>
       </view>
-      <!-- </view> -->
     </view>
     <scroll-view scroll-y="true" class='scroll_view' bindscroll="scroll" bindscrolltolower="lower">
-      <navigator class='nav' wx:for="{{datalist}}" wx:key="item" url='../detail/detail?id={{item.id}}&name={{item.name}}&no={{item.no}}&status={{item.status}}&resolution={{item.resolution}}&hasProgram={{item.hasProgram}}'>
+      <navigator class='nav' wx:for="{{datalist}}" wx:key="item" url='../detail/detail?id={{item.id}}&name={{item.name}}&no={{item.no}}&status={{item.status}}&resolution={{item.resolution}}&hasProgram={{item.hasProgram}}&exception={{item.exception?item.exception:""}}'>
         <view class='test'>
           <view class='tit'>
             <image wx-if="{{item.status == 1}}" src='../../img/icon_name@2x_4.png'></image>
@@ -87,26 +86,26 @@
             <image wx-if="{{item.status == 3}}" src='../../img/icon_name@2x.png'></image>
             <image wx-if="{{item.status == 4}}" src='../../img/icon_name@2x_3.png'></image>
             <text>{{item.name}}</text>
-            <text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text>
-          </view>
-          <view class='main'>
-            <image src='../../img/icon_res.png'></image>
-            <text>{{item.no}}</text>
+            <!-- <text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text> -->
           </view>
           <view class='main'>
             <image src='../../img/terminal1_icon_number.png'></image>
-            <text>{{item.resolution}}</text>
+            <text style='position:absolute;top:-4rpx'>{{item.no}}</text>
+          </view>
+          <view class='main'>
+            <image src='../../img/icon_res.png'></image>
+            <text style='position:absolute;top:-4rpx'>{{item.resolution}}<text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text></text>
+
           </view>
         </view>
         <view class='num'>
-          <!-- <view>{{ filter.status(item.status)}}</view> -->
+          <view>{{item.programCounts}}</view>
           <view>节目</view>
-          <view>{{item.hasProgram}}</view>
-
 
         </view>
 
       </navigator>
+      <view style='color:#2b344a;line-height:100vh;text-align:center' wx:if='{{datalist.length == 0}}'>未查询到相关终端</view>
     </scroll-view>
 
   </view>

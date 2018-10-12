@@ -4,7 +4,7 @@
     <image bindtap='scanCode' src='../../img/home_icon_scan.png'></image>
     <view class="btn">
       <image src='../../img/home_nav-2_icon_search.png'></image>
-      <input style='padding-bottom:15rpx' bindtap="chooseLocation" placeholder="" value="{{locationAddress}}" />
+      <input style='padding-bottom:15rpx' bindtap="chooseLocation" placeholder="搜索地址" value="{{locationAddress}}" />
     </view>
   </view>
   <!-- <view class='clearfix'> -->
@@ -33,51 +33,10 @@
 
   </scroll-view>
   <!-- </view> -->
-  <view class="page-body" style='margin-top:140rpx'>
+  <view class="page-body" style='margin-top:180rpx'>
     <view class="page-section page-section-gap">
-      <map id="myMap" style="width: 100%; height: 100vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" scale="{{scale}}" controls="{{controls}}" show-location="true">
-
-        <!-- <cover-view>
-          <cover-view class='sea'>
-            <cover-image bindtap='scanCode' src='../../img/home_icon_scan.png'></cover-image>
-            <cover-view class="btn">
-              <cover-image src='../../img/home_nav-2_icon_search.png'></cover-image>
-              <input style='padding-bottom:6rpx' bindfocus="chooseLocation" placeholder="输入地址" value="{{locationAddress}}" />
-            </cover-view>
-          </cover-view>
-        </cover-view> -->
-
-
-        <!-- <cover-view>
-
-          <scroll-view class="scroll-view_H btns" scroll-x="true">
-            <view class='btn_ok'>
-              <cover-image src='../../img/home_content_normal.png'></cover-image>
-              <text>在线</text>
-              <text>{{ter_ok}}</text>
-            </view>
-            <view class='btn_offline'>
-              <cover-image src='../../img/home_content_offline.png'></cover-image>
-              <text>离线</text>
-              <text>{{ter_offline}}</text>
-            </view>
-            <view class='btn_error'>
-              <cover-image src='../../img/home_content_abnormal.png'></cover-image>
-              <text>异常</text>
-              <text>{{ter_error}}</text>
-
-            </view>
-            <view class='btn_out'>
-              <cover-image src='../../img/home_content_expire.png'></cover-image>
-              <text>到期</text>
-              <text>{{ter_out}}</text>
-            </view>
-
-          </scroll-view>
-
-        </cover-view> -->
-
-
+      <map id="myMap" style="width: 100%; height: 78vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" scale="{{scale}}" controls="{{controls}}"  covers="{{covers}}" bindregionchange="bindregionchange" show-location="true">
+      <cover-image style='width:88rpx;height:96rpx;position:absolute;top:44%;left:44%' src='../../img/location.png'></cover-image>
       </map>
 
     </view>

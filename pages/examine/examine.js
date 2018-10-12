@@ -33,18 +33,33 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success: function(res) {
-              that.setData({
-                dataList: res.data.content.data
-              })
+            that.setData({
+              dataList: res.data.content.data
+            })
+          }
+        });
+        wx.request({
+          url: ip.init + '/api/material/materialCheck_getMaterialCheckList;JSESSIONID=' + res.data,
+          method: 'POST',
+          data: {
+            oid: 0,
+            length: 10,
+            start: 0
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function(res) {
+
+            that.setData({
+              dataMatList: res.data.content.data
+            })
           }
         })
       }
     })
 
   },
-
-
-
 
   selected: function(e) {
     this.setData({
@@ -107,7 +122,7 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success: function(res) {
-            
+
             that.setData({
               dataMatList: res.data.content.data
             })
@@ -117,9 +132,25 @@ Page({
     })
 
   },
-  proExa: function() {
-    // wx.navigateTo({
-    //   url: '',
-    // })
+  preview: function(e) {
+    var id = e.currentTarget.dataset.id;
+    var type = e.currentTarget.dataset.type;
+    var path = e.currentTarget.dataset.path;
+    path = encodeURIComponent(path);
+    console.log(path)
+    wx.navigateTo({
+      url: '../exa/exa?id=' + id
+    })
+  },
+  pre_mate: function(e) {
+    var path = e.currentTarget.dataset.path;
+    var id = e.currentTarget.dataset.id;
+    var type = e.currentTarget.dataset.type;
+    path = encodeURIComponent(path)
+    console.log(path)
+    wx.navigateTo({
+      url: '../exa_mate/exa_mate?id=' + id + '&type=' + type + '&path=' + path,
+    })
+
   }
 })

@@ -116,6 +116,87 @@ function rep(str) {
   return newStr
 }
 
+//百度地图经纬度转腾讯地图经纬度
+function bMapTransQQMap(lng, lat, iconPath, width, height) {
+  let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+  let x = lng - 0.0065;
+  let y = lat - 0.006;
+  let z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+  let theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+  let longitude = z * Math.cos(theta);
+  let latitude = z * Math.sin(theta);
+  return {
+    longitude: longitude,
+    latitude: latitude,
+    iconPath: iconPath,
+    width: width,
+    height: height
+  } 
+}
+
+
+
+//腾讯地图经纬度转百度地图经纬度
+function qqMapTransBMap(lng, lat) {
+  let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+  let x = lng;
+  let y = lat;
+  let z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+  let theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+  let longitude = z * Math.cos(theta) + 0.0065;
+  let latitude = z * Math.sin(theta) + 0.006;
+  return {
+    longitude: longitude,
+    latitude: latitude
+  }
+};
+
+
+//时间交叉
+function checkCross(times, timeItem) {                
+  function cross(a1, a2, b1, b2) {                    
+    if (b1 == a1 && b2 == a2) {                        
+      return true;                    
+    } else if (b2 <= a1) {                        
+      return false;                    
+    } else if (b2 > a1 && b1 >= a2) {                        
+      return false;                    
+    } else if (b1 >= a2) {                        
+      return false;                    
+    } else if (b1 < a2 && b2 <= a1) {                        
+      return false;                    
+    } else {                        
+      return true;                    
+    }                
+  }                
+  var result = {                    
+    cross: []                
+  };                
+  for (let i = 0; i < times.length; i++) {                    
+    let differenctDays = [];
+
+    var timeI = timeItem.weeks.split(',');
+    for (var j = 0; j < timeI.length; j++) {
+      if (times[i].weeks.indexOf(timeI[j])>-1) {
+        differenctDays.push(timeI[j])
+      }
+    }
+
+
+                
+    if (differenctDays.length) {                        
+      let a1 = parseInt(timeItem.startTime.split(':')[0] * 60) + parseInt(timeItem.startTime.split(':')[1]);                        
+      let b1 = parseInt(timeItem.endTime.split(':')[0] * 60) + parseInt(timeItem.endTime.split(':')[1]);                        
+      let a2 = parseInt(times[i].startTime.split(':')[0] * 60) + parseInt(times[i].startTime.split(':')[1]);                        
+      let b2 = parseInt(times[i].endTime.split(':')[0] * 60) + parseInt(times[i].endTime.split(':')[1]);                        
+      if (cross(a1, b1, a2, b2)) {                            
+        result.cross.push(times[i]);                        
+      }                    
+    }                
+  }             
+  // console.log(result.cross.length)   
+  return result;            
+}
 
 module.exports = {
   formatTime: formatTime,
@@ -124,5 +205,8 @@ module.exports = {
   getTime: getTime,
   myTimeToLocal: myTimeToLocal,
   format: format,
-  rep: rep
+  rep: rep,
+  bMapTransQQMap: bMapTransQQMap,
+  qqMapTransBMap: qqMapTransBMap,
+  checkCross: checkCross
 }

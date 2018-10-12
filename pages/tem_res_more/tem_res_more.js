@@ -93,7 +93,9 @@ Page({
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
-      gid: e.currentTarget.dataset.text
+      gid: e.currentTarget.dataset.text,
+      hideTeam_fir: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff',
+      hideTeam_sec: ''
     });
     wx.navigateBack({
       delta: 1

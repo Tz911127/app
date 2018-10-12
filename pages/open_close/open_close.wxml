@@ -1,12 +1,12 @@
 <view class='time'>
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell weui-cell_input" style='padding-left:30rpx'>
       <view class="weui-cell__hd">
-        <view class="weui-label">开始时间</view>
+        <view class="weui-label" style='font-size:28rpx;color:#2B344A'>开机时间</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="time" value="{{startTime}}" bindchange="bindStartTimeChange">
-          <view class="weui-input">{{startTime}}</view>
+        <picker mode="time" value="{{startTime}}" end="{{endTime}}" bindchange="bindStartTimeChange">
+          <view class="weui-input" style='color:#98A0B3;font-size:28rpx'>{{startTime}}</view>
         </picker>
       </view>
     </view>
@@ -15,17 +15,17 @@
 
   <!-- endTime -->
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell weui-cell_input" style='padding-left:30rpx'>
       <view class="weui-cell__hd">
-        <view class="weui-label">结束时间</view>
+        <view class="weui-label" style='font-size:28rpx;color:#2B344A'>关机时间</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="time" value="{{endTime}}" bindchange="bindEndTimeChange">
-          <view class="weui-input">{{endTime}}</view>
+        <picker mode="time" value="{{endTime}}" start="{{startTime}}" bindchange="bindEndTimeChange">
+          <view class="weui-input" style='color:#98A0B3;font-size:28rpx'>{{endTime}}</view>
         </picker>
       </view>
     </view>
   </view>
 
-  <button type="primary" bindtap='btn'>确定</button>
+  <button bindtap='btn'>确定</button>
 </view>

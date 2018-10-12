@@ -1,2 +1,4 @@
 <view style='padding:15rpx'>
-<view class='pro' wx:for="{{cities}}" wx:for-index="key" wx:for-item="value" data-name="{{value}}" data-code="{{key}}" bindtap="click">{{value}}</view></view>
+<view class='pro' bindtap='choiceAll'>全选</view>
+  <view class='pro' wx:for="{{cities}}" wx:key="item" wx:for-index="key" wx:for-item="value" data-name="{{value}}" data-code="{{key}}" bindtap="click">{{value}}</view>
+</view>

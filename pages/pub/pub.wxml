@@ -1,21 +1,21 @@
 <wxs module='filter' src='./pub.wxs'></wxs>
 <view class='time'>
-  <view style='text-align:center;margin-top:100rpx;color:#2B344A'>
+  <view class='title'>
     <text>{{title}}</text>
   </view>
-  <view style='text-align:center;margin-bottom:100rpx;color:#2B344A'>
+  <view class='res'>
     <text>{{res}}</text>
   </view>
 
 
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell weui-cell_input" style='font-size:28rpx;padding-left:30rpx'>
       <view class="weui-cell__hd">
         <view class="weui-label" style='color:#000'>开始日期</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="date" value="{{startDate}}" bindchange="bindStartDate">
-          <view class="weui-input" style='color:#98A0B3'>{{startDate}}</view>
+        <picker mode="date" value="{{newstartDate}}" end="{{endDate}}" bindchange="bindStartDate">
+          <view class="weui-input" style='color:#98A0B3'>{{filter.date(startDate)}}</view>
         </picker>
       </view>
     </view>
@@ -23,20 +23,20 @@
 
 
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
+    <view class="weui-cell weui-cell_input" style='font-size:28rpx;padding-left:30rpx'>
       <view class="weui-cell__hd">
         <view class="weui-label" style='color:#000'>结束日期</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="date" value="{{endDate}}" bindchange="bindEndDate">
-          <view class="weui-input" style='color:#98A0B3'>{{endDate}}</view>
+        <picker mode="date" value="{{endDate}}" start="{{startDate}}" bindchange="bindEndDate">
+          <view class="weui-input" style='color:#98A0B3'>{{filter.date(endDate)}}</view>
         </picker>
       </view>
     </view>
   </view>
 
-  <view style='padding:25rpx 15rpx; font-size:35rpx;background:#fff'>自定时段
-    <button class='add' bindtap='setTime' disabled="{{flag}}">添加时段</button>
+  <view style='padding:25rpx 30rpx; font-size:28rpx;background:#fff'>自定时段
+    <button class='add' style='{{border}}' bindtap='setTime' disabled="{{flag}}">添加</button>
   </view>
 
   <view wx:for="{{pubTime}}" wx:key="item"  class='addTime'>

@@ -1,22 +1,24 @@
 <!-- <view> -->
-  <view class='me'>
-    <view class='img'>
-      <image src='../../img/icon_logo .png'></image>
-    </view>
-    <view class='info'>
-      <view style='font-size:40rpx'>快媒数字</view>
-      <view style='font-size:35rpx'>登录账号: {{account}}</view>
-    </view>
+<view class='me'>
+  <view class='img'>
+    <image src='../../img/icon_logo.png'></image>
   </view>
-  <view class='pwd' bindtap='pwd'>
+  <view class='info'>
+    <view style='font-size:40rpx'>快媒数字</view>
+    <view style='font-size:35rpx'>登录账号: {{account}}</view>
+  </view>
+</view>
+<view class='pwd' bindtap='pwd'>
+  <view class='password'>
     <image src='../../img/me_icon1.png'></image>
     <view class='ab'>修改密码</view>
   </view>
-  <view class='pwd' bindtap='about'>
+</view>
+<!-- <view class='pwd' bindtap='about'>
     <image src='../../img/me_icon2.png'></image>
     <view class='ab'>关于</view>
 
-  </view>
+  </view> -->
 
-  <button bindtap='quit'>退出</button>
+<view class='quit' bindtap='quit'>退出</view>
 <!-- </view> -->

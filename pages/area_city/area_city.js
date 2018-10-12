@@ -14,11 +14,12 @@ Page({
    */
   onLoad: function(options) {
     var code = options.code;
-
+    // console.log(options)
     for (var i in cityData.init) {
       this.setData({
         cities: cityData.init[code],
-        provinceCode: options.code
+        provinceCode: options.code,
+        name:options.name
       })
     }
     // console.log(this.data.cities);
@@ -78,11 +79,23 @@ Page({
     prevPage.setData({
       city_no: e.currentTarget.dataset.code,
       city_name: e.currentTarget.dataset.name,
-      provinceCode: this.data.provinceCode
+      provinceCode: this.data.provinceCode,
+      hideCity: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff'
     });
     wx.navigateBack({
       delta: 2
     });
-    // console.log(this.data.provinceCode, e.currentTarget.dataset.code)
+  },
+  choiceAll: function(e) {
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 3];
+    prevPage.setData({
+      city_name: this.data.name,
+      provinceCode: this.data.provinceCode,
+      hideCity: 'background:#096dd9;color:#fff'
+    });
+    wx.navigateBack({
+      delta: 2
+    });
   }
 })

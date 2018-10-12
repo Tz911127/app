@@ -7,36 +7,35 @@
     <view class='page-tab' style="{{position}}">
       <view class='tab'>
         <view>审核状态</view>
-        <view data-text="0" bindtap="bindtapFuncSt" class='status_line online'>待提交审核</view>
-        <view data-text="1" bindtap="bindtapFuncSt" class='status_line offline'>审核通过</view>
-        <view data-text="3" bindtap="bindtapFuncSt" class='status_line inline'>内部终审中</view>
-        <view data-text="5" bindtap="bindtapFuncSt" class='status_line okline'>内部审核不通过</view>
+        <view data-text="0" bindtap="bindtapFuncSt_fir" style='{{hideSt_fir}}' class='status_line online'>待提交审核</view>
+        <view data-text="1" bindtap="bindtapFuncSt_sec" style='{{hideSt_sec}}' class='status_line offline'>审核通过</view>
+        <view data-text="3" bindtap="bindtapFuncSt_thr" style='{{hideSt_thr}}' class='status_line inline'>内部终审中</view>
+        <view data-text="5" bindtap="bindtapFuncSt_fou" style='{{hideSt_fou}}' class='status_line okline'>内部审核不通过</view>
 
-        <view>节目类型</view>
-        <button class='btn_' data-text='0' bindtap='bindtapFuncPr'>普通节目</button>
-        <button class='btn_' data-text='1' bindtap='bindtapFuncPr'>互动节目</button>
+        <view style='margin:40rpx 0'>节目类型</view>
+        <view class='btn_' data-text='0' style='{{hide_fir}}' bindtap='bindtapFuncPr_fir'>普通节目</view>
+        <view class='btn_' data-text='1' style='{{hide_sec}}' bindtap='bindtapFuncPr_sec'>互动节目</view>
 
-        <view>终端分辨率
+        <view style='margin:40rpx 0'>终端分辨率
           <view bindtap='pro_more' style='float:right;color:#98A0B3'>更多 ></view>
         </view>
-        <button class='btn_'>{{fir_res}}</button>
-        <button class='btn_'>{{sec_res}}</button>
+        <view class='btn_' style='{{hideRes_fir}}' data-text='{{fir_res}}' bindtap='resFunc_fir'>{{fir_res}}</view>
+        <view class='btn_' style='{{hideRes_sec}}' data-text='{{sec_res}}' bindtap='resFunc_sec'>{{sec_res}}</view>
 
         <!-- <view>发布终端</view>
-        <button class='btn_'>有</button>
-        <button class='btn_'>无</button> -->
+        <view class='btn_'>有</view>
+        <view class='btn_'>无</view> -->
 
-        <view>节目分组
+        <view style='margin:40rpx 0'>节目分组
           <view bindtap='tem_res_more' style='float:right;color:#98A0B3'>更多 ></view>
         </view>
-        <button class='btn_'>{{fir_team}}</button>
-        <button class='btn_'>{{sec_team}}</button>
-        <!-- <button class='btn_'>小组A</button>
-        <button class='btn_'>小组B</button> -->
+        <view style='{{hideTeam_fir}}' data-text="{{fir_team_id}}"bindtap='teamFunc_fir' class='btn_'>{{fir_team}}</view>
+        <view style='{{hideTeam_sec}}' data-text="{{sec_team_id}}"bindtap='teamFunc_sec' class='btn_'>{{sec_team}}</view>
+
 
         <view class='ok_off'>
-          <button bindtap='reset'>重置</button>
-          <button type="primary" form-type='submit'>确定</button>
+          <view bindtap='reset' style='background:#dbdfe8;padding:14rpx; color:#2B344A'>重置</view>
+          <button class='ok_btn' form-type='submit'>确定</button>
         </view>
       </view>
 
@@ -52,40 +51,50 @@
     <view class='sear'>
       <view class="btn">
         <image src='../../img/home_nav-2_icon_search.png'></image>
-        <input style='padding-bottom:15rpx' placeholder="节目名称" bindconfirm='search' />
+        <input style='padding-bottom:15rpx' value='{{searchInput}}' placeholder="节目名称" bindconfirm='search' />
       </view>
       <view class='weui-cell_input sea'>
         <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
       </view>
     </view>
     <!-- <view style='margin-top:130rpx'> -->
-    <scroll-view style='margin-top:87rpx;height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
-      <navigator url='../proDetail/proDetail?id={{item.id}}&playTers={{item.playTers}}' wx:for="{{dataList}}" wx:key='item' class='main'>
+    <scroll-view style='margin-top:80rpx;height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+      <view  wx:for="{{dataList}}" wx:key='item' class='main'>
         <view class='title'>
-          <view>节目名称</view>
+          <!-- <view>节目名称</view> -->
           <view>{{item.name}}</view>
         </view>
-        <view class='nav'>
+        <navigator url='../proDetail/proDetail?id={{item.id}}&playTers={{item.playTers}}&name={{item.name}}' class='nav'>
           <view class='img'>
-            <image src='../../img/pre.png'></image>
+            <!-- <image src='../../img/pre.png'></image> -->
+            <view class='sta'>
+              分辨率
+            </view>
+            <view class='sta'>
+              发布终端数
+            </view>
+            <view class='sta'>
+              审核状态
+            </view>
           </view>
           <view class='test'>
             <view class='num'>
-              分辨率：{{item.pixelHorizontal}}*{{item.pixelVertical}}
+              {{item.pixelHorizontal}}*{{item.pixelVertical}}
             </view>
             <view class='num'>
-              发布终端数: {{item.playTers}}
+            {{item.playTers}}
             </view>
             <view class='num'>
               {{filter.status(item.status)}}
             </view>
           </view>
-        </view>
+        </navigator>
         <view class='foot'>
-          <view catchtap='preview'>预览</view>
-          <view catchtap='pub' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}' data-id='{{item.id}}'>发布</view>
+          <view catchtap='preview'  data-id='{{item.id}}'>预览</view>
+          <view catchtap='pub'  wx:if="{{item.status == 1}}"  data-status='{{item.status}}' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}' data-id='{{item.id}}'>发布</view>
+          <view catchtap='exam' wx:if="{{item.status == 0||item.status == 4||item.status == 5||item.status == 7}}" data-id='{{item.id}}' >提交审核</view>
         </view>
-      </navigator>
+      </view>
     </scroll-view>
     <!-- </view> -->
   </view>
