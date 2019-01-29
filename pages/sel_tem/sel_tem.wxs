@@ -1,0 +1,18 @@
+function status(data) {
+  if (data == 0) {
+    return "未激活";
+  }
+  else if (data == 1) {
+    return "在线";
+  } else if (data == 2) {
+    return "离线"
+  } else if (data == 3) {
+    return "异常"
+  } else if (data == 4) {
+    return "到期"
+  }
+};
+
+module.exports = {
+  status: status
+}

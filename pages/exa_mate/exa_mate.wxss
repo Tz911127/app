@@ -1,0 +1,19 @@
+/* pages/exa_mate/exa_mate.wxss */
+
+page {
+  background-color: #edf0f3;
+}
+
+.foot {
+  border-top: 1px solid rgba(242, 242, 242, 1);
+  display: flex;
+  margin: 20rpx;
+  padding-top: 25rpx;
+}
+
+.foot view {
+  width: 50%;
+  font-size: 28rpx;
+  color: #096dd9;
+  text-align: center;
+}

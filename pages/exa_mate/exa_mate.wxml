@@ -1,0 +1,13 @@
+<!-- <view wx:for=>
+<image src='{{path}}'></image></view> -->
+<view style='background:#fff;margin-bottom:10px;padding-bottom:10px;'>
+  <view style='text-align:center'>
+    <video wx:if='{{type==1}}' src='{{path}}'></video>
+    <image wx:if='{{type==0}}' src='{{path}}'></image>
+    <audio wx:if='{{type==2}}' src='{{path}}'></audio>
+  </view>
+  <view class='foot'>
+    <view catchtap='exa' data-status='3'>审核通过</view>
+    <view catchtap='exa' data-status='4'>审核不通过</view>
+  </view>
+</view>
