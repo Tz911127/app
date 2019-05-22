@@ -1,23 +1,8 @@
-<!-- <view wx:for=>
-<image src='{{path}}'></image></view> -->
 <view style='background:#fff;margin-bottom:10px;padding-bottom:10px;'>
 
-
-  <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
-    <view class='scroll' style='text-align:center' wx:for="{{pic}}" wx:key='item' wx:if='{{item.type==1}}'>
-      <video src='{{item.url}}'></video>
-    </view>
-    <view class='scroll' style='text-align:center' wx:for="{{pic}}" wx:key='item' wx:if='{{item.type==0}}'>
-      <image src='{{item.url}} '></image>
-    </view>
-    <view class='scroll' style='text-align:center' wx:for="{{pic}}" wx:key='item' wx:if='{{item.type==2}}'>
-      <audio src='{{item.url}}'>
-      </audio>
-    </view>
-  </scroll-view>
-
   <view class='foot'>
-    <view catchtap='exa' data-status='6'>审核通过</view>
-    <view catchtap='exa' data-status='4'>审核不通过</view>
+    <view catchtap='preview' style='color:#096DD9'>预览节目</view>
+    <view catchtap='exa' data-status='6' style='color:#40BE65'>审核通过</view>
+    <view catchtap='exa' data-status='4' style='color:#FF4D4F'>审核不通过</view>
   </view>
 </view>

@@ -1,0 +1,38 @@
+/* pages/open_edit/open_edit.wxss */
+@import "../../lib/lib.wxss";
+@import "../../lib/conment.wxss";
+@import "../sel_tem/sel_tem.wxss";
+.test {
+  flex: 50%
+}
+.nav .image {
+  width: 256rpx;
+  height: 196rpx;
+  margin-right: 10px
+}
+.home .btn {
+  width: 90%
+}
+.ok_btn .ok_rad {
+  width: 50%;
+}
+.ok_pub {
+  /* padding: 0 50rpx; */
+}
+.ok_pub text {
+  /* display: inline-block; */
+}
+.ok_btn .ok_pub {
+  padding: 0
+}
+.ok_pub text:nth-child(1){
+  /* margin-right: 20rpx; */
+  border-right: 1px solid #fff;
+  /* padding-right: 20rpx; */
+  padding: 10rpx 45rpx
+}
+.ok_pub text:nth-child(2) {
+padding: 10rpx 45rpx
+}  
+
+

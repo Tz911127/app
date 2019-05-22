@@ -1,0 +1,61 @@
+
+@import "../../lib/conment.wxss";
+@import "../../lib/lib.wxss";
+@import "../../lib/conment.wxss";
+.page {
+  background: #f5f7f8;
+  position: absolute;
+  width: 100%;
+  font-size: 32rpx
+}
+
+.main image {
+  width: 256rpx;
+  height: 196rpx;
+}
+
+.main {
+  margin: 10rpx 20rpx 16rpx 20rpx;
+  background: #fff;
+}
+
+.nav {
+  display: inline-block;
+  margin-left: 30rpx;
+  vertical-align: top;
+}
+
+.nav view:nth-child(2), .nav view:nth-child(3) {
+  font-size: 32rpx;
+  color: #98a0b3;
+}
+.nav view:nth-child(2) {
+  margin: 10rpx 0
+}
+.nav view:nth-child(3) {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav view:nth-child(2) image {
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: middle;
+}
+
+.scroll_view {
+  height: 100vh;
+  margin-top:80rpx;
+
+}
+.op-icon {
+  display:inline-block;
+/* float:right; */
+/* padding-right:40rpx; */
+font-size: 60rpx;
+margin: -20rpx 0rpx;
+/* margin-right: 20rpx */
+padding-left: 12rpx
+}

@@ -8,7 +8,7 @@ Page({
     scale: 13,
     controls: '40',
     covers: [],
-    markers: []
+    markers: [],
 
   },
   onLoad: function(e) {
@@ -27,62 +27,133 @@ Page({
             })
           },
         });
-
         qqmapsdk = new QQMapWX({
           key: 'DFUBZ-FSIC6-P7OS7-MNHFC-IRRKK-L3FJJ'
         });
 
-
         wx.getLocation({
           type: 'wgs84',
           success: function(res) {
-            // wx.setStorage({
-            //   key: 'latitude',
-            //   data: res.latitude,
-            // });
-            // wx.setStorage({
-            //   key: 'longitude',
-            //   data: res.longitude,
-            // });
             that.setData({
               latitude: res.latitude,
               longitude: res.longitude,
             });
-            wx.request({
-              url: ip.init + '/api/terminal/getAllTerminalInfoForMap;JSESSIONID=' + that.data.JSESSIONID,
-              method: 'POST',
-              data: {
-                latitude: res.latitude,
-                longitude: res.longitude,
-                maxDistance: 10000,
-                length: 1000
+
+            qqmapsdk.reverseGeocoder({
+              location: {
+                latitude: that.data.latitude,
+                longitude: that.data.longitude
               },
-              header: {
-                'content-type': 'application/x-www-form-urlencoded' // 默认值
-              },
+              success: function(address) {
+                that.setData({
+                  locationAddr: address.result.address,
+                })
+              }
             })
           }
         });
+      /*  wx.request({
+          url: ip.init + '/api/program/getCheckProgramList;JSESSIONID=' + that.data.JSESSIONID,
+          method: 'POST',
+          data: {
+            oid: 0,
+            length: 10,
+            start: 0
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          success: function(res) {
+            if (res.data.code == 1) {
+              that.setData({
+                proLength: res.data.content.data.length
+              })
+              if (res.data.content.data.length > 0) {
+                // wx.showTabBarRedDot({
+                //   index: 3,
+                // })
+              }
+            }
+
+          }
+        });*/
+    /*    wx.request({
+          url: ip.init + '/api/material/materialCheck_getMaterialCheckList;JSESSIONID=' + that.data.JSESSIONID,
+          method: 'POST',
+          data: {
+            oid: 0,
+            length: 10,
+            start: 0
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          success: function(res) {
+            if (res.data.code == 1) {
+              that.setData({
+                matLenght: res.data.content.data.length
+              })
+              if (res.data.content.data.length > 0) {
+                // wx.showTabBarRedDot({
+                //   index: 3,
+                // })
+              }
+            }
+
+          }
+        });*/
+
+        wx.request({
+          url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + that.data.JSESSIONID,
+          method: 'GET',
+          data: {},
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            let arr = res.data.content.current_perms.split(',');
+            wx.setStorage({
+              key: 'perms',
+              data: arr
+            });
+            wx.setStorage({
+              key: 'domainName',
+              data: res.data.content.domainName,
+            });
+            wx.setStorage({
+              key: 'organizations',
+              data: res.data.content.root_organizations,
+            });
+            wx.setStorage({
+              key: 'root_terminalReslotions',
+              data: res.data.content.root_terminalReslotions,
+            });
+          }
+        })
+
 
       },
       fail: function(res) {
         wx.redirectTo({
           url: '../login/login',
         })
-      }
-    })
+      },
 
+    });
   },
   onShow: function(e) {
+
     var that = this;
     wx.getStorage({
       key: 'sessionid',
       success: function(res) {
+
         that.setData({
           JSESSIONID: res.data
         });
         wx.getLocation({
           success: function(res) {
+
             wx.request({
               url: ip.init + '/api/terminal/getAllTerminalInfoForMap;JSESSIONID=' + that.data.JSESSIONID,
               method: 'POST',
@@ -95,13 +166,12 @@ Page({
               header: {
                 'content-type': 'application/x-www-form-urlencoded' // 默认值
               },
-              success: function (res) {
+              success: function(res) {
                 if (res.data.code == 2) {
                   wx.redirectTo({
                     url: '../login/login',
                   })
                 }
-                // console.log(res.data)
                 if (res.data.code == 1) {
 
                   var statusCount = res.data.content.statusSummary;
@@ -151,24 +221,76 @@ Page({
                 };
 
               }
-            })
+            });
+      /*     wx.request({
+              url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + that.data.JSESSIONID,
+              method: 'GET',
+              data: {},
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function(res) {
+                let arr = res.data.content.current_perms.split(',');
+                wx.setStorage({
+                  key: 'perms',
+                  data: arr
+                });
+                wx.setStorage({
+                  key: 'domainName',
+                  data: res.data.content.domainName,
+                });
+                wx.setStorage({
+                  key: 'organizations',
+                  data: res.data.content.root_organizations,
+                });
+                wx.setStorage({
+                  key: 'root_terminalReslotions',
+                  data: res.data.content.root_terminalReslotions,
+                });
+                // wx.setStorage({
+                //   key: 'root_terminalReslotions',
+                //   data: 'res.data.content.root_terminalReslotions',
+                // })
+              }
+            })*/
           },
         })
-        
+
       },
     })
 
 
   },
 
+  onShareAppMessage(e){
+    if(e.from ==='button'){
+      console.log(e.target)
+    }
+    return {
+      title:'转发'
+    }
+  },
+
   onReady: function(e) {
     this.mapCtx = wx.createMapContext('myMap');
     var that = this;
   },
+
+  // play:function(){
+  //   console.log(13)
+  // },
   scanCode: function() {
     var that = this
+    // wx.navigateTo({
+    //   url: '../scan/scan',
+    // });
+
+
+
     wx.scanCode({
       success: function(res) {
+       
+
         wx.request({
           url: ip.init + '/client/assit/descryptQR;JSESSIONID=' + that.data.JSESSIONID,
           method: 'POST',
@@ -181,13 +303,21 @@ Page({
           },
           success: function(res) {
             if (res.data.content) {
+              
               var new_res = res.data.content;
+              console.log(new_res)
+              var license = '';
+              if (new_res.split(',').length == 4) {
+                license = new_res.split(',')[3];
+              }
               that.setData({
                 reso: new_res.split(',')[2],
-                uuid: new_res.split(',')[1]
+                uuid: new_res.split(',')[1],
+                os: new_res.split(',')[0],
+                license: license,
               });
               wx.navigateTo({
-                url: '../scan/scan?reso=' + that.data.reso + '&uuid=' + that.data.uuid + '&latitude=' + that.data.latitude + '&longitude=' + that.data.longitude,
+                url: '../scan/scan?reso=' + that.data.reso + '&uuid=' + that.data.uuid + '&locationAddr=' + that.data.locationAddr + '&latitude=' + that.data.latitude + '&longitude=' + that.data.longitude + '&license=' + license + '&os=' + that.data.os,
               });
             } else {
               wx.showToast({

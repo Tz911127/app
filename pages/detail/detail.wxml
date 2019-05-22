@@ -8,6 +8,7 @@
   <view class="{{selected?'show':'hidden'}}">
     <view class='exception' wx-if="{{status == 3}}">
       {{exception}}
+      <text>\n建议将终端初始化后重新发布节目</text>
     </view>
     <view class='detail'>
       <view class='test'>
@@ -29,12 +30,9 @@
         </view>
 
       </view>
-      <!-- <view class='num'>
-        <view>{{filter.proStatus(status)}}</view>
-      </view> -->
     </view>
     <!-- btn -->
-    <view style='{{hide}}'>
+    <view style='{{hide}}' wx:if="{{tem_order}}">
       <scroll-view class="scroll-view_H btns" scroll-x="true" style="width: 100%">
         <view class='scroll_img open_close' bindtap='open_close'>开关机时间</view>
         <view class='scroll_img sounds' bindtap='sounds'>音量设置</view>
@@ -50,33 +48,78 @@
       </scroll-view>
     </view>
     <!-- 终端节目数 -->
-    <view class='pro'>终端节目数:
-      <text>{{hasProgram}}</text>
-    </view>
-    <view class='program' wx:for="{{proList}}" wx:key="item">
-      <!-- <view class='tit'>
-        <view class='left'>节目名称</view>
-        <view class='right'>{{item.name}}</view>
-      </view> -->
-      <view class='left'>
-        <view>节目名称</view>
-        <view>播放时间</view>
-        <view>播放周期</view>
+    <view class="nav ad">
+      <view class="{{pro?'red':'default'}}" bindtap="bind_pro">节目
+        <text>({{hasProgram}})</text>
       </view>
-      <view class='right'>
-        <view>{{item.name}}</view>
-        <view>
-          {{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}
-        </view>
-        <view>
-          {{filter.strArr(item.periodArray)}}
-        </view>
-      </view>
-      <view class='foot'>
-        <view bindtap='pre' data-pid="{{item.pid}}">预览</view>
-        <view bindtap='proStop' data-pid="{{item.pid}}">停播</view>
+      <view class="{{ad?'red':'default'}}" bindtap="bind_ad">广告
+        <text>({{adTotal}})</text>
       </view>
     </view>
+    <view class="{{pro?'ad_show':'hidden'}}">
+      <view class='program' wx:for="{{proList}}" wx:key="item">
+        <view class='left'>
+          <image wx:if='{{item.snapshot}}' src='{{item.snapshot}}'></image>
+          <image wx:else style='height:180rpx;width:180rpx' src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+        </view>
+        <view class='right'>
+          <view class='right_item' style='display:inline-block;float:left'>
+            <view>节目名称</view>
+            <view>播放时间</view>
+            <view>播放周期</view>
+          </view>
+          <view class='right_item' style='float:right'>
+            <view>{{item.name}}</view>
+            <view wx:if="{{item.startDate == 19700101 && item.endDate == 20500101}}">
+              不限
+            </view>
+            <view wx:else>
+              {{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}
+            </view>
+            <view>
+              {{filter.strArr(item.periodArray)}}
+            </view>
+          </view>
+        </view>
+        <view class='foot'>
+          <view bindtap='pre' data-pid="{{item.pid}}">预览</view>
+          <view bindtap='proStop' wx:if="{{program_manage}}" style='{{proHide}}' data-pid="{{item.pid}}">停播</view>
+        </view>
+      </view>
+    </view>
+    <view class="{{ad?'ad_show':'hidden'}}">
+      <view class='program' wx:for="{{adList}}" wx:key="item">
+        <view class='left'>
+          <image style='height:180rpx;width:180rpx' src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+
+        </view>
+
+        <view class='right'>
+          <view class='right_item' style='display:inline-block;float:left'>
+            <view>广告名称</view>
+            <view>播放时间</view>
+            <view>播放周期</view>
+          </view>
+          <view class='right_item' style='float:right'>
+            <view>{{item.name}}</view>
+            <view wx:if="{{item.startDate == 19700101 && item.endDate == 20500101}}">
+              不限
+            </view>
+            <view wx:else>
+              {{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}
+            </view>
+            <view>
+              {{filter.strArr(item.periodArray)}}
+            </view>
+          </view>
+        </view>
+        <view class='foot'>
+          <view bindtap='pre' data-pid="{{item.pid}}">预览</view>
+        </view>
+      </view>
+
+    </view>
+
 
   </view>
   <view class="{{selected1?'show':'hidden'}}">
@@ -103,6 +146,39 @@
         </view>
 
       </view>
+      <view class='basic' style="{{datalist.shareType ==undefined?'display:none':''}}">开放信息</view>
+      <view class='main'>
+        <!-- <view class='basic'>基本信息</view> -->
+        <view class='left'>
+          <view style="{{datalist.shareType ==undefined?'display:none':''}}">终端类型</view>
+          <view style="{{datalist.scene == undefined?'display:none':''}}">所在场景</view>
+          <view style="{{datalist.tradeArea ==undefined?'display:none':''}}">所在商圈</view>
+          <view style="{{datalist.shareStartDay == undefined?'display:none':''}}">开放日期</view>
+          <view style="{{datalist.shareStartTime ==undefined?'display:none':''}}">开放时段</view>
+          <view style="{{datalist.sharePrice ==undefined?'display:none':''}}">单价</view>
+          <view style="{{datalist.sharePrice ==undefined?'display:none':''}}">媒体描述</view>
+        </view>
+        <view class='right'>
+          <view style="{{datalist.shareType ==undefined?'display:none':''}}">{{datalist.shareType}}</view>
+          <view style="{{datalist.scene ==undefined?'display:none':''}}">{{datalist.scene}}</view>
+          <view style="{{datalist.tradeArea == undefined?'display:none':''}}">{{datalist.tradeArea}}</view>
+          <view style="{{datalist.shareStartDay ==undefined?'display:none':''}}">{{filter.getTime(datalist.shareStartDay)}} 至 {{filter.getTime(datalist.shareEndDay)}}</view>
+          <view style="{{datalist.shareStartTime ==undefined?'display:none':''}}">{{filter.fomTime(datalist.shareStartTime)}} 至 {{ filter.fomTime(datalist.shareEndTime)}}</view>
+          <view style="{{datalist.sharePrice ==undefined?'display:none':''}}">{{datalist.sharePrice}}</view>
+          <view style="{{datalist.sharePrice ==undefined?'display:none':''}}">暂无</view>
+        </view>
+
+      </view>
+      <view class='pic' style="{{datalist.shareType ==undefined?'display:none':''}}">
+        <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
+          <image bindtap='show_pic' wx:for="{{imgSrc}}" data-item='{{item}}' wx:key="item" src='{{item}}'></image>
+        </scroll-view>
+        <!-- <view class='prePic' bindtap='hide_pic'>
+          <image src='{{itemSrc}}'></image>
+        </view> -->
+        <view wx:if="{{show}}" bindtap='hide_pic' class='prePic'> <image src='{{itemSrc}}'></image></view>
+      </view>
+
       <!-- order -->
       <view class='basic'>命令信息</view>
       <view class='main'>
@@ -186,4 +262,7 @@
       <view wx:if="{{orderList.length == 0}}" style='color:#2b344a;line-height:100vh;text-align:center'>暂无数据</view>
     </scroll-view>
   </view>
+  <!-- <view wx:if='{{show}}' bindtap='hide_pic' style='position:fixed;background:rgba(0,0,0,0.5);width:100%;text-align:center;height:100vh;line-height:125vh'>
+    <image src='{{itemSrc}}'></image>
+  </view> -->
 </view>

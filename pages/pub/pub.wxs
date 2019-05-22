@@ -1,3 +1,4 @@
+
 function formatCH(str) {
   if (str.length == 13) {
     return "每天"
@@ -33,13 +34,14 @@ function formatCH(str) {
 function date(date) {
   if (date == '1970-01-01') {
     return "开始日期"
-  } else if (date == '2050-01-01'){
+  } else if (date == '2050-01-01') {
     return '永久'
-  }
-   else {
+  } else {
     return date
   }
 };
+
+
 
 module.exports = {
   formatCH: formatCH,

@@ -35,8 +35,9 @@
   <!-- </view> -->
   <view class="page-body" style='margin-top:180rpx'>
     <view class="page-section page-section-gap">
-      <map id="myMap" style="width: 100%; height: 78vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" scale="{{scale}}" controls="{{controls}}"  covers="{{covers}}" bindregionchange="bindregionchange" show-location="true">
+      <map id="myMap" style="width: 100%; height: 78vh;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" scale="{{scale}}" controls="{{controls}}"  covers="{{covers}}"   bindregionchange="bindregionchange" show-location="true">
       <cover-image style='width:88rpx;height:96rpx;position:absolute;top:44%;left:44%' src='../../img/location.png'></cover-image>
+      <!-- <cover-view bindtap="play">画图</cover-view> -->
       </map>
 
     </view>

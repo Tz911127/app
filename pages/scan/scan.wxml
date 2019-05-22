@@ -28,6 +28,50 @@
     </view>
   </view>
 
+
+  <view>
+    <view class='camera_pic'>
+      上传终端照片
+      <text bindtap='example'>示例</text>
+    </view>
+    <view>
+      <view class="page-section">
+        <view class="page-body-info">
+
+          <block wx:if="{{imageSrc}}">
+            <image src="{{imageSrc}}" class="image" mode="aspectFit"></image>
+          </block>
+
+          <block wx:else>
+            <view class="image-plus image-plus-nb" data-name='jsrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{jsrc}}" src='{{jsrc}}'></image>
+              <view wx:else class="image-plus-text">近景</view>
+
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='ysrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{ysrc}}" src='{{ysrc}}'></image>
+              <view wx:else class="image-plus-text">远景景</view>
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='zsrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{zsrc}}" src='{{zsrc}}'></image>
+              <view wx:else class="image-plus-text">周边环境</view>
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='osrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{osrc}}" src='{{osrc}}'></image>
+              <view wx:else class="image-plus-text">其他</view>
+            </view>
+
+            <!-- <view class="image-plus-text">选择图片</view> -->
+          </block>
+
+        </view>
+      </view>
+    </view>
+  </view>
+
   <button type="primary" bindtap='ok_btn'>确定</button>
 
 </view>

@@ -14,7 +14,7 @@ page {
 .foot view {
   width: 50%;
   font-size: 28rpx;
-  color: #096dd9;
+  /* color: #096dd9; */
   text-align: center;
 }
 

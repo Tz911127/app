@@ -1,0 +1,164 @@
+<view>
+  <!-- <view class="weui-cells__title">地区选择器</view> -->
+  <!-- 终端类型 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">终端类型</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindPickerChange_ter" value="{{ter_index}}" range="{{ter_array}}">
+          <view class="weui-input">{{ter_array[ter_index]}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 所在场景 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">所在场景</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindPickerChange_sce" value="{{sce_index}}" range="{{sce_array}}">
+          <view class="weui-input">{{sce_array[sce_index]}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 所在商圈 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <!-- <view class="weui-cell__hd"> -->
+      <view class="weui-label">所在商圈</view>
+      <!-- </view> -->
+      <input class="weui-input" value='{{tradeArea}}' bindinput='bindinputArea' />
+    </view>
+  </view>
+  <!-- 开放开始日期 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">开放开始日期</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="date" value="{{startDate}}" end="{{endDate}}" bindchange="bindStartDateChange">
+          <!-- <view class="weui-input" wx:if='{{share}}'>{{filter.getTime(startDate)}}</view> -->
+          <view class="weui-input">{{startDate}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 开放结束日期 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">开放结束日期</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="date" value="{{endDate}}" start="{{startDate}}" bindchange="bindEndDateChange">
+          <view class="weui-input">{{endDate}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 开放时段 -->
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">开放时段(开始)</view>
+      </view>
+      <view class="weui-cell__bd timeSet">
+        <picker mode="time" value="{{startTime}}" end="{{endTime}}" bindchange="bindStartTimeChange">
+          <view class="weui-input">{{startTime}}</view>
+        </picker>
+        <!-- <picker mode="time" value="{{endTime}}" bindchange="bindEndTimeChange">
+          <view class="weui-input">{{endTime}}</view>
+        </picker> -->
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label must_label">开放时段(结束)</view>
+      </view>
+      <view class="weui-cell__bd timeSet">
+        <!-- <picker mode="time" value="{{startTime}}" bindchange="bindStartTimeChange">
+          <view class="weui-input">{{startTime}}</view>
+        </picker> -->
+        <picker mode="time" value="{{endTime}}" start="{{startTime}}" bindchange="bindEndTimeChange">
+          <view class="weui-input">{{endTime}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 单价 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <!-- <view class="weui-cell__hd"> -->
+      <view class="weui-label must_label">单价（元）</view>
+      <!-- </view> -->
+      <input type="number" class="weui-input" value='{{sharePrice}}' bindinput='bindinput' />
+    </view>
+  </view>
+
+  <!-- 上传照片 -->
+  <view>
+    <view class='camera_pic'>
+      上传终端照片
+      <text bindtap='example'>示例</text>
+    </view>
+    <view>
+      <view class="page-section">
+        <view class="page-body-info">
+
+          <block wx:if="{{imageSrc}}">
+            <image src="{{imageSrc}}" class="image" mode="aspectFit"></image>
+          </block>
+
+          <block wx:else>
+            <view class="image-plus image-plus-nb" data-name='jsrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{jsrc}}" src='{{jsrc}}'></image>
+              <view wx:else class="image-plus-text">近景</view>
+
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='ysrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{ysrc}}" src='{{ysrc}}'></image>
+              <view wx:else class="image-plus-text">远景景</view>
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='zsrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{zsrc}}" src='{{zsrc}}'></image>
+              <view wx:else class="image-plus-text">周边环境</view>
+            </view>
+
+            <view class="image-plus image-plus-nb" data-name='osrc' bindtap="chooseImage" style='width:25%;text-align:center'>
+              <image class='picSrc' wx:if="{{osrc}}" src='{{osrc}}'></image>
+              <view wx:else class="image-plus-text">其他</view>
+            </view>
+
+            <!-- <view class="image-plus-text">选择图片</view> -->
+          </block>
+
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 媒体描述 -->
+  <view>
+    <view class="page-section">
+      <view class="page-section-title media_dec">媒体描述</view>
+      <view class="textarea-wrp">
+        <textarea style="height: 3em" />
+      </view>
+    </view>
+  </view>
+
+  <!-- btn -->
+  <button class='btn' type="primary" bindtap='open_add_btn'>确认</button>
+</view>

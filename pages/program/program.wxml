@@ -1,7 +1,6 @@
 <!--pages/terminal/terminal.wxml-->
 <wxs module='filter' src='./program.wxs'></wxs>
 <view class='page clearfix'>
-
   <!-- 滑动 -->
   <form bindsubmit="formSubmit">
     <view class='page-tab' style="{{position}}">
@@ -25,16 +24,24 @@
         <!-- <view>发布终端</view>
         <view class='btn_'>有</view>
         <view class='btn_'>无</view> -->
+        <view wx:if='{{teamData.length != 0}}'>
+          <view style='margin:20rpx 0'>节目分组
+            <view bindtap='tem_res_more' style='float:right;color:#98A0B3'>更多 ></view>
+          </view>
+          <view style='{{hideTeam_fir}}' data-text="{{fir_team_id}}" bindtap='teamFunc_fir' class='btn_'>{{fir_team}}</view>
+          <view wx:if="{{sec_team}}" style='{{hideTeam_sec}}' data-text="{{sec_team_id}}" bindtap='teamFunc_sec' class='btn_'>{{sec_team}}</view>
 
-        <view style='margin:40rpx 0'>节目分组
-          <view bindtap='tem_res_more' style='float:right;color:#98A0B3'>更多 ></view>
         </view>
-        <view style='{{hideTeam_fir}}' data-text="{{fir_team_id}}"bindtap='teamFunc_fir' class='btn_'>{{fir_team}}</view>
-        <view style='{{hideTeam_sec}}' data-text="{{sec_team_id}}"bindtap='teamFunc_sec' class='btn_'>{{sec_team}}</view>
-
+        <view class='organization'>
+          <view style='margin:20rpx 0'>
+            组织机构
+            <view bindtap='upOrag' style='float:right;color:#98A0B3;font-size:25rpx'>全部 ></view>
+          </view>
+          <view class="btn_city" style='{{hideCity}}'>{{org_name}}</view>
+        </view>
 
         <view class='ok_off'>
-          <view bindtap='reset' style='background:#dbdfe8;padding:14rpx; color:#2B344A'>重置</view>
+          <view bindtap='reset' style='background:#dbdfe8;padding:14rpx; color:#fff'>重置</view>
           <button class='ok_btn' form-type='submit'>确定</button>
         </view>
       </view>
@@ -59,15 +66,16 @@
     </view>
     <!-- <view style='margin-top:130rpx'> -->
     <scroll-view style='margin-top:80rpx;height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
-      <view  wx:for="{{dataList}}" wx:key='item' class='main'>
+      <view wx:for="{{dataList}}" wx:key='item' class='main'>
         <view class='title'>
           <!-- <view>节目名称</view> -->
           <view>{{item.name}}</view>
         </view>
         <navigator url='../proDetail/proDetail?id={{item.id}}&playTers={{item.playTers}}&name={{item.name}}' class='nav'>
           <view class='img'>
-            <!-- <image src='../../img/pre.png'></image> -->
-            <view class='sta'>
+            <image wx:if='{{item.snapshot}}' src='{{item.snapshot}}'></image>
+            <image  wx:else src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+            <!-- <view class='sta'>
               分辨率
             </view>
             <view class='sta'>
@@ -75,26 +83,41 @@
             </view>
             <view class='sta'>
               审核状态
-            </view>
+            </view> -->
           </view>
           <view class='test'>
-            <view class='num'>
-              {{item.pixelHorizontal}}*{{item.pixelVertical}}
+            <!-- <view class='num'> -->
+            <view style='display:inline-block'>
+              <view class='sta'>
+                分辨率
+              </view>
+              <view class='sta'>
+                发布终端数
+              </view>
+              <view class='sta'>
+                审核状态
+              </view>
             </view>
-            <view class='num'>
-            {{item.playTers}}
-            </view>
-            <view class='num'>
-              {{filter.status(item.status)}}
+            <view style='float:right'>
+              <view class='num'>
+                {{item.pixelHorizontal}}*{{item.pixelVertical}}
+              </view>
+              <view class='num'>
+                {{item.playTers}}
+              </view>
+              <view class='num'>
+                {{filter.status(item.status)}}
+              </view>
             </view>
           </view>
         </navigator>
         <view class='foot'>
-          <view catchtap='preview'  data-id='{{item.id}}'>预览</view>
-          <view catchtap='pub'  wx:if="{{item.status == 1}}"  data-status='{{item.status}}' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}' data-id='{{item.id}}'>发布</view>
-          <view catchtap='exam' wx:if="{{item.status == 0||item.status == 4||item.status == 5||item.status == 7}}" data-id='{{item.id}}' >提交审核</view>
+          <view catchtap='preview' data-id='{{item.id}}'>预览</view>
+          <view catchtap='pub' wx:if="{{item.status == 1&&proBtn&&pub_pro}}" data-status='{{item.status}}' data-title='{{item.name}}' data-pixlH='{{item.pixelHorizontal}}' data-pixlV='{{item.pixelVertical}}' data-id='{{item.id}}'>发布</view>
+          <view catchtap='exam' wx:if="{{cheBtn&&(item.status == 0||item.status == 4||item.status == 5||item.status == 7)}}" data-id='{{item.id}}'>提交审核</view>
         </view>
       </view>
+      <view style='color:#2b344a;line-height:100vh;text-align:center' wx:if="{{dataList.length == 0}}">未查询到相关节目或者没有访问节目权限</view>
     </scroll-view>
     <!-- </view> -->
   </view>

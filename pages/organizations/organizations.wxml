@@ -1,0 +1,10 @@
+<!--index.wxml-->
+<view>
+  <text class="head-title">{{name}}</text>
+  <!--  btnTxt='>' -->
+  <path-view unnormalizedValue="{{unnormalizedValue}}"
+             btnTxt=' '
+             contentKey="name"
+             catchtapBtn="selThis"
+             style='width:100%'></path-view>
+</view>

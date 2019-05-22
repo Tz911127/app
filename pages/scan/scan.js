@@ -3,22 +3,28 @@ var util = require('../../utils/util.js')
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.js')
 var ip = require('../../utils/ip.js')
 var qqmapsdk;
-var formatLocation = util.formatLocation
+var formatLocation = util.formatLocation;
 Page({
 
   data: {
     hasLocation: false,
-    token: ''
+    token: '',
+    locationAddress: '',
+    remark: '',
+    name: ''
   },
   onLoad: function(e) {
     var that = this;
-    console.log(e)
     that.setData({
       reso: e.reso,
       uuid: e.uuid,
+      locationAddress: e.locationAddr,
+      longitude: e.longitude,
       latitude: e.latitude,
-      longitude: e.longitude
+      license: e.license,
+      os:e.os
     })
+    console.log(e.os)
     wx.getStorage({
       key: 'token',
       success: function(res) {
@@ -35,45 +41,25 @@ Page({
         })
       },
     });
-    // wx.getStorage({
-    //   key: 'latitude',
-    //   success: function(res) {
-    //     that.setData({
-    //       latitude: res.data
-    //     })
-    //   },
-    // });
-    // wx.getStorage({
-    //   key: 'longitude',
-    //   success: function(res) {
-    //     that.setData({
-    //       longitude: res.data
-    //     })
-    //   },
-    // })
 
     qqmapsdk = new QQMapWX({
       key: 'DFUBZ-FSIC6-P7OS7-MNHFC-IRRKK-L3FJJ'
     });
 
-
     wx.getLocation({
       success: function(res) {
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: that.data.latitude,
-            longitude: that.data.longitude
-          },
-          success: function(address) {
-            that.setData({
-              locationAddress: address.result.address,
-              latitude: address.result.location.lat,
-              longitude: address.result.location.lng
-            })
-          }
+        console.log(res)
+        that.setData({
+          hasLocation: true,
+          location: formatLocation(res.longitude, res.latitude)
         })
       }
     })
+
+
+
+
+
   },
 
   chooseLocation: function() {
@@ -101,13 +87,56 @@ Page({
     });
 
   },
+  example: function (e) {
+    wx.navigateTo({
+      url: '../example/example',
+    })
+  },
+  chooseImage: function (e) {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        const tempFilePaths = res.tempFilePaths;
+        that.setData({
+          tempFilePaths: tempFilePaths,
+          picName: e.currentTarget.dataset.name
+        })
+        if (e.currentTarget.dataset.name === 'jsrc') {
+          that.setData({
+            jsrc: res.tempFilePaths[0],
+          });
+
+        } else if (e.currentTarget.dataset.name === 'ysrc') {
+          that.setData({
+            ysrc: res.tempFilePaths[0],
+          });
+        } else if (e.currentTarget.dataset.name === 'zsrc') {
+          that.setData({
+            zsrc: res.tempFilePaths[0],
+          });
+        } else if (e.currentTarget.dataset.name === 'osrc') {
+          that.setData({
+            osrc: res.tempFilePaths[0],
+          });
+        }
+
+
+      },
+
+    })
+  },
   ok_btn: function() {
     var that = this;
     var r = util.qqMapTransBMap(that.data.longitude, that.data.latitude);
     var locationAddress = that.data.locationAddress;
+    // var locationAddress = '';
+    var name = that.data.name;
     if (locationAddress == '') {
       wx.showToast({
-        title: '请选择位置',
+        title: '请选择位置/终端名称',
         icon: 'none'
       })
     } else {
@@ -117,13 +146,13 @@ Page({
         data: {
           token: that.data.token,
           sn: that.data.uuid,
-          os: 1,
+          os: that.data.os,
           name: that.data.name,
           longitude: r.longitude,
           latitude: r.latitude,
           address: locationAddress,
           resolution: that.data.reso,
-          license: '',
+          license: that.data.license,
           remark: that.data.remark
         },
         header: {
@@ -142,15 +171,64 @@ Page({
               }
             })
 
-          } else {
+          } else if (res.data.code == 0){
+            if (locationAddress == 'undefined') {
+              wx.showToast({
+                title: "请开启定位",
+                icon: 'none'
+              })
+            }else {
             wx.showToast({
               title: res.data.message,
               icon: 'none'
-            })
-          }
+              })
+            }
+          } 
 
 
         }
+      })
+    }
+
+    let tempFilePaths = that.data.tempFilePaths;
+    let picName = that.data.picName
+
+    if (picName === 'jsrc') {
+      wx.uploadFile({
+        url: ip.init + '/api/terminalShare/saveTerminalShare;JSESSIONID=' + that.data.JSESSIONID,
+        filePath: tempFilePaths[0],
+        name: 'closeShotFile',
+        // formData: {
+        //   tids: that.data.tids
+        // },
+      })
+
+    } else if (picName === 'ysrc') {
+      wx.uploadFile({
+        url: ip.init + '/api/terminalShare/saveTerminalShare;JSESSIONID=' + that.data.JSESSIONID,
+        filePath: tempFilePaths[0],
+        name: 'longShotFile',
+        // formData: {
+        //   tids: that.data.tids
+        // },
+      })
+    } else if (picName === 'zsrc') {
+      wx.uploadFile({
+        url: ip.init + '/api/terminalShare/saveTerminalShare;JSESSIONID=' + that.data.JSESSIONID,
+        filePath: tempFilePaths[0],
+        name: 'aroundShotFile',
+        // formData: {
+        //   tids: that.data.tids
+        // },
+      })
+    } else if (picName === 'osrc') {
+      wx.uploadFile({
+        url: ip.init + '/api/terminalShare/saveTerminalShare;JSESSIONID=' + that.data.JSESSIONID,
+        filePath: tempFilePaths[0],
+        name: 'otherShotFile',
+        // formData: {
+        //   tids: that.data.tids
+        // },
       })
     }
 

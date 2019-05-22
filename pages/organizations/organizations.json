@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "组织机构",
+    "navigationBarTextStyle": "black",
+    "usingComponents": {
+      "path-view": "/components/path-view/index"
+    }
+}

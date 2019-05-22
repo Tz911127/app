@@ -1,5 +1,6 @@
 var pwd = require('../../utils/pwd.js');
 var ip = require('../../utils/ip.js')
+var base = require('../../utils/base.js')
 Page({
 
   /**
@@ -28,8 +29,8 @@ Page({
       key: 'password',
       success: function(res) {
         that.setData({
-          password: res.data
-        })
+          password: base.decode(res.data)
+        });
       },
     });
 
@@ -45,7 +46,8 @@ Page({
       that.setData({
         domain: e.detail.value.code,
         account: e.detail.value.no,
-        password: e.detail.value.pwd.length == 32 ? e.detail.value.pwd : pwd.md5_pwd(e.detail.value.pwd)
+        // password: e.detail.value.pwd.length == 32 ? e.detail.value.pwd : pwd.md5_pwd(e.detail.value.pwd)
+        password: (e.detail.value.pwd)
       });
       wx.request({
         url: ip.init + '/api/auth/login',
@@ -53,7 +55,8 @@ Page({
         data: {
           domain: e.detail.value.code,
           account: e.detail.value.no,
-          password: that.data.password
+          password: pwd.md5_pwd(that.data.password)
+          // password: 'b898108842924a5454e1f135a851f0ea'
         },
 
         header: {
@@ -80,7 +83,7 @@ Page({
             });
             wx.setStorage({
               key: 'password',
-              data: that.data.password,
+              data: base.encode(that.data.password),
             })
             wx.showToast({
               title: '登录成功',
@@ -89,7 +92,7 @@ Page({
                 wx.switchTab({
                   url: '../home/home',
                 })
-
+               
               }
             })
           } else {

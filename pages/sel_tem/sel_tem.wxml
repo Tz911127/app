@@ -13,7 +13,7 @@
         </view>
 
 
-        <view style='margin:40rpx 0'>
+        <view>
           <view style='margin-bottom:15rpx'>终端分辨率
             <view bindtap='res_more' style='float:right;color:#98A0B3;font-size:25rpx'>更多></view>
           </view>
@@ -21,13 +21,13 @@
           <view wx:if="{{tem_sec}}"  data-text="{{tem_sec}}" class="btn_" style='{{hide_sec}}' bindtap="bindtapFuncRe_sec">{{tem_sec}}</view>
         </view>
 
-        <view style='margin:40rpx 0'>
+        <view>
           <view style='margin-bottom:15rpx'>系统类型</view>
           <view data-text="1" class="btn_" style='{{opHide_fir}}' bindtap="bindtapFuncOp_fir">Android</view>
           <view data-text="2" class="btn_" style='{{opHide_sec}}' bindtap="bindtapFuncOp_sec">Windows</view>
         </view>
 
-        <view style='margin:40rpx 0'>
+        <view>
           <view style='margin-bottom:15rpx'>播放节目</view>
           <view data-text="1" class="btn_" style='{{proHide_fir}}' bindtap="bindtapFuncPro_fir">有</view>
           <view data-text="0" class="btn_" style='{{proHide_sec}}' bindtap="bindtapFuncPro_sec">无</view>
@@ -49,6 +49,14 @@
             </view>
           </view>
           <view class="btn_city" style='{{hideCity}}'>{{city_name}}</view>
+        </view>
+
+        <view class='organization'>
+          <view style='margin-bottom:10rpx'>
+            组织机构
+            <view bindtap='upOrag' style='float:right;color:#98A0B3;font-size:25rpx'>全部 ></view>
+          </view>
+          <view class="btn_city" style='{{hideCity}}'>{{org_name}}</view>
         </view>
 
         <view class='ok_off'>
@@ -76,7 +84,7 @@
 
     <scroll-view scroll-y="true" class='scroll_view' bindscroll="scroll" bindscrolltolower="lower">
       <checkbox-group bindchange="checkboxChange">
-        <label' class="nav" wx:for="{{datalist}}" wx:key="{{item.id}}">
+        <label class="nav" wx:for="{{datalist}}" wx:key="{{item.id}}">
           <view class='test'>
             <view class='tit'>
               <image wx-if="{{item.status == 1}}" src='../../img/icon_name@2x_4.png'></image>
@@ -84,7 +92,6 @@
               <image wx-if="{{item.status == 3}}" src='../../img/icon_name@2x.png'></image>
               <image wx-if="{{item.status == 4}}" src='../../img/icon_name@2x_3.png'></image>
               <text style='margin-left:20rpx'>{{item.name}}</text>
-              <!-- <text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text> -->
             </view>
             <view class='main'>
               <image src='../../img/icon_res.png'></image>
@@ -97,14 +104,14 @@
           </view>
 
           <view class="weui-cell__hd">
-            <checkbox value="{{item.id}}" checked="{{item.checked}}" />
+            <checkbox value="{{item.id}}" data-checked='{{checked}}'  checked="{{item.checked}}"/>
           </view>
         </label>
       </checkbox-group>
     </scroll-view>
 
-
-    <view class='ok_btn'>
+    <view style='height:130rpx'></view>
+    <view class='ok_btn clearfix'>
       <view class='ok_rad'>
         <label class="radio">
           <view wx:if="{{!select_all}}" bindtap="selectall">

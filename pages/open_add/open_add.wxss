@@ -1,0 +1,10 @@
+/* pages/open_add/open_add.wxss */
+@import "../../lib/lib.wxss";
+@import "../../lib/conment.wxss";
+@import "../sel_tem/sel_tem.wxss";
+.sea image {
+  margin-left: 30rpx
+}
+.sea {
+  padding-left: 0
+}

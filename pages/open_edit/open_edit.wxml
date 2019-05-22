@@ -1,0 +1,77 @@
+<!--pages/open_edit/open_edit.wxml-->
+<wxs module='filter' src='../sel_tem/sel_tem.wxs'></wxs>
+<view>
+  <view class='home'>
+    <view class='sear'>
+      <view class="btn">
+        <image src='../../img/home_nav-2_icon_search.png'></image>
+        <input style='padding-bottom:15rpx;' value='{{searchInput}}' placeholder="终端名称/终端编号" bindconfirm='search' />
+      </view>
+      <!-- <view bindtap='filter' class='weui-cell_input sea'>
+        <image src='../../img/home_icon_filter.png'></image>
+      </view> -->
+    </view>
+    <scroll-view scroll-y="true" class='scroll_view' bindscroll="scroll" bindscrolltolower="lower">
+      <checkbox-group bindchange="checkboxChange">
+        <label class="nav" wx:for="{{datalist}}" wx:key="{{item.id}}">
+          <image class='image' wx:if="{{item.closeShot}}" src='{{item.closeShot}}'></image>
+          <image class='image' wx:elif="{{item.longShot}}" src='{{item.longShot}}'></image>
+          <image class='image' wx:elif="{{item.aroundShot}}" src='{{item.aroundShot}}'></image>
+          <image class='image' wx:elif="{{item.otherShot}}" src='{{item.otherShot}}'></image>
+          <image class='image' wx:else src='https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1426331807,2460330022&fm=26&gp=0.jpg'></image>
+
+          <view class='test'>
+            <view class='tit'>
+              <image wx-if="{{item.status == 1}}" src='../../img/icon_name@2x_4.png'></image>
+              <image wx-if="{{item.status == 2}}" src='../../img/icon_name@2x_2.png'></image>
+              <image wx-if="{{item.status == 3}}" src='../../img/icon_name@2x.png'></image>
+              <image wx-if="{{item.status == 4}}" src='../../img/icon_name@2x_3.png'></image>
+              <text style='margin-left:20rpx'>{{item.name}}</text>
+            </view>
+            <view class='main'>
+              <image src='../../img/icon_res.png'></image>
+              <text style='position:absolute;top:-2rpx;margin-left:20rpx'>{{item.no}}</text>
+            </view>
+            <view class='main'>
+              <image src='../../img/terminal1_icon_number.png'></image>
+              <text style='position:absolute;top:-2rpx;margin-left:20rpx'><text style='margin-right:20rpx'>{{item.resolution}}</text>
+              <text class="stu {{item.status == 1?'blue':item.status==2?'green':item.status==3?'red':item.status==4?'yellow':''}}">{{ filter.status(item.status)}}</text></text>
+            </view>
+          </view>
+
+          <view class="weui-cell__hd">
+            <checkbox value="{{item.id}}" data-checked='{{checked}}' checked="{{item.checked}}" />
+          </view>
+        </label>
+      </checkbox-group>
+      <view style='color:#2b344a;line-height:100vh;text-align:center' wx:if='{{datalist.length == 0}}'>没有查询到记录</view>
+    </scroll-view>
+    <view style='height:130rpx'></view>
+    <view class='ok_btn clearfix'>
+      <view class='ok_rad'>
+        <label class="radio">
+          <view wx:if="{{!select_all}}" bindtap="selectall">
+            <!-- <checkbox value="r1" /> -->
+            <view class='select_none'></view>
+            <view style='margin-left:70rpx'>全选</view>
+          </view>
+          <view wx:if="{{select_all}}" bindtap="selectnone">
+            <!-- <checkbox value="r2" /> -->
+            <icon type="success" class='icon' size="20" color="#096dd9" />
+            <view style='margin-left:70rpx'>取消全选</view>
+          </view>
+        </label>
+        <view class='ok_total'>
+          <view>合计:</view>
+          <text style='color:#40A9FF;'>{{total}}</text>
+        </view>
+      </view>
+      <view class='ok_pub'>
+        <text bindtap='del_ter'>移除</text>
+        <text bindtap='edit_ter'>修改</text>
+      </view>
+      <!-- <view class='ok_pub' bindtap='pub'>下一步</view> -->
+
+    </view>
+  </view>
+</view>

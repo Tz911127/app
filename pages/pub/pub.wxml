@@ -28,7 +28,7 @@
         <view class="weui-label" style='color:#000'>结束日期</view>
       </view>
       <view class="weui-cell__bd">
-        <picker mode="date" value="{{endDate}}" start="{{startDate}}" bindchange="bindEndDate">
+        <picker mode="date" value="{{newendDate}}" start="{{startDate}}" bindchange="bindEndDate">
           <view class="weui-input" style='color:#98A0B3'>{{filter.date(endDate)}}</view>
         </picker>
       </view>

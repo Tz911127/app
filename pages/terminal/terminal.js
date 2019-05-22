@@ -1,5 +1,6 @@
 // pages/terminal/terminal.js
 var ip = require('../../utils/ip.js')
+var util = require('../../utils/util.js')
 var start_clientX;
 var end_clientX;
 Page({
@@ -14,16 +15,108 @@ Page({
     resolution: '',
     gid: '',
     tem_fir: '',
+    tem_sec: '',
     provinceCode: '',
     city_no: '',
     city_name: '',
-    searchInput: ''
+    searchInput: '',
+    team_fir: '',
+    oid: 0,
+    open_icon: false
   },
   onLoad: function(e) {
     var that = this;
     wx.getStorage({
+      key: 'perms',
+      success: function(res) {
+        that.setData({
+          perms: res.data
+        })
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i] === '9') {
+            that.setData({
+              // open_icon: true
+            })
+          }
+        }
+      },
+    });
+
+
+
+    wx.getStorage({
       key: 'sessionid',
-      
+      success: function(res) {
+        that.setData({
+          JSESSIONID: res.data
+        });
+
+        var perms_lists = that.data.perms;
+        for (var i = 0; i < perms_lists.length; i++) {
+
+          if (perms_lists[i] === '21') {
+            wx.request({
+              url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + res.data,
+              method: 'POST',
+              data: {
+                oid: that.data.oid,
+                length: 10,
+                start: that.data.start
+              },
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              success: function(res) {
+
+                if (res.data.code == 2) {
+                  wx.redirectTo({
+                    url: '../login/login',
+                  })
+                }
+                that.setData({
+                  datalist: res.data.content.data,
+                  bg: 'background:red'
+                });
+
+              }
+            });
+            wx.request({
+              url: ip.init + '/api/terminal/getTerminalGroups;JSESSIONID=' + res.data,
+              method: 'GET',
+              data: {
+                oid: that.data.oid
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function(res) {
+                that.setData({
+                  groups: res.data.content
+                })
+                if (res.data.content.length > 0) {
+                  that.setData({
+                    team_fir: that.data.team_fir ? that.data.team_fir : res.data.content[0].name,
+                    new_team_fir: res.data.content[0].name,
+                    team_fir_gid: res.data.content[0].id
+                  })
+                  if (res.data.content.length > 1) {
+                    that.setData({
+                      team_sec: res.data.content[1].name,
+                      team_sec_gid: res.data.content[1].id
+                    })
+                  }
+                }
+              }
+            });
+          }
+          // if (perms_lists[i] === '9') {
+          //   that.setData({
+          //     open_icon: true
+          //   })
+          // }
+        };
+
+      },
       fail: function(res) {
         wx.redirectTo({
           url: '../login/login',
@@ -31,8 +124,17 @@ Page({
       }
 
     })
-  },
 
+
+  },
+  onShareAppMessage(e) {
+    if (e.from === 'button') {
+      console.log(e.target)
+    }
+    return {
+      title: '转发'
+    }
+  },
   onShow: function(e) {
     var that = this;
     var pages = getCurrentPages();
@@ -41,100 +143,57 @@ Page({
       searchInput: '',
       search: ''
     })
+    // wx.getStorage({
+    //   key: 'perms',
+    //   success: function(res) {
+    //     that.setData({
+    //       perms: res.data
+    //     })
+    //   },
+    // });
+    wx.getStorage({
+      key: 'root_terminalReslotions',
+      success: function(res) {
+        if (res.data.length > 0) {
+          that.setData({
+            tem_fir: currPages.data.resolution ? currPages.data.resolution : res.data[0],
+            new_tem_fir: res.data[0],
+
+          });
+          if (res.data.length > 1) {
+            that.setData({
+              tem_sec: res.data[1],
+              new_tem_sec: res.data[1]
+
+            });
+          }
+        }
+      },
+    })
+
     wx.getStorage({
       key: 'sessionid',
       success: function(res) {
         that.setData({
           JSESSIONID: res.data
         })
-
-        wx.request({
-          url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + res.data,
-          method: 'POST',
-          data: {
-            oid: 0,
-            length: 10,
-            start: that.data.start
-          },
-          header: {
-            'content-type': 'application/json' // 默认值
-          },
-          success: function(res) {
-            if (res.data.code == 2) {
-              wx.redirectTo({
-                url: '../login/login',
-              })}
-            that.setData({
-              datalist: res.data.content.data
-            });
-            that.setData({
-              bg: 'background:red'
-            })
-
-          }
-        });
-
-        wx.request({
-          url: ip.init + '/api/terminal/getTerminalGroups;JSESSIONID=' + res.data,
-          method: 'GET',
-          data: {
-            oid: 0
-          },
-          header: {
-            'content-type': 'application/json'
-          },
-          success: function(res) {
-            that.setData({
-              groups: res.data.content
-            })
-            if (res.data.content.length > 0) {
-              that.setData({
-                team_fir: res.data.content[0].name,
-
-              })
-              if (res.data.content.length > 1) {
-                that.setData({
-                  team_sec: res.data.content[1].name,
-                })
-              }
-            }
-          }
-        });
-
-        wx.request({
-          url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + res.data,
-          method: "GET",
-          data: {},
-          header: {
-            'content-type': 'application/json' // 默认值
-          },
-          success: function(res) {
-            if (res.data.content.root_terminalReslotions.length > 0) {
-              that.setData({
-                tem_fir: currPages.data.resolution ? currPages.data.resolution : res.data.content.root_terminalReslotions[0],
-                new_tem_fir: res.data.content.root_terminalReslotions[0],
-
-              });
-              if (res.data.content.root_terminalReslotions.length > 1) {
-                that.setData({
-                  tem_sec: res.data.content.root_terminalReslotions[1],
-                  new_tem_sec: res.data.content.root_terminalReslotions[1]
-
-                });
-              }
-            }
-
-          }
-        });
-
       },
-      fail: function (res) {
+      fail: function(res) {
         wx.redirectTo({
           url: '../login/login',
         })
       }
     })
 
+  },
+
+  onShareAppMessage(e) {
+    if (e.from === 'button') {
+      console.log(e.target)
+    }
+    return {
+      title: '转发'
+    }
   },
 
   tem_more: function() {
@@ -150,22 +209,11 @@ Page({
   },
 
 
-  filter: function() {
-    this.setData({
-      display: "block",
-      position: "position:fixed",
-      translate: 'transform: translateX(-' + this.data.windowWidth * 0.7 + 'px);'
-    })
 
-  },
+  filter: util.filter,
   // 遮拦
-  hideview: function() {
-    this.setData({
-      display: "none",
-      position: "position:absolute",
-      translate: '',
-    })
-  },
+
+  hideview: util.hideview,
 
   upArea: function() {
     wx.navigateTo({
@@ -173,6 +221,11 @@ Page({
     })
   },
 
+  upOrag: function() {
+    wx.navigateTo({
+      url: '../organizations/organizations',
+    })
+  },
   detail: function() {
     wx.navigateTo({
       url: '../detail/detail',
@@ -191,7 +244,7 @@ Page({
           url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + res.data,
           method: 'POST',
           data: {
-            oid: 0,
+            oid: that.data.oid,
             length: 10,
             search: that.data.search || '',
             start: that.data.start += 10,
@@ -229,9 +282,9 @@ Page({
     })
     wx.request({
       url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + that.data.JSESSIONID,
-      // method: 'POST',
+      method: 'GET',
       data: {
-        oid: 0,
+        oid: that.data.oid,
         search: e.detail.value || '',
         resolution: that.data.resolution,
         op: that.data.op,
@@ -255,6 +308,7 @@ Page({
   reset: function() {
     var that = this;
     that.setData({
+      start: 0,
       op: '',
       hasProgram: '',
       status: '',
@@ -264,6 +318,7 @@ Page({
       city_no: '',
       tem_fir: that.data.new_tem_fir,
       tem_sec: that.data.new_tem_sec,
+      team_fir: that.data.new_team_fir,
       hide_fir: '',
       hide_sec: '',
       opHide_fir: '',
@@ -276,7 +331,10 @@ Page({
       hideSt_fou: "",
       city_name: "",
       search: "",
-      teHide_fir: ''
+      teHide_fir: '',
+      teHide_sec: '',
+      org_name: '',
+      oid: 0
     })
   },
 
@@ -286,11 +344,12 @@ Page({
       display: "none",
       position: "position:absolute",
       translate: '',
+      start: 0
     })
     wx.request({
       url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + that.data.JSESSIONID,
       data: {
-        oid: 0,
+        oid: that.data.oid,
         search: that.data.search || '',
         resolution: that.data.resolution,
         op: that.data.op,
@@ -405,18 +464,25 @@ Page({
   //分组
   bindtapFuncTe_fir: function(e) {
     var that = this;
-    that.data.gid = e.currentTarget.dataset.text.id;
+    // that.data.gid = e.currentTarget.dataset.text.id;
     that.setData({
       teHide_fir: "background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff",
-      teHide_sec: ''
+      teHide_sec: '',
+      gid: that.data.team_fir_gid
     })
   },
   bindtapFuncTe_sec: function(e) {
     var that = this;
-    that.data.gid = e.currentTarget.dataset.text.id;
+    // that.data.gid = e.currentTarget.dataset.text.id;
     that.setData({
       teHide_fir: "",
-      teHide_sec: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff'
+      teHide_sec: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff',
+      gid: that.data.team_sec_gid
+    })
+  },
+  open_ter: function() {
+    wx.navigateTo({
+      url: '../open_ter/open_ter',
     })
   }
 })

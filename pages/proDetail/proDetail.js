@@ -9,7 +9,8 @@ Page({
   data: {
     selected: true,
     selected1: false,
-    start: 0
+    start: 0,
+    program_manage: false
 
   },
   onLoad: function(options) {
@@ -22,12 +23,21 @@ Page({
   onShow: function(e) {
     var that = this;
     wx.getStorage({
+      key: 'perms',
+      success: function (res) {
+        that.setData({
+          perms :res.data
+        })
+
+      },
+    })
+
+    wx.getStorage({
       key: 'sessionid',
       success: function(res) {
         that.setData({
             JSESSIONID: res.data
           }),
-
           //节目
           wx.request({
             url: ip.init + '/api/program/getProgramById;JSESSIONID=' + res.data,
@@ -39,7 +49,15 @@ Page({
               'content-type': 'application/x-www-form-urlencoded' // 默认值
             },
             success: function(res) {
-              console.log(res.data)
+              var perms = that.data.perms;
+              for (var i = 0; i < perms.length; i++) {
+                if (perms[i] === '436') {
+                  console.log(that.data.program_manage)
+                  that.setData({
+                    program_manage: true
+                  })
+                }
+              }
               that.setData({
                 dataList: res.data.content,
                 pixel: res.data.content.pixelHorizontal + '*' + res.data.content.pixelVertical,
@@ -173,55 +191,58 @@ Page({
   },
   proStop: function(e) {
     var that = this;
-    // wx.showModal({
-    //   title: '',
-    //   content: '',
-    // })
-    wx.request({
-      url: ip.init + '/api/program/programManage_sendCommand;JSESSIONID=' + that.data.JSESSIONID,
-      method: 'POST',
-      data: {
-        tids: e.currentTarget.dataset.tid,
-        type: 0,
-        pid: that.data.id,
-        oid: 0,
-        gid: '',
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function(res) {
-        wx.showToast({
-          title: res.data.message,
-          icon: 'none',
-          success: function(res) {
-            setTimeout(function() {
-              wx.request({
-                url: ip.init + '/api/program/getProgramPlayPageByPid;JSESSIONID=' + that.data.JSESSIONID,
-                method: 'POST',
-                data: {
-                  pid: that.data.id,
-                  oid: 0,
-                  length: 10,
-                  start: 0
-                },
-                header: {
-                  'content-type': 'application/x-www-form-urlencoded' // 默认值
-                },
-                success: function(res) {
-                  console.log(res.data)
-                  that.setData({
-                    temList: res.data.content.data,
-                    playTers: res.data.content.recordsTotal,
+    wx.showModal({
+      title: '',
+      content: '确定要停播？',
+      success:function(res){
+        wx.request({
+          url: ip.init + '/api/program/programManage_sendCommand;JSESSIONID=' + that.data.JSESSIONID,
+          method: 'POST',
+          data: {
+            tids: e.currentTarget.dataset.tid,
+            type: 0,
+            pid: that.data.id,
+            oid: 0,
+            gid: '',
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          success: function (res) {
+            wx.showToast({
+              title: res.data.message,
+              icon: 'none',
+              success: function (res) {
+                setTimeout(function () {
+                  wx.request({
+                    url: ip.init + '/api/program/getProgramPlayPageByPid;JSESSIONID=' + that.data.JSESSIONID,
+                    method: 'POST',
+                    data: {
+                      pid: that.data.id,
+                      oid: 0,
+                      length: 10,
+                      start: 0
+                    },
+                    header: {
+                      'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    },
+                    success: function (res) {
+                      console.log(res.data)
+                      that.setData({
+                        temList: res.data.content.data,
+                        playTers: res.data.content.recordsTotal,
+                      })
+                    }
                   })
-                }
-              })
-            }, 2000)
+                }, 2000)
+
+              }
+            });
 
           }
-        });
-
+        })
       }
     })
+   
   }
 })

@@ -7,7 +7,14 @@ Page({
   data: {
   
   },
-
+  onShareAppMessage(e) {
+    if (e.from === 'button') {
+      console.log(e.target)
+    }
+    return {
+      title: '转发'
+    }
+  },
   onShow:function(e){
     var that = this;
     wx.getStorage({
@@ -15,6 +22,14 @@ Page({
       success: function (res) {
         that.setData({
           account: res.data
+        })
+      },
+    });
+    wx.getStorage({
+      key: 'domainName',
+      success: function(res) {
+        that.setData({
+          domainName:res.data
         })
       },
     })

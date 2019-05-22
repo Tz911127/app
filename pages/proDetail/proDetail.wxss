@@ -126,6 +126,8 @@ page {
 
 .tem .left {
   color: #2b344a;
+  text-align: justify;
+  text-align-last: justify
 }
 
 .tem .right {

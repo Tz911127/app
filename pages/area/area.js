@@ -22,10 +22,6 @@ Page({
         pro.push(that.data.provinces[i][j])
       }
     };
-    // for (var i = 0; i < pro.length; i++) {
-    //   console.log(cityData.init[pro[i].code])
-
-    // };
 
     that.setData({
       pro: pro

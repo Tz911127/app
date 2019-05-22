@@ -86,7 +86,8 @@ Page({
     var that = this;
     wx.showModal({
       content: status == 3 ? '确定通过素材' : '确定不通过素材',
-      success: function() {
+      success: function(res) {
+        if (res.confirm) {
         wx.request({
           url: ip.init + '/api/material/materialCheck_check;JSESSIONID=' + that.data.JSESSIONID,
           method: 'POST',
@@ -103,6 +104,7 @@ Page({
               });
           }
         })
+        }
       }
     })
 

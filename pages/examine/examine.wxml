@@ -13,7 +13,7 @@
     <view class='nav'>
       <view class='img'>
         <!-- <image src='../../img/pre.png'></image> -->
-         <view class='sta'>
+        <view class='sta'>
           节目大小
         </view>
         <view class='sta'>
@@ -36,11 +36,16 @@
       </view>
     </view>
     <view class='foot'>
-      <view catchtap='preview' data-id='{{item.id}}' data-type='{{item.type}}' data-path="{{item.path}}">审核</view>
+      <view data-id='{{item.id}}' catchtap='preview' style='color:#096DD9'>预览节目</view>
+      <view wx:if="{{item.status ==2&&firChe || item.status == 6&&lasChe}}" data-id='{{item.id}}' catchtap='exa' data-status='{{item.status ==2?6:3}}' style='color:#40BE65'>审核通过</view>
+      <view wx:if="{{item.status ==2&&firChe || item.status == 6&&lasChe}}" data-id='{{item.id}}' catchtap='exa' data-status='{{item.status ==2?4:7}}' style='color:#FF4D4F'>审核不通过</view>
+
+
+      <!-- </view> -->
     </view>
 
   </view>
-  <view class='hide' wx:if="{{dataList.length == 0}}">暂无数据</view>
+  <view class='hide' wx:if="{{dataList.length == 0}}">暂无数据或者没有访问节目审核权限</view>
 </view>
 <view class="{{selected1?'show':'hidden'}}">
 
@@ -67,8 +72,8 @@
       </view>
     </view>
     <view class='foot'>
-      <view catchtap='pre_mate' data-id="{{item.id}}" data-type='{{item.type}}' data-path="{{item.path}}">审核</view>
+      <view wx:if="{{matChe}}"  catchtap='pre_mate' data-id="{{item.id}}" data-type='{{item.type}}' data-path="{{item.path}}">审核</view>
     </view>
   </view>
-  <view class='hide' wx:if="{{dataMatList.length == 0}}">暂无数据</view>
+  <view class='hide' wx:if="{{dataMatList.length == 0}}">暂无数据或者没有访问素材审核权限</view>
 </view>

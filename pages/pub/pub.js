@@ -6,6 +6,7 @@ Page({
   data: {
     startDate: '1970-01-01',
     newstartDate: util.formatTime,
+    newendDate: util.formatTime,
     endDate: '2050-01-01',
     pubTime: [],
     flag: false,
@@ -106,11 +107,6 @@ Page({
         url: '../sel_tem/sel_tem?proId=' + this.data.proId + '&pubTime=' + JSON.stringify(this.data.pubTime) + '&startDate=' + this.data.startDate + '&endDate=' + this.data.endDate,
 
       });
-      setTimeout(function() {
-        that.setData({
-          pubTime: []
-        })
-      }, 2000)
 
     }
   },

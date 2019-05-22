@@ -21,7 +21,8 @@ Page({
       key: 'sessionid',
       success: function(res) {
         that.setData({
-          JSESSIONID: res.data
+          JSESSIONID: res.data,
+          url: ip.init + '/TBXEditor/preview_online/index_online.html?pid=' + that.data.id + '&sessionid=' + res.data + '&keepScale=1&autoRotate=1'
         });
         wx.request({
           url: ip.init + '/api/program/getProgramById;JSESSIONID=' + that.data.JSESSIONID,
@@ -57,7 +58,7 @@ Page({
                   pic.push(res.data.content[i])
                 };
                 that.setData({
-                  pic:pic
+                  pic: pic
                 })
               }
             })
@@ -69,7 +70,7 @@ Page({
 
 
   },
-  scroll:function(){},
+  scroll: function() {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -123,39 +124,45 @@ Page({
     var that = this;
     wx.showModal({
       title: '',
-      content: status == 6 ? '确定审核通过' :'审核不通过',
-      success: function (res) {
+      content: status == 6 ? '确定审核通过' : '审核不通过',
+      success: function(res) {
         if (res.confirm) {
           wx.request({
             url: ip.init + '/api/program/check;JSESSIONID=' + that.data.JSESSIONID,
-            method:'POST',
-            data:{
-              id:that.data.id,
+            method: 'POST',
+            data: {
+              id: that.data.id,
               status: status
             },
-            header:{
-              'Content-Type':"application/x-www-form-urlencoded"
+            header: {
+              'Content-Type': "application/x-www-form-urlencoded"
             },
-            success:function(res){
+            success: function(res) {
               wx.showToast({
-                title: status == 6 ?'审核通过':'审核不通过',
-                icon:'none',
-                success:function(res){
-                  setTimeout(function(){
+                title: status == 6 ? '审核通过' : '审核不通过',
+                icon: 'none',
+                success: function(res) {
+                  setTimeout(function() {
                     wx.navigateBack({
                       delta: 1
                     });
-                  },2000)
+                  }, 2000)
                 }
               })
             }
           })
-          
+
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
 
-  }
-})
+  },
+  preview: function (e) {
+    var id = this.data.id;
+    wx.navigateTo({
+      url: '../preview/preview?id=' + id,
+    })
+  },
+})  

@@ -91,8 +91,15 @@ Page({
   bindFunc: function(e) {
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
+    let team_fir;
+    for(let i =0;i<this.data.dataList.length;i++){
+      if (e.currentTarget.dataset.text === this.data.dataList[i].id) {
+        team_fir = this.data.dataList[i].name
+      }
+    }
     prevPage.setData({
       gid: e.currentTarget.dataset.text,
+      team_fir: team_fir,
       teHide_fir: "background:#096dd9;color:#fff",
       teHide_sec: ''
     });

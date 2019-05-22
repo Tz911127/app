@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "终端详情",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "detail-order": "/components/detail-order/detail-order"
+  }
 }

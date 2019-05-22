@@ -14,8 +14,37 @@ Page({
     var that = this;
     that.setData({
       tids: options.tids,
-      weeks: options.weeks
+      weeks: options.weeks,
+      name: options.name
+    });
+    wx.getStorage({
+      key: 'sessionid',
+      success: function(res) {
+        wx.request({
+          url: ip.init + '/api/terminal/getTerminalPageList;JSESSIONID=' + res.data,
+          method: 'POST',
+          data: {
+            search: that.data.name
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' // 默认值
+          },
+          success: function(res) {
+            if (res.data.content.data[0].workCron) {
+              let time = res.data.content.data[0].workCron;
+              let startTime = time.split('?')[0].split(' ');
+              let endTime = time.split('?')[1].split('/')[1].split(' ')
+              that.setData({
+                startTime: (startTime[2] > 9 ? startTime[2] : '0' + startTime[2]) + ':' + (startTime[1] > 9 ? startTime[1] : '0' + startTime[1]),
+                endTime: (endTime[2] > 9 ? endTime[2] : '0' + endTime[2]) + ':' + (endTime[1] > 9 ? endTime[1] : '0' + endTime[1])
+              })
+            }
+          }
+        });
+
+      },
     })
+
   },
 
 

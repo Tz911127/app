@@ -31,7 +31,7 @@
     <view class='tem clearfix' wx:for="{{temList}}" wx:key="{{item}}">
       <view class='detail'>
         <view class='title'>
-         <image wx-if="{{item.terminalStatus == 1}}" src='../../img/icon_name@2x_4.png'></image>
+          <image wx-if="{{item.terminalStatus == 1}}" src='../../img/icon_name@2x_4.png'></image>
           <image wx-if="{{item.terminalStatus == 2}}" src='../../img/icon_name@2x_2.png'></image>
           <image wx-if="{{item.terminalStatus == 3}}" src='../../img/icon_name@2x.png'></image>
           <image wx-if="{{item.terminalStatus == 4}}" src='../../img/icon_name@2x_3.png'></image>
@@ -48,12 +48,15 @@
           <view class='right'>
             <view>{{item.terminalNo}}</view>
             <view>{{pixel}}</view>
-            <view>{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
+            <view wx:if="{{item.startDate == 19700101 && item.endDate == 20500101}}">
+              不限
+            </view>
+            <view wx:else>{{filter.getTime(item.startDate)}}至{{filter.getTime(item.endDate)}}</view>
             <view>{{filter.strArr(item.periodArray)}}</view>
           </view>
         </view>
       </view>
-      <view class='btn' data-tid='{{item.tid}}' bindtap='proStop'>
+      <view class='btn' wx:if="{{program_manage}}" data-tid='{{item.tid}}' bindtap='proStop'>
         停播
       </view>
     </view>
@@ -61,27 +64,28 @@
   </view>
   <view class="{{selected1?'show':'hidden'}}">
     <scroll-view style='height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
-    <view  wx:for="{{orderList}}" wx:key="{{item}}" class='scroll'>
-     <view style='padding:20rpx'>下发时间:{{filter.format(item.sendTime)}}</view>
-      <view class='order'>
-     
-        <view class='left'>
-          <view>命令名称</view>
-          <view>下发状态</view>
-          <view>终端编号</view>
-          <view>终端名称</view>
-          <view>用户账号</view>
-          <!-- <view>下发时间</view> -->
+      <view wx:for="{{orderList}}" wx:key="{{item}}" class='scroll'>
+        <view style='padding:20rpx'>下发时间:{{filter.format(item.sendTime)}}</view>
+        <view class='order'>
+
+          <view class='left'>
+            <view>命令名称</view>
+            <view>下发状态</view>
+            <view>终端编号</view>
+            <view>终端名称</view>
+            <view>用户账号</view>
+            <!-- <view>下发时间</view> -->
+          </view>
+          <view class='right'>
+            <view> {{filter.option(item.cmdCode)}}</view>
+            <view class="{{item.status == 1?'suc':item.status == 2?'fail':''}}"> {{filter.proStatus(item.status)}}</view>
+            <view> {{item.terNo}}</view>
+            <view> {{item.programName}}</view>
+            <view> {{item.userAccount}}</view>
+            <!-- <view> {{filter.format(item.sendTime)}}</view> -->
+          </view>
         </view>
-        <view class='right'>
-          <view> {{item.terName}}</view>
-          <view class="{{item.status == 1?'suc':item.status == 2?'fail':''}}"> {{filter.proStatus(item.status)}}</view>
-          <view> {{item.terNo}}</view>
-          <view> {{item.programName}}</view>
-          <view> {{item.userAccount}}</view>
-          <!-- <view> {{filter.format(item.sendTime)}}</view> -->
-        </view>
-      </view></view>
+      </view>
       <view style='color:#2b344a;line-height:100vh;text-align:center' wx:if='{{orderList.length == 0}}'>暂无命令记录</view>
     </scroll-view>
 

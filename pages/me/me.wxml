@@ -1,10 +1,10 @@
 <!-- <view> -->
 <view class='me'>
   <view class='img'>
-    <image src='../../img/icon_logo.png'></image>
+    <image src='../../img/img_head.png'></image>
   </view>
   <view class='info'>
-    <view style='font-size:40rpx'>快媒数字</view>
+    <view style='font-size:40rpx'>{{domainName}}</view>
     <view style='font-size:35rpx'>登录账号: {{account}}</view>
   </view>
 </view>

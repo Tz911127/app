@@ -9,6 +9,10 @@ page {
   background-color: #edf0f3;
 }
 
+.organization {
+  margin-bottom: 15rpx
+}
+
 .test .tit {
   color: #2b344a;
   font-size: 32rpx;
@@ -42,6 +46,8 @@ page {
 .scroll_view {
   height: 100vh;
   margin-top: 83rpx;
+  /* margin-bottom: 120rpx; */
+  background: #edf0f3
 }
 
 .checkbox {
@@ -61,7 +67,7 @@ page {
   border-top: 1px solid #f5f7fb;
   height: 130rpx;
   line-height: 130rpx;
-  padding-left: 30rpx;
+  /* padding-left: 30rpx; */
 }
 
 .ok_btn label, .ok_btn view {
@@ -73,12 +79,13 @@ page {
   background: linear-gradient(to bottom right, #40a9ff, #096dd9);
   color: #fff;
   padding: 0 60rpx;
-  margin-right: 32rpx;
+  /* margin-right: 32rpx; */
 }
 
 .ok_btn .ok_rad {
   width: 55%;
   position: relative;
+  padding-left:40rpx
 }
 
 .ok_total {

@@ -15,6 +15,7 @@ Page({
   onLoad: function(options) {
     var that = this;
     var id = options.id;
+    console.log(id)
     that.setData({
       id: id
     })
@@ -26,7 +27,6 @@ Page({
           url: ip.init + '/TBXEditor/preview_online/index_online.html?pid=' + that.data.id + '&sessionid=' + res.data + '&keepScale=1&autoRotate=1'
         
         })
-        console.log(that.data.url)
       }
     });
     // })
