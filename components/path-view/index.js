@@ -7,7 +7,8 @@ Component({
       value: [],
       observer() {
         this.initView();
-      }
+      },
+
     },
     // 非树形数据，仅在value无传参时生效
     unnormalizedValue: {
@@ -61,7 +62,8 @@ Component({
     isChange: false,
     // 映射value值，存放树形数据
     normalValue: [],
-    currentFatherId: null
+    currentFatherId: null,
+    display: 'none',
   },
   methods: {
     initView() {
@@ -104,7 +106,7 @@ Component({
       // 如果正在执行修改路径的方法
       if (this.data.isChange) {
         return;
-      }
+      };
       this.setData({
         isChange: true
       });
@@ -117,13 +119,17 @@ Component({
         this.setData({
           currentPath: [
             ...this.data.currentPath,
-            { text: currentText, index: currentIndex }
+            {
+              text: currentText,
+              index: currentIndex
+            }
           ]
         });
         this.selPath();
       }
       this.setData({
-        isChange: false
+        isChange: false,
+        display: "block"
       });
     },
     // 选择路径
@@ -164,10 +170,19 @@ Component({
       });
       // 获取当前点击的索引
       const index =
-        e.currentTarget.dataset.index != undefined
-          ? e.currentTarget.dataset.index
-          : this.data.currentPath.length - 1;
+        e.currentTarget.dataset.index != undefined ?
+        e.currentTarget.dataset.index :
+        this.data.currentPath.length - 1;
       this.selPath(index - 1);
+      if (index == -1 || index == 0) {
+        this.setData({
+          display: "none"
+        });
+      } else {
+        this.setData({
+          display: "block"
+        });
+      }
       this.setData({
         isChange: false
       });
@@ -181,10 +196,8 @@ Component({
         value: this.properties.unnormalizedValue,
         fatherKey: this.properties.fatherKey,
         selfKey: this.properties.selfKey,
-        rootValue:
-          this.properties.rootValue === null
-            ? undefined
-            : this.properties.rootValue
+        rootValue: this.properties.rootValue === null ?
+          undefined : this.properties.rootValue
       });
     },
     // 通过唯一标识符找到元素的所在位置

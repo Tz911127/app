@@ -4,37 +4,44 @@
   <form bindsubmit="formSubmit">
     <view class='page-tab' style="{{position}}">
       <view class='tab'>
-        <view>终端状态</view>
+        <view style='margin:40rpx 0'>终端状态</view>
         <view>
-          <view data-text="1" class="status_line online" style='{{hideSt_fir}}' bindtap="bindtapFuncSt_fir">在线</view>
-          <view data-text="2" class="status_line offline" style='{{hideSt_sec}}' bindtap="bindtapFuncSt_sec">离线</view>
-          <view data-text="3" class="status_line error" style='{{hideSt_thr}}' bindtap="bindtapFuncSt_thr">异常</view>
-          <view data-text="4" class="status_line timeout" style='{{hideSt_fou}}' bindtap="bindtapFuncSt_fou">到期</view>
+          <view data-text="1" class="btn_" style='{{online}}' bindtap="bindtapLine">在线</view>
+          <view data-text="2" class="btn_" style='{{offline}}' bindtap="bindtapLine">离线</view>
         </view>
 
+        <view style='margin:40rpx 0'>到期状态</view>
+        <view>
+          <view data-text="0" class="btn_" style='{{onexpired}}' bindtap="bindtapExpired">未到期</view>
+          <view data-text="1" class="btn_" style='{{offexpired}}' bindtap="bindtapExpired">到期</view>
+        </view>
+        <view style='margin:40rpx 0'>运行状态</view>
+        <view data-text="0" class="btn_" style='{{onexception}}' bindtap="bindtapExc">正常</view>
+        <view data-text="1" class="btn_" style='{{offexception}}' bindtap="bindtapExc">异常</view>
+
 
         <view>
-          <view style='margin-bottom:15rpx'>终端分辨率
+          <view style='margin:40rpx 0'>终端分辨率
             <view bindtap='res_more' style='float:right;color:#98A0B3;font-size:25rpx'>更多></view>
           </view>
           <view data-text="{{tem_fir}}" class="btn_" style='{{hide_fir}}' bindtap="bindtapFuncRe_fir">{{tem_fir}}</view>
-          <view wx:if="{{tem_sec}}"  data-text="{{tem_sec}}" class="btn_" style='{{hide_sec}}' bindtap="bindtapFuncRe_sec">{{tem_sec}}</view>
+          <view wx:if="{{tem_sec}}" data-text="{{tem_sec}}" class="btn_" style='{{hide_sec}}' bindtap="bindtapFuncRe_sec">{{tem_sec}}</view>
         </view>
 
         <view>
-          <view style='margin-bottom:15rpx'>系统类型</view>
+          <view style='margin:40rpx 0'>系统类型</view>
           <view data-text="1" class="btn_" style='{{opHide_fir}}' bindtap="bindtapFuncOp_fir">Android</view>
           <view data-text="2" class="btn_" style='{{opHide_sec}}' bindtap="bindtapFuncOp_sec">Windows</view>
         </view>
 
         <view>
-          <view style='margin-bottom:15rpx'>播放节目</view>
+          <view style='margin:40rpx 0'>播放节目</view>
           <view data-text="1" class="btn_" style='{{proHide_fir}}' bindtap="bindtapFuncPro_fir">有</view>
           <view data-text="0" class="btn_" style='{{proHide_sec}}' bindtap="bindtapFuncPro_sec">无</view>
         </view>
 
         <view wx:if="{{groups.length != 0}}">
-          <view style='margin-bottom:15rpx'>终端分组
+          <view style='margin:40rpx 0'>终端分组
             <view bindtap='tem_more' style='float:right;color:#98A0B3;font-size:25rpx'>更多 >
             </view>
           </view>
@@ -42,9 +49,9 @@
           <view wx:if="{{team_sec}}" data-text="{{team_sec}}" class="btn_" style='{{teHide_sec}}' bindtap="bindtapFuncTe_sec">{{team_sec}}</view>
         </view>
 
-        <view class='clearfix turn'>
+        <view class='clearfix turn' style='margin:40rpx 0'>
           <view class='clearfix'>
-            <view style='float:left;margin-bottom:15rpx'>所属区域</view>
+            <view style='float:left'>所属区域</view>
             <view bindtap='upArea' style='float:right;color:#98A0B3;font-size:25rpx'>全部 >
             </view>
           </view>
@@ -52,7 +59,7 @@
         </view>
 
         <view class='organization'>
-          <view style='margin-bottom:10rpx'>
+          <view style='margin:40rpx 0'>
             组织机构
             <view bindtap='upOrag' style='float:right;color:#98A0B3;font-size:25rpx'>全部 ></view>
           </view>
@@ -104,7 +111,7 @@
           </view>
 
           <view class="weui-cell__hd">
-            <checkbox value="{{item.id}}" data-checked='{{checked}}'  checked="{{item.checked}}"/>
+            <checkbox value="{{item.id}}" data-checked='{{checked}}' checked="{{item.checked}}" />
           </view>
         </label>
       </checkbox-group>

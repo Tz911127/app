@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/home/home",
     "pages/terminal/terminal",
-    "pages/login/login",
     "pages/program/program",
     "pages/me/me",
     "pages/area/area",
@@ -10,8 +10,6 @@
     "pages/open_close/open_close",
     "pages/sounds/sounds",
     "pages/preview/preview",
-    "pages/pub/pub",
-    "pages/setTime/setTime",
     "pages/proDetail/proDetail",
     "pages/about/about",
     "pages/password/password",
@@ -22,15 +20,39 @@
     "pages/pro_more/pro_more",
     "pages/tem_res_more/tem_res_more",
     "pages/area_city/area_city",
-    "pages/sel_tem/sel_tem",
     "pages/exa/exa",
-    "pages/exa_mate/exa_mate"
+    "pages/exa_mate/exa_mate",
+    "pages/organizations/organizations",
+    "pages/open_ter/open_ter",
+    "pages/open_add/open_add",
+    "pages/open_edit/open_edit",
+    "pages/open_add_info/open_add_info",
+    "pages/example/example",
+    "pages/map/map",
+    "pages/ter_list/ter_list",
+    "pages/pub/pub",
+    "pages/sel_tem/sel_tem",
+    "pages/setTime/setTime"
   ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "pages": [
+        "pages/exp/exp"
+      ]
+    }
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "登录",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7f8"
   },
   "tabBar": {
     "color": "#98a0b3",
@@ -55,17 +77,12 @@
         "selectedIconPath": "img/tab3_select.png"
       },
       {
-        "pagePath": "pages/examine/examine",
-        "text": "审核",
-        "iconPath": "img/tab4_unselect.png",
-        "selectedIconPath": "img/tab4_select.png"
-      },
-      {
         "pagePath": "pages/me/me",
         "text": "我的",
         "iconPath": "img/tab5_unselect.png",
         "selectedIconPath": "img/tab5_select.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

@@ -26,7 +26,9 @@ Page({
     select_all: false,
     searchInput: '',
     tids: '',
-    oid: 0
+    oid: "",
+    exceptionStatus:"",
+    expired:""
   },
 
   /**
@@ -35,38 +37,46 @@ Page({
   onLoad: function(options) {
     var proId = options.proId;
     // delete options.pubTime.id;
+    let that = this;
+    var pages = getCurrentPages();
+    var currPages = pages[pages.length - 1];
     this.setData({
       proId: proId,
       pubTime: options.pubTime,
       startDate: options.startDate,
       endDate: options.endDate,
+    });
+    wx.getStorage({
+      key: 'organizations',
+      success: function(res) {
+        that.setData({
+          oid: res.data[0].id,
+          _oid: res.data[0].id
+        });
+      }
+
+    });
+
+    wx.getStorage({
+      key: 'root_terminalReslotions',
+      success: function(res) {
+        if (res.data.length > 0) {
+          that.setData({
+            tem_fir: currPages.data.resolution ? currPages.data.resolution : res.data[0],
+            new_tem_fir: res.data[0],
+
+          });
+          if (res.data.length > 1) {
+            that.setData({
+              tem_sec: res.data[1],
+              new_tem_sec: res.data[1]
+
+            });
+          }
+        }
+      },
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    var that = this;
-    var pages = getCurrentPages();
-    var currPages = pages[pages.length - 1];
-    // that.setData({
-    //   searchInput: '',
-    //   search: ''
-    // })
-    this.setData({
-      tids: '',
-      total: 0,
-      start: 0,
-      select_all: false
-    })
+    
     wx.getStorage({
       key: 'sessionid',
       success: function(res) {
@@ -92,6 +102,37 @@ Page({
           }
         });
 
+
+
+
+
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    var that = this;
+    // var pages = getCurrentPages();
+    // var currPages = pages[pages.length - 1];
+    this.setData({
+      tids: '',
+      total: 0,
+      start: 0,
+      select_all: false
+    });
+    wx.getStorage({
+      key: 'sessionid',
+      success: function(res) {
         wx.request({
           url: ip.init + '/api/terminal/getTerminalGroups;JSESSIONID=' + res.data,
           method: 'GET',
@@ -107,7 +148,8 @@ Page({
             })
             if (res.data.content.length > 0) {
               that.setData({
-                team_fir: that.data.team_fir ? that.data.team_fir : res.data.content[0].name,
+                // team_fir: that.data.team_fir ? that.data.team_fir : res.data.content[0].name,
+                team_fir: res.data.content[0].name,
                 new_team_fir: res.data.content[0].name,
                 // team_fir: res.data.content[0].name,
                 team_fir_gid: res.data.content[0].id
@@ -118,43 +160,19 @@ Page({
                   team_sec: res.data.content[1].name,
                   team_sec_gid: res.data.content[1].id
                 })
-              }
-            }
-          }
-        });
-
-        wx.request({
-          url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + res.data,
-          method: "GET",
-          data: {},
-          header: {
-            'content-type': 'application/json' // 默认值
-          },
-          success: function(res) {
-            if (res.data.content.root_terminalReslotions.length > 0) {
-              that.setData({
-                tem_fir: currPages.data.resolution ? currPages.data.resolution : res.data.content.root_terminalReslotions[0],
-                // tem_sec: res.data.content.root_terminalReslotions[1],
-                new_tem_fir: res.data.content.root_terminalReslotions[0],
-                // new_tem_sec: res.data.content.root_terminalReslotions[1]
-
-              });
-              if (res.data.content.root_terminalReslotions.length > 1) {
+              } else {
                 that.setData({
-                  // tem_fir: currPages.data.resolution ? currPages.data.resolution : res.data.content.root_terminalReslotions[0],
-                  tem_sec: res.data.content.root_terminalReslotions[1],
-                  // new_tem_fir: res.data.content.root_terminalReslotions[0],
-                  new_tem_sec: res.data.content.root_terminalReslotions[1]
-
-                });
+                  team_sec: "",
+                  team_sec_gid: ""
+                })
               }
             }
-
           }
         });
-
-      }
+      },
     })
+
+
   },
 
 
@@ -300,6 +318,8 @@ Page({
         provinceCode: that.data.provinceCode,
         city_no: that.data.city_no,
         length: 50,
+        exceptionStatus: that.data.exceptionStatus,
+        expired: that.data.expired
       },
       header: {
         'content-type': 'application/json' // 默认值
@@ -319,7 +339,7 @@ Page({
   },
   bindtapFuncOp_fir: select.bindtapFuncOp_fir,
   // bindtapFuncOp_sec: select.bindtapFuncRe_sec,
-  bindtapFuncOp_sec:function(e){
+  bindtapFuncOp_sec: function(e) {
     var that = this;
     that.data.op = e.currentTarget.dataset.text;
     that.setData({
@@ -346,11 +366,9 @@ Page({
   },
   //状态
 
-  bindtapFuncSt_fir: select.bindtapFuncSt_fir,
-  bindtapFuncSt_sec: select.bindtapFuncSt_sec,
-  bindtapFuncSt_thr: select.bindtapFuncSt_thr,
-  bindtapFuncSt_fou: select.bindtapFuncSt_fou,
-
+  bindtapLine: select.bindtapLine,
+  bindtapExpired: select.bindtapExpired,
+  bindtapExc: select.bindtapExc,
 
   //分辨率
   bindtapFuncRe_fir: select.bindtapFuncRe_fir,
@@ -433,11 +451,49 @@ Page({
       city_name: "",
       teHide_fir: '',
       teHide_sec: '',
-      oid: 0,
+      oid: that.data._oid,
       org_name: '',
       team_fir: that.data.new_team_fir,
+      online: '',
+      offline: "",
+      onexpired: "",
+      offexpired: "",
+      onexception: "",
+      offexception: "",
+      expired: "",
+      exceptionStatus: '',
 
-    })
+    });
+    wx.request({
+      url: ip.init + '/api/terminal/getTerminalGroups;JSESSIONID=' + that.data.JSESSIONID,
+      method: 'GET',
+      data: {
+        oid: that.data._oid
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        that.setData({
+          groups: res.data.content
+        })
+        if (res.data.content.length > 0) {
+          that.setData({
+            // team_fir: that.data.team_fir ? that.data.team_fir : res.data.content[0].name,
+            team_fir: res.data.content[0].name,
+            new_team_fir: res.data.content[0].name,
+            team_fir_gid: res.data.content[0].id
+          })
+          if (res.data.content.length > 1) {
+            that.setData({
+              team_sec: res.data.content[1].name,
+              team_sec_gid: res.data.content[1].id
+            })
+          }
+        }
+      }
+    });
+
   },
   res_more: function() {
     wx.navigateTo({
@@ -446,7 +502,7 @@ Page({
   },
   tem_more: function() {
     wx.navigateTo({
-      url: '../tem_more/tem_more',
+      url: '../tem_more/tem_more?oid=' + this.data.oid,
     })
   },
   upArea: function() {

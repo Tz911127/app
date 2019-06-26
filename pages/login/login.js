@@ -1,6 +1,7 @@
 var pwd = require('../../utils/pwd.js');
-var ip = require('../../utils/ip.js')
-var base = require('../../utils/base.js')
+var ip = require('../../utils/ip.js');
+var base = require('../../utils/base.js');
+var util = require('../../utils/util.js')
 Page({
 
   /**
@@ -34,13 +35,14 @@ Page({
       },
     });
 
+    
   },
   formSubmit: function(e) {
     var that = this;
     if (e.detail.value.code == '' || e.detail.value.no == '' || e.detail.value.pwd == '') {
       wx.showToast({
         title: "公司代码，用户名，密码不能为空",
-        icon:'none'
+        icon: 'none'
       })
     } else {
       that.setData({
@@ -49,6 +51,9 @@ Page({
         // password: e.detail.value.pwd.length == 32 ? e.detail.value.pwd : pwd.md5_pwd(e.detail.value.pwd)
         password: (e.detail.value.pwd)
       });
+      wx.showLoading({
+        title: '加载中',
+      })
       wx.request({
         url: ip.init + '/api/auth/login',
         method: 'POST',
@@ -84,7 +89,8 @@ Page({
             wx.setStorage({
               key: 'password',
               data: base.encode(that.data.password),
-            })
+            });
+            wx.hideLoading();
             wx.showToast({
               title: '登录成功',
               icon: 'success',
@@ -92,13 +98,13 @@ Page({
                 wx.switchTab({
                   url: '../home/home',
                 })
-               
+
               }
             })
           } else {
             wx.showToast({
               title: res.data.message,
-              icon:'none',
+              icon: 'none',
             })
           }
 
@@ -107,6 +113,5 @@ Page({
     }
 
   }
-
 
 });

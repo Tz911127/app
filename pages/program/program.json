@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "节目",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true
 }

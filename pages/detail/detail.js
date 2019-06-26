@@ -90,16 +90,16 @@ Page({
           success: function(res) {
             let imgSrc = [];
             if (res.data.content.closeShot) {
-              imgSrc.push(res.data.content.closeShot);
+              imgSrc.push(res.data.content.closeShot.path);
             };
             if (res.data.content.aroundShot) {
-              imgSrc.push(res.data.content.aroundShot);
+              imgSrc.push(res.data.content.aroundShot.path);
             }
             if (res.data.content.longShot) {
-              imgSrc.push(res.data.content.longShot);
+              imgSrc.push(res.data.content.longShot.path);
             }
             if (res.data.content.otherShot) {
-              imgSrc.push(res.data.content.otherShot);
+              imgSrc.push(res.data.content.otherShot.path);
             }
             that.setData({
               datalist: res.data.content,

@@ -23,8 +23,32 @@ Page({
     exa_pro: false,
     fir_team_id: '',
     sec_team_id: '',
-    oid: 0,
+    oid: "",
     perms: ''
+  },
+  // 下来加载
+  onReachBottom: function() {
+    this.lower()
+  },
+  // 上拉刷新
+  onPullDownRefresh() {
+    this.refresh();
+  },
+  refresh: function() {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var perms_lists = this.data.perms;
+    for (var i = 0; i < perms_lists.length; i++) {
+      if (perms_lists[i] === '43') {
+        this.getData(this);
+      }
+    }
+    setTimeout(function() {
+
+      wx.hideNavigationBarLoading() //完成停止加载
+
+      wx.stopPullDownRefresh() //停止下拉刷新
+
+    }, 1500);
   },
   onShareAppMessage(e) {
     if (e.from === 'button') {
@@ -34,159 +58,27 @@ Page({
       title: '转发'
     }
   },
-  onLoad:function(e){
+  onLoad: function(e) {
     let that = this;
     wx.getStorage({
       key: 'perms',
-      success: function (res) {
+      success: function(res) {
         that.setData({
           perms: res.data
         })
       },
-    })
+    });
+    wx.getStorage({
+      key: 'organizations',
+      success: function(res) {
+        that.setData({
+          oid: res.data[0].id,
+          _oid: res.data[0].id
+        });
+      },
+    });
     wx.getStorage({
       key: 'sessionid',
-      success: function (res) {
-        that.setData({
-          JSESSIONID: res.data
-        });
-        var perms_lists = that.data.perms;
-        for (var i = 0; i < perms_lists.length; i++) {
-          if (perms_lists[i] === '43') {
-            wx.request({
-              url: ip.init + '/api/program/getProgramList;JSESSIONID=' + res.data,
-              method: 'POST',
-              data: {
-                oid: that.data.oid,
-                length: 10,
-                start: that.data.start
-              },
-              header: {
-                'content-type': 'application/json' // 默认值
-              },
-              success: function (res) {
-                let src = res.data.content.data[0].content;
-                if (res.data.code == 2) {
-                  wx.redirectTo({
-                    url: '../login/login',
-                  })
-                }
-                that.setData({
-                  dataList: res.data.content.data
-                })
-              }
-            });
-            wx.request({
-              url: ip.init + '/api/program/getProgramGroups;JSESSIONID=' + res.data,
-              method: 'GET',
-              data: {
-                oid: that.data.oid
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function (res) {
-                that.setData({
-                  teamData: res.data.content,
-                })
-                if (res.data.content.length == 1) {
-                  that.setData({
-                    fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                  })
-
-
-                } else if (res.data.content.length > 1) {
-                  that.setData({
-                    fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    sec_team: res.data.content[1].name ? res.data.content[1].name : '',
-                    sec_team_id: res.data.content[1].id ? res.data.content[1].id : '',
-                  })
-                }
-
-                for (var i = 0; i < res.data.content.length; i++) {
-                  if (that.data.gid == res.data.content[i].id) {
-                    that.setData({
-                      fir_team: res.data.content[i].name,
-                    })
-                  }
-                }
-
-              }
-            });
-          };
-          if (perms_lists[i] === '436') {
-            that.setData({
-              pub_pro: true
-            })
-          };
-          if (perms_lists[i] === '435') {
-            that.setData({
-              exa_pro: true
-            })
-          }
-        }
-
-
-        wx.getStorage({
-          key: 'root_terminalReslotions',
-          success: function (res) {
-            that.setData({
-              fir_res: that.data.resolution ? that.data.resolution : res.data[0],
-              new_fir_res: res.data[0],
-              sec_res: res.data[1],
-            });
-
-
-          }
-        })
-
-
-        let arr = that.data.perms
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i] == "436") {
-            that.setData({
-              proBtn: true
-            })
-          };
-          if (arr[i] == "435") {
-            that.setData({
-              cheBtn: true
-            })
-          }
-        }
-      
-      },
-      fail: function (res) {
-        wx.redirectTo({
-          url: '../login/login',
-        })
-      }
-    })
-  },
-  onShow: function(e) {
-    var that = this;
-    that.setData({
-      searchInput: '',
-      search: '',
-      start: 0
-    })
- /*   wx.getStorage({
-      key: 'perms',
-      success: function(res) {
-        that.setData({
-          perms: res.data
-        })
-      },
-    })
-    
-   wx.getStorage({
-      key: 'sessionid',
       success: function(res) {
         that.setData({
           JSESSIONID: res.data
@@ -194,77 +86,12 @@ Page({
         var perms_lists = that.data.perms;
         for (var i = 0; i < perms_lists.length; i++) {
           if (perms_lists[i] === '43') {
-            wx.request({
-              url: ip.init + '/api/program/getProgramList;JSESSIONID=' + res.data,
-              method: 'POST',
-              data: {
-                oid: that.data.oid,
-                length: 10,
-                start: that.data.start
-              },
-              header: {
-                'content-type': 'application/json' // 默认值
-              },
-              success: function(res) {
-                let src = res.data.content.data[0].content;
-                // src = JSON.parse(src);
-                // console.log(src.srcUrl);
-                // that.setData({
-                //   srcUrl: src.srcUrl
-                // })
-                if (res.data.code == 2) {
-                  wx.redirectTo({
-                    url: '../login/login',
-                  })
-                }
-                that.setData({
-                  dataList: res.data.content.data
-                })
-              }
-            });
-            wx.request({
-              url: ip.init + '/api/program/getProgramGroups;JSESSIONID=' + res.data,
-              method: 'GET',
-              data: {
-                oid: that.data.oid
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function(res) {
-                that.setData({
-                  teamData: res.data.content,
-                })
-                if (res.data.content.length == 1) {
-                  that.setData({
-                    fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                  })
-
-
-                } else if (res.data.content.length > 1) {
-                  that.setData({
-                    fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
-                    new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
-                    sec_team: res.data.content[1].name ? res.data.content[1].name : '',
-                    sec_team_id: res.data.content[1].id ? res.data.content[1].id : '',
-                  })
-                }
-
-                for (var i = 0; i < res.data.content.length; i++) {
-                  if (that.data.gid == res.data.content[i].id) {
-                    that.setData({
-                      fir_team: res.data.content[i].name,
-                    })
-                  }
-                }
-
-              }
-            });
+            wx.showLoading({
+              title: '加载中',
+            })
+            that.getData(that);
+            wx.hideLoading();
+            that.getGroups(that)
           };
           if (perms_lists[i] === '436') {
             that.setData({
@@ -287,7 +114,7 @@ Page({
               new_fir_res: res.data[0],
               sec_res: res.data[1],
             });
-          
+
 
           }
         })
@@ -306,14 +133,29 @@ Page({
             })
           }
         }
-      
+
       },
       fail: function(res) {
         wx.redirectTo({
           url: '../login/login',
         })
       }
-    })*/
+    })
+
+  },
+  onShow: function(e) {
+    var that = this;
+    wx.getStorage({
+      key: 'sessionid',
+      success: function(res) {
+        that.setData({
+          JSESSIONID:res.data
+        });
+        that.getGroups(that)
+      },
+    })
+
+
 
   },
 
@@ -350,7 +192,8 @@ Page({
     var status = e.currentTarget.dataset.status;
     if (status == 1) {
       wx.navigateTo({
-        url: '../pub/pub?pub=' + title + '|' + pixlh + '|' + pixlv + '|' + id,
+        url: '../pub/pub?pub=' +
+          title + '|' + pixlh + '|' + pixlv + '|' + id,
       })
     } else {
       wx.showToast({
@@ -367,43 +210,52 @@ Page({
       title: '提交审核',
       content: '确定提交审核？',
       success: function(res) {
-        wx.request({
-          url: ip.init + '/api/program/sumbmitCheck;JSESSIONID=' + that.data.JSESSIONID,
-          method: 'POST',
-          data: {
-            id: id
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          success: function(res) {
-            wx.request({
-              url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
-              method: 'POST',
-              data: {
-                oid: that.data.oid,
-                length: 10,
-                start: that.data.start
-              },
-              header: {
-                'content-type': 'application/json' // 默认值
-              },
-              success: function(res) {
-                if (res.data.code == 2) {
-                  wx.redirectTo({
-                    url: '../login/login',
+        if (res.confirm) {
+          wx.request({
+            url: ip.init + '/api/program/sumbmitCheck;JSESSIONID=' + that.data.JSESSIONID,
+            method: 'POST',
+            data: {
+              id: id
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            success: function(res) {
+              var perms_lists = that.data.perms;
+              for (var i = 0; i < perms_lists.length; i++) {
+                if (perms_lists[i] === '43') {
+                  wx.request({
+                    url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+                    method: 'POST',
+                    data: {
+                      oid: that.data.oid,
+                      length: 10,
+                      start: that.data.start
+                    },
+                    header: {
+                      'content-type': 'application/json' // 默认值
+                    },
+                    success: function(res) {
+                      if (res.data.code == 2) {
+                        wx.redirectTo({
+                          url: '../login/login',
+                        })
+                      }
+                      that.setData({
+                        dataList: res.data.content.data
+                      })
+                      // wx.showTabBarRedDot({
+                      //   index: 3,
+                      // })
+                    }
                   })
                 }
-                that.setData({
-                  dataList: res.data.content.data
-                })
-                // wx.showTabBarRedDot({
-                //   index: 3,
-                // })
               }
-            })
-          }
-        });
+            }
+          });
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
   },
@@ -420,29 +272,33 @@ Page({
         that.setData({
           JSESSIONID: res.data
         })
-
-        wx.request({
-          url: ip.init + '/api/program/getProgramList;JSESSIONID=' + res.data,
-          method: 'POST',
-          data: {
-            oid: that.data.oid,
-            length: 10,
-            search: that.data.search || '',
-            start: that.data.start += 10,
-            resolution: that.data.resolution,
-            type: that.data.type,
-            status: that.data.status,
-            gid: that.data.gid,
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' // 默认值
-          },
-          success: function(res) {
-            that.setData({
-              dataList: that.data.dataList.concat(res.data.content.data)
+        var perms_lists = that.data.perms;
+        for (var i = 0; i < perms_lists.length; i++) {
+          if (perms_lists[i] === '43') {
+            wx.request({
+              url: ip.init + '/api/program/getProgramList;JSESSIONID=' + res.data,
+              method: 'POST',
+              data: {
+                oid: that.data.oid,
+                length: 10,
+                search: that.data.search || '',
+                start: that.data.start += 10,
+                resolution: that.data.resolution,
+                type: that.data.type,
+                status: that.data.status,
+                gid: that.data.gid,
+              },
+              header: {
+                'content-type': 'application/x-www-form-urlencoded' // 默认值
+              },
+              success: function(res) {
+                that.setData({
+                  dataList: that.data.dataList.concat(res.data.content.data)
+                })
+              }
             })
           }
-        })
+        }
       }
     })
   },
@@ -450,7 +306,7 @@ Page({
 
   tem_res_more: function() {
     wx.navigateTo({
-      url: '../tem_res_more/tem_res_more',
+      url: '../tem_res_more/tem_res_more?oid='+this.data.oid,
     })
   },
   pro_more: function() {
@@ -463,23 +319,32 @@ Page({
     var that = this;
     that.setData({
       search: e.detail.value || ''
-    })
-    wx.request({
-      url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
-      // method: 'POST',
-      data: {
-        oid: that.data.oid,
-        search: e.detail.value || ''
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function(res) {
-        that.setData({
-          dataList: res.data.content.data
-        })
-      }
     });
+    var perms_lists = that.data.perms;
+    for (var i = 0; i < perms_lists.length; i++) {
+      if (perms_lists[i] === '43') {
+        wx.request({
+          url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+          // method: 'POST',
+          data: {
+            oid: that.data.oid,
+            search: e.detail.value || '',
+            resolution: that.data.resolution,
+            type: that.data.type,
+            status: that.data.status,
+            gid: that.data.gid,
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function(res) {
+            that.setData({
+              dataList: res.data.content.data
+            })
+          }
+        });
+      }
+    }
 
   },
 
@@ -487,39 +352,48 @@ Page({
     var that = this;
     this.setData({
       display: "none",
-      position: "position:absolute",
+      position: "position:fixed",
       translate: '',
       start: 0
     })
-    wx.request({
-      url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
-      data: {
-        oid: that.data.oid,
-        resolution: that.data.resolution,
-        type: that.data.type,
-        status: that.data.status,
-        gid: that.data.gid,
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function(res) {
-        that.setData({
-          dataList: res.data.content.data,
+    var perms_lists = that.data.perms;
+    for (var i = 0; i < perms_lists.length; i++) {
+      if (perms_lists[i] === '43') {
+        wx.request({
+          url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+          data: {
+            oid: that.data.oid,
+            resolution: that.data.resolution,
+            type: that.data.type,
+            status: that.data.status,
+            gid: that.data.gid,
+            search: that.data.search || ""
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function(res) {
+            that.setData({
+              dataList: res.data.content.data,
 
-        })
+            })
+          }
+        });
       }
-    });
+    }
   },
   reset: function() {
+    let that = this;
+    var perms_lists = that.data.perms;
+
     this.setData({
       type: '',
       status: '',
       gid: '',
       resolution: '',
-      fir_team: this.data.new_fir_team,
+      fir_team: this.data.new_fir_team || '',
       fir_res: this.data.new_fir_res,
-      fir_team_id: this.data.new_fir_team_id,
+      fir_team_id: this.data.new_fir_team_id || '',
       hide_fir: '',
       hide_sec: '',
       hideRes_fir: '',
@@ -531,8 +405,13 @@ Page({
       hideSt_thr: '',
       hideSt_fou: "",
       org_name: '',
-      oid: 0
-    })
+      oid: this.data._oid
+    });
+    for (var i = 0; i < perms_lists.length; i++) {
+      if (perms_lists[i] === '43') {
+        that.getGroups(that)
+      }
+    }
   },
 
   bindtapFuncSt_fir: function(e) {
@@ -625,5 +504,81 @@ Page({
       hideTeam_fir: '',
       hideTeam_sec: 'background:linear-gradient(to bottom right, #40a9ff, #096dd9);color:#fff'
     })
+  },
+  getData: function(that) {
+    wx.request({
+      url: ip.init + '/api/program/getProgramList;JSESSIONID=' + that.data.JSESSIONID,
+      method: 'GET',
+      data: {
+        oid: that.data.oid,
+        length: 10,
+        start: 0,
+        resolution: that.data.resolution,
+        type: that.data.type,
+        status: that.data.status,
+        gid: that.data.gid,
+        search: that.data.searchInput
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        if (res.data.code == 2) {
+          wx.redirectTo({
+            url: '../login/login',
+          })
+        }
+        that.setData({
+          dataList: res.data.content.data,
+          start: 0
+        })
+      }
+    });
+
+  },
+  getGroups: function(that) {
+    wx.request({
+      url: ip.init + '/api/program/getProgramGroups;JSESSIONID=' + that.data.JSESSIONID,
+      method: 'GET',
+      data: {
+        oid: that.data.oid
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        that.setData({
+          teamData: res.data.content,
+        })
+        if (res.data.content.length == 1) {
+          that.setData({
+            fir_team: res.data.content[0].name ? res.data.content[0].name : '',
+            fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
+            new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
+            new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
+          })
+
+
+        } else if (res.data.content.length > 1) {
+          that.setData({
+            fir_team: res.data.content[0].name ? res.data.content[0].name : '',
+            fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
+            new_fir_team_id: res.data.content[0].id ? res.data.content[0].id : '',
+            new_fir_team: res.data.content[0].name ? res.data.content[0].name : '',
+            sec_team: res.data.content[1].name ? res.data.content[1].name : '',
+            sec_team_id: res.data.content[1].id ? res.data.content[1].id : '',
+          })
+        }
+
+        for (var i = 0; i < res.data.content.length; i++) {
+          if (that.data.gid == res.data.content[i].id) {
+            that.setData({
+              fir_team: res.data.content[i].name,
+            })
+          }
+        }
+
+      }
+    });
   }
 })

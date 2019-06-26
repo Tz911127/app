@@ -13,7 +13,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log(options)
+    this.setData({
+      oid:options.oid
+    })
   },
 
   /**
@@ -38,7 +41,7 @@ Page({
           url: ip.init + '/api/terminal/getTerminalGroups;JSESSIONID=' + res.data,
           method: 'GET',
           data: {
-            oid: 0
+            oid: that.data.oid
           },
           header: {
             'content-type': 'application/json'

@@ -13,7 +13,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    let that = this;
+    wx.getStorage({
+      key: 'root_terminalReslotions',
+      success: function(res) {
+        that.setData({
+          tem_res: res.data
+        })
+      },
+    })
   },
 
   /**
@@ -27,29 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var that = this;
-    wx.getStorage({
-      key: 'sessionid',
-      success: function(res) {
-        that.setData({
-          JSESSIONID: res.data
-        });
-        wx.request({
-          url: ip.init + '/api/auth/getUserSrc;JSESSIONID=' + res.data,
-          method: 'GET',
-          data: {},
-          header: {
-            'content-type': 'application/json'
-          },
-          success: function(res) {
-            that.setData({
-              tem_res: res.data.content.root_terminalReslotions
-            })
-          }
-        })
-      }
 
-    })
   },
 
   bindFunc: function(e) {

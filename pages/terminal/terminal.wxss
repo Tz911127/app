@@ -1,10 +1,11 @@
 @import "../../lib/lib.wxss";
 @import "../../lib/conment.wxss";
+@import "../../lib/iconfont.wxss";
 
 .page {
   background-color: #f5f7f8;
   position: absolute;
-  height: 107%;
+  height: 100%;
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -35,6 +36,7 @@
 } */
 
 /* 遮罩层 */
+
 /* 
 .bg {
   display: none;
@@ -85,35 +87,16 @@
 .timeout {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAADIElEQVRIS+2WTWgdVRTH///7ZualtDE2vJlAbZKFtKVpG6hIFxUFi9LarSIIhpZAKXZRSjKvflHIIou0eZNWF0LjQsEPlELsQkE3CiooiIt20UKhHxYRM5OKbVLyMpO5RyYvL0xeXpKX94rd9K5m5pzz/805557LJR7S4kPi4hF4rvJyHqaecnpjoAeCbkCaAP6hKN9GYeSte/vfW422aEmpi2ecJ5XCRQA7y+IC3CCkE2CGQFFEH7fyEx82Al8ElnNOWzgrvxFsT4sKZndQMqMgn5n/LorSa/QHH9cLXwQOC87nAF6rFBPE2wl1HuBzZRuBqRktWzacDP6uB74Ani483pmBeQOgqgWc+BAyaLrBqYbAs559WAs/qiZSLeN5v18s198befY3ItxcJVYIXDeELvPjN9P2hYwjz35XhIMLRsFtEN8n79GMfsfM8ot0qUvbH7etvN8ZFZz9QnmiEpyUTgSvCJCz3GBPVXA4nDsBqrOpHn5HyHslgCgN9QGIjgrxK5br71ip1OLZuyPh72aHb/JVxCn90mN0xn5WFH9cU78En1p5v2elmJmRtl3Uctls9i0eRbQELANQ0Qb7CsBttcJJvc/sn/ihIXASPFuwX9LA19V2dqU4gTHT9V9e7SdXzbgsUBy2jytiJDmllhMl8LMR64N8c2LygYHn+u3lnhewAOFTi4XlroAj1pQ/xAGEq0ETe80Zp8Wk0NoVi+rW4DoquWVw4lf2YboWYNmnLvDcJJ3ONYPK4Un/+lqADYOLBefFDORL0w1a/1dwNNz2glBfsNxgYz1gGWnbFSVzfM23OFpljpcTFS+3NRJeJXjAEF6q9PszMz7Z3odpeb/1McyYTWn7/VCYzcoRDRzLusGmtK2mO1fk2YMieKv6iPGo5Y6Php7zCQSvL513uaehD2XdO8nlYmHVBJ7bZEMbW4pASzrYMIwxAdYT/AtAl4j+Ko7jobJPk0nB5D8BB1CscgDV07lSTHg69zQzal/pTceG5mes8WJQc8bl3ws95w3opOwrLEKopMfsC35azmvN4PrrszjyEfhBVXJVnf8AeW9HLlzqCQsAAAAASUVORK5CYII=');
 }
-/* 
-.btn {
-  display: inline-block;
-  border-radius: 57rpx;
-  width: 80%;
-  background-color: #f5f7f8;
-  height: 60rpx;
-} */
-
-/* .sea {
-  display: inline-block;
-  padding-left: 8rpx;
-  position: absolute;
-  top: 4rpx;
-} */
-/* 
-.sea image {
-  width: 56rpx;
-  height: 56rpx;
-} */
 
 .nav {
   display: flex;
   background: #fff;
   padding-left: 30rpx;
-  padding-top: 20rpx;
+  /* padding-top: 20rpx; */
   padding-bottom: 20rpx;
-  margin: 10rpx 20rpx 16rpx 20rpx;
+  margin: 0 20rpx 16rpx 20rpx;
   position: relative;
+  padding-top: 20rpx
 }
 
 .img {
@@ -121,8 +104,8 @@
 }
 
 .nav image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 32rpx;
+  height: 32rpx;
 }
 
 .test {
@@ -137,7 +120,7 @@
 
 .tit image {
   position: absolute;
-  top: 0rpx;
+  top: 10rpx;
 }
 
 .test .tit text:nth-child(2) {
@@ -148,8 +131,9 @@
 
 .test .main {
   color: #98a0b3;
-  font-size: 32rpx;
+  font-size: 28rpx;
   position: relative;
+  margin: 14rpx 0;
 }
 
 .test .main text {
@@ -228,13 +212,19 @@
 }
 
 .organization {
-  margin-bottom: 15rpx;
+  margin-bottom: 120rpx;
 }
 
 .ok_off {
   display: flex;
   flex-direction: row;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 62%;
+  padding-bottom: 20rpx;
+   padding-top: 20rpx;
+  background-color: rgba(255, 255, 255, 0.9)
 }
 
 .ok_off view {
@@ -295,6 +285,7 @@
   font-size: 25rpx;
   text-align: center;
 }
+
 /* 
 .red {
   background: #ff4d4f;

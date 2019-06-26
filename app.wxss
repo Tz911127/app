@@ -1,4 +1,5 @@
 /**app.wxss**/
+@import 'lib/iconfont.wxss';
 
 page {
   font-family: PingFang-SC;
@@ -135,3 +136,9 @@ page {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+
+
+
+
+

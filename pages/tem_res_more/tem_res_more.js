@@ -13,7 +13,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    this.setData({
+      oid:options.oid
+    })
   },
 
   /**
@@ -38,7 +40,7 @@ Page({
           url: ip.init + '/api/program/getProgramGroups;JSESSIONID=' + res.data,
           method: 'GET',
           data: {
-            oid: 0
+            oid: that.data.oid
           },
           header: {
             'content-type': 'application/json'

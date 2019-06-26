@@ -1,7 +1,7 @@
 function format(ts) {
   var d = getDate(ts)
-  return [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-') +
-    ' ' + [d.getHours(), d.getMinutes(), d.getSeconds()].join(':')
+  return [d.getFullYear(), (d.getMonth() + 1) < 10 ? ('0' + (d.getMonth() + 1)) : d.getMonth() + 1, (d.getDate()) < 10 ? ('0' + d.getDate()) : d.getDate()].join('-') +
+    ' ' + [d.getHours() < 10 ? ('0' + d.getHours()) : d.getHours(), d.getMinutes() < 10 ? ('0' + d.getMinutes()) : d.getMinutes(), d.getSeconds() < 10 ? ('0' + d.getSeconds()) : d.getSeconds()].join(':')
 }
 
 function status(data) {
@@ -120,7 +120,7 @@ function op(num){
 function netType(num) {
   if(num == 1) {
     return 'LAN'
-  }else if(num == 2) {
+  }else {
     return 'WIFI'
   }
 }

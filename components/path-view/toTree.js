@@ -21,7 +21,7 @@ export default function toTree({
         if (
           !itemJ[childrenKey] ||
           Object.prototype.toString.call(itemJ[childrenKey]) !==
-            '[object Array]'
+          '[object Array]'
         ) {
           itemJ[childrenKey] = [];
         }

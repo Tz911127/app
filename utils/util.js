@@ -196,7 +196,79 @@ function checkCross(times, timeItem) {                
   }             
   // console.log(result.cross.length)   
   return result;            
-}
+};
+//滑动
+function filter() {
+  this.setData({
+    display: "block",
+    // position: "position:fixed",
+    translate: 'transform: translateX(-' + this.data.windowWidth * 0.7 + 'px);height:100vh;overflow:hidden;position:fixed'
+  })
+
+};
+function hideview() {
+  this.setData({
+    display: "none",
+    position: "position:absolute",
+    translate: '',
+  })
+};
+function throttle(fn, gapTime) {
+  if (gapTime == null || gapTime == undefined) {
+    gapTime = 1500
+  }
+
+  let _lastTime = null
+  return function () {
+    let _nowTime = + new Date()
+    if (_nowTime - _lastTime > gapTime || !_lastTime) {
+      fn.apply(this)
+      _lastTime = _nowTime
+    }
+  }
+};
+
+function sha1_to_base64(sha1) {
+  var digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var base64_rep = "";
+  var cnt = 0;
+  var bit_arr = 0;
+  var bit_num = 0;
+  var ascv;
+
+  for (var n = 0; n < sha1.length; ++n) {
+    if (sha1[n] >= 'A' && sha1[n] <= 'Z') {
+      ascv = sha1.charCodeAt(n) - 55;
+    } else if (sha1[n] >= 'a' && sha1[n] <= 'z') {
+      ascv = sha1.charCodeAt(n) - 87;
+    } else {
+      ascv = sha1.charCodeAt(n) - 48;
+    }
+
+    bit_arr = (bit_arr << 4) | ascv;
+    bit_num += 4;
+    if (bit_num >= 6) {
+      bit_num -= 6;
+
+      base64_rep += digits[bit_arr >>> bit_num];
+      bit_arr &= ~(-1 << bit_num);
+    }
+  }
+
+  if (bit_num > 0) {
+    bit_arr <<= 6 - bit_num;
+    base64_rep += digits[bit_arr];
+  }
+  var padding = base64_rep.length % 4;
+
+  if (padding > 0) {
+    for (var n = 0; n < 4 - padding; ++n) {
+      base64_rep += "=";
+    }
+  }
+  return base64_rep;
+};
+
 
 module.exports = {
   formatTime: formatTime,
@@ -208,5 +280,9 @@ module.exports = {
   rep: rep,
   bMapTransQQMap: bMapTransQQMap,
   qqMapTransBMap: qqMapTransBMap,
-  checkCross: checkCross
+  checkCross: checkCross,
+  filter: filter,
+  hideview: hideview,
+  throttle: throttle,
+  sha1_to_base64: sha1_to_base64
 }

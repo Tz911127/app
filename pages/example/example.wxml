@@ -1,12 +1,12 @@
 <!--pages/example/example.wxml-->
 <view>
   <view class='title'>近景</view>
-  <image src='https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1426331807,2460330022&fm=26&gp=0.jpg'></image>
+  <image src='http://cdn-public.q-media.cn/html/254443691195970511.jpg'></image>
   <view class='foot'>终端屏幕需完整展示</view>
   <view class='title'>远景</view>
-  <image src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+  <image src='http://cdn-public.q-media.cn/html/284722609518109630.jpg'></image>
     <view class='foot'>终端屏幕所在位置，比如：餐厅，电梯等</view>
    <view class='title'>周边环境</view>
-  <image src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+  <image src='http://cdn-public.q-media.cn/html/350480535971437781.jpg'></image>
     <view class='foot'>终端屏幕所处环境，比如：小区，商圈等</view>
 </view>

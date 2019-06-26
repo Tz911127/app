@@ -18,7 +18,7 @@ page {
 }
 
 .page-tab {
-  height: 100%;
+  /* height: 100%; */
   width: 70%;
   position: absolute;
   z-index: 10;
@@ -178,7 +178,8 @@ input {
 }
 
 .page-tab .tab {
-  margin: 30rpx;
+  height: 96vh;
+  margin: 0 30rpx;
 }
 
 .page-tab .tab view {
@@ -208,6 +209,10 @@ input {
   flex-direction: row;
   text-align: center;
   margin-top: 40rpx;
+    position: fixed;
+  bottom: 0;
+  width: 62%;
+  margin-bottom: 20rpx
 }
 
 .ok_off view {
@@ -233,7 +238,7 @@ input {
 
 .foot view {
   width:100%;
-  font-size: 28rpx;
+  font-size: 32rpx;
   text-align: center;
 }
 
@@ -251,6 +256,7 @@ input {
 
 .sear {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 333;
   background: #fff;
@@ -262,8 +268,9 @@ input {
 .sea {
   display: inline-block;
   padding-left: 30rpx;
+  padding-right: 30rpx;
   position: absolute;
-  top: 4rpx;
+  top: -6rpx;
 }
 
 .sea image {
@@ -283,19 +290,20 @@ input {
   display: inline-block;
   width: 70%;
   position: absolute;
-  top: 6rpx;
-  font-size: 32rpx;
+  top: 6px;
+  font-size: 26rpx;
 }
 
 .title {
-  width: 100%;
+  /* width: 100%; */
   /* padding-left: 35rpx; */
   padding: 20rpx 35rpx;
   border-bottom: 1px solid rgba(228, 228, 228, 1);
+  font-weight: 600
 }
 
 .title view {
-  font-size: 28rpx;
+  font-size:32rpx;
   display: inline-block;
 }
 

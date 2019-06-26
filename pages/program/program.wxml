@@ -5,7 +5,7 @@
   <form bindsubmit="formSubmit">
     <view class='page-tab' style="{{position}}">
       <view class='tab'>
-        <view>审核状态</view>
+        <view style='margin:40rpx 0'>审核状态</view>
         <view data-text="0" bindtap="bindtapFuncSt_fir" style='{{hideSt_fir}}' class='status_line online'>待提交审核</view>
         <view data-text="1" bindtap="bindtapFuncSt_sec" style='{{hideSt_sec}}' class='status_line offline'>审核通过</view>
         <view data-text="3" bindtap="bindtapFuncSt_thr" style='{{hideSt_thr}}' class='status_line inline'>内部终审中</view>
@@ -60,12 +60,12 @@
         <image src='../../img/home_nav-2_icon_search.png'></image>
         <input style='padding-bottom:15rpx' value='{{searchInput}}' placeholder="节目名称" bindconfirm='search' />
       </view>
-      <view class='weui-cell_input sea'>
-        <image bindtap='filter' src='../../img/home_icon_filter.png'></image>
+      <view  bindtap='filter' class='weui-cell_input sea iconfont iconshaixuan'>
+        <!-- <image bindtap='filter' src='../../img/home_icon_filter.png'></image> -->
       </view>
     </view>
     <!-- <view style='margin-top:130rpx'> -->
-    <scroll-view style='margin-top:80rpx;height:100vh' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower">
+    <view style='margin-top:90rpx' scroll-y="true" bindscroll="scroll" bindscrolltolower="lower" bindscrolltoupper="refresh">
       <view wx:for="{{dataList}}" wx:key='item' class='main'>
         <view class='title'>
           <!-- <view>节目名称</view> -->
@@ -74,7 +74,7 @@
         <navigator url='../proDetail/proDetail?id={{item.id}}&playTers={{item.playTers}}&name={{item.name}}' class='nav'>
           <view class='img'>
             <image wx:if='{{item.snapshot}}' src='{{item.snapshot}}'></image>
-            <image  wx:else src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+            <image  wx:else src='http://cdn-public.q-media.cn/html/nothing.png'></image>
             <!-- <view class='sta'>
               分辨率
             </view>
@@ -118,7 +118,7 @@
         </view>
       </view>
       <view style='color:#2b344a;line-height:100vh;text-align:center' wx:if="{{dataList.length == 0}}">未查询到相关节目或者没有访问节目权限</view>
-    </scroll-view>
+    </view>
     <!-- </view> -->
   </view>
 

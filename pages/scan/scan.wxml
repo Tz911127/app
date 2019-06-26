@@ -51,7 +51,7 @@
 
             <view class="image-plus image-plus-nb" data-name='ysrc' bindtap="chooseImage" style='width:25%;text-align:center'>
               <image class='picSrc' wx:if="{{ysrc}}" src='{{ysrc}}'></image>
-              <view wx:else class="image-plus-text">远景景</view>
+              <view wx:else class="image-plus-text">远景</view>
             </view>
 
             <view class="image-plus image-plus-nb" data-name='zsrc' bindtap="chooseImage" style='width:25%;text-align:center'>

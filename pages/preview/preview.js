@@ -27,6 +27,7 @@ Page({
           url: ip.init + '/TBXEditor/preview_online/index_online.html?pid=' + that.data.id + '&sessionid=' + res.data + '&keepScale=1&autoRotate=1'
         
         })
+        console.log(that.data.url)
       }
     });
     // })

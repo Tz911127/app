@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view>
-  <text class="head-title">{{name}}</text>
+  <!-- <text class="head-title">{{name}}</text> -->
   <!--  btnTxt='>' -->
   <path-view unnormalizedValue="{{unnormalizedValue}}"
              btnTxt=' '

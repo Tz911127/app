@@ -59,8 +59,8 @@
     <view class="{{pro?'ad_show':'hidden'}}">
       <view class='program' wx:for="{{proList}}" wx:key="item">
         <view class='left'>
-          <image wx:if='{{item.snapshot}}' src='{{item.snapshot}}'></image>
-          <image wx:else style='height:180rpx;width:180rpx' src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+          <image wx:if='{{item.programSnapshot}}' style='height:180rpx;width:180rpx' src='{{item.programSnapshot}}'></image>
+          <image wx:else style='height:180rpx;width:180rpx' src='http://cdn-public.q-media.cn/html/nothing.png'></image>
         </view>
         <view class='right'>
           <view class='right_item' style='display:inline-block;float:left'>
@@ -90,7 +90,7 @@
     <view class="{{ad?'ad_show':'hidden'}}">
       <view class='program' wx:for="{{adList}}" wx:key="item">
         <view class='left'>
-          <image style='height:180rpx;width:180rpx' src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556449264554&di=84f40083427df726bc04e7d4456fb810&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Ff54083119edfb83c4cfe9ce2eeebc076.jpeg'></image>
+          <image style='height:180rpx;width:180rpx' src='http://cdn-public.q-media.cn/html/nothing.png'></image>
 
         </view>
 
@@ -147,7 +147,7 @@
 
       </view>
       <view class='basic' style="{{datalist.shareType ==undefined?'display:none':''}}">开放信息</view>
-      <view class='main'>
+      <view class='main' style="{{datalist.shareType ==undefined?'display:none':''}}">
         <!-- <view class='basic'>基本信息</view> -->
         <view class='left'>
           <view style="{{datalist.shareType ==undefined?'display:none':''}}">终端类型</view>
@@ -171,7 +171,7 @@
       </view>
       <view class='pic' style="{{datalist.shareType ==undefined?'display:none':''}}">
         <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
-          <image bindtap='show_pic' wx:for="{{imgSrc}}" data-item='{{item}}' wx:key="item" src='{{item}}'></image>
+          <image bindtap='show_pic' style="margin:0 10px" wx:for="{{imgSrc}}" data-item='{{item}}' wx:key="item" src='{{item}}'></image>
         </scroll-view>
         <!-- <view class='prePic' bindtap='hide_pic'>
           <image src='{{itemSrc}}'></image>

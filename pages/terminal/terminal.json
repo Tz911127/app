@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "终端",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
 }

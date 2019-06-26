@@ -1,4 +1,77 @@
 @import "../../lib/lib.wxss";
+@import "../../lib/conment.wxss";
+
+.canvas {
+  width: 100%;
+  height: 260px;
+  margin-top: -20px;
+  /* margin-left: 30px */
+}
+
+.swiper-item {
+  display: block;
+  height: 150px;
+}
+
+.swiper-item image {
+  width: 100%;
+  height: 100%;
+}
+
+.demo-text-1 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #1aad19;
+  color: #fff;
+  font-size: 36rpx;
+}
+
+.demo-text-1:before {
+  content: 'A';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.demo-text-2 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #2782d7;
+  color: #fff;
+  font-size: 36rpx;
+}
+
+.demo-text-2:before {
+  content: 'B';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.demo-text-3 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  color: #353535;
+  font-size: 36rpx;
+}
+
+.demo-text-3:before {
+  content: 'C';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+page {
+  /* width: 90%; */
+}
 
 .page-section-gap {
   box-sizing: border-box;
@@ -16,23 +89,34 @@
   width: 100%;
   display: flex;
   padding-bottom: 14rpx;
+  padding-left: 0;
+  padding-right: 0;
   /* border-bottom: 1px solid #e5e5e5 */
+  font-size: 30rpx;
+  border-top: solid #ecf4fd 1px;
 }
 
-.sea image {
-  width: 48rpx;
-  height: 48rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-  margin-top: 7rpx;
+.sea view:nth-child(1) {
+  border-right: solid #ecf4fd 1px;
+}
+
+.sea view {
+  width: 50%;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.container {
+  padding: 0;
 }
 
 .btn {
   display: inline-block;
   border-radius: 57rpx;
-  width: 83%;
+  width: 70%;
   background-color: #f5f7f8;
   height: 60rpx;
+  margin: auto;
 }
 
 .scroll-view_H {
@@ -65,7 +149,7 @@
 .btn input {
   display: inline-block;
   position: absolute;
-  top:10rpx;
+  /* top: 10rpx; */
   font-size: 32rpx;
 }
 
@@ -74,26 +158,114 @@
   width: 330rpx;
   height: 180rpx;
   position: relative;
-  color: #fff;
-  margin-right: -10rpx
+  /* color: #fff; *//* margin-right: -10rpx; */
 }
 
-.btns image {
+image {
   width: 330rpx;
   height: 180rpx;
+}
+
+.btn_ok .iconfont {
+  color: #1174fd;
+}
+
+.btn_offline .iconfont {
+  color: #98a0b3;
+}
+
+.btn_error .iconfont {
+  color: #f7b500;
+}
+
+.btn_out .iconfont {
+  color: #f72000;
 }
 
 .btn_ok text:nth-child(2), .btn_offline text:nth-child(2),
 .btn_error text:nth-child(2), .btn_out text:nth-child(2) {
   position: absolute;
   top: 24rpx;
-  left: 30rpx;
-  font-size: 32rpx
+  right: 50rpx;
+  font-size: 32rpx;
 }
 
 .btn_ok text:nth-child(3), .btn_offline text:nth-child(3),
 .btn_error text:nth-child(3), .btn_out text:nth-child(3) {
   position: absolute;
   top: 90rpx;
-  left: 30rpx;
+  right: 50rpx;
+  /* left: 30rpx; */
+}
+
+.op-icon {
+  display: inline-block;
+  padding: 0 20rpx;
+  color: #1890ff;
+  font-size: 40rpx;
+}
+
+.foot {
+  text-align: center;
+  margin: 40rpx;
+}
+
+.foot .top {
+  border-bottom: 1px solid #ecf4fd;
+}
+
+.right {
+  border-right: 1px solid #ecf4fd;
+}
+
+.foot .iconfont {
+  line-height: 180rpx;
+  padding-right: 130rpx;
+}
+
+.pic {
+  position: relative;
+  font-size: 28rpx;
+  /* top: 20px */
+  background: rgba(245, 247, 251, 1)
+}
+
+.pic .statu {
+  /* position: absolute;
+  bottom: 70px; *//* left: 50px; */
+  width: 100%;
+  /* text-align: center; */
+  display: flex;
+}
+
+.pic .title {
+  padding: 10px 30px;
+  font-weight: 600
+}
+
+.pic .statu .line {
+  display: inline-block;
+  flex: 1;
+  text-align: center;
+}
+
+.pic .statu .line:nth-child(1) {
+  color: rgba(24, 144, 255, 1);
+  padding-left: 50px;
+}
+
+.pic .statu .line:nth-child(2) {
+  color: rgba(152, 160, 179, 1);
+  padding-right: 50px
+}
+
+.pic .statu .line view:nth-child(1) {
+  font-size: 40rpx;
+}
+.pic .pic_sec,.pic .pic_fir {
+background: rgba(255, 255, 255, 1);
+padding: 10px 0
+}
+.pic .pic_sec {
+  margin: 10px 0
 }
